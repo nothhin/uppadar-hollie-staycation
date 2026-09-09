@@ -2234,6 +2234,19 @@ body:has(.pwa-site) .guest-menu-toggle { display:none; }
 .pwa-footer { min-height:85px; padding:20px clamp(20px,4vw,55px); display:flex; justify-content:space-between; align-items:center; gap:25px; background:#2d261f; color:#fff; }
 .pwa-footer > div:last-child { display:flex; gap:17px; color:#c4b8aa; font-size:9px; }
 .pwa-footer .pwa-logo small { color:#a99b8a; }
+.pwa-stay-details { border-top:1px solid var(--pwa-line); display:grid; grid-template-columns:.7fr 1.3fr; gap:clamp(30px,7vw,90px); }
+.pwa-stay-details h2 { margin:14px 0 12px; font:500 clamp(36px,4vw,58px)/.98 var(--font-display),serif; }
+.pwa-stay-details > div:first-child > p { color:var(--pwa-muted); line-height:1.7; }
+.pwa-stay-details-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.pwa-stay-details-grid article { padding:20px; border:1px solid var(--pwa-line); border-radius:16px; background:var(--pwa-paper); }
+.pwa-stay-details-grid article > strong { display:block; color:var(--pwa-gold-dark); font-size:9px; letter-spacing:.1em; text-transform:uppercase; }
+.pwa-stay-details-grid article > span { display:block; margin-top:8px; font:500 29px var(--font-display),serif; }
+.pwa-stay-reminders ul { margin:12px 0 0; padding-left:18px; display:grid; gap:8px; color:#4d453d; font-size:10px; line-height:1.5; }
+.pwa-stay-contacts { display:grid; gap:9px; }
+.pwa-stay-contacts a { display:flex; justify-content:space-between; gap:10px; color:#4d453d; font-size:10px; }
+.pwa-stay-contacts a span { color:var(--pwa-muted); }
+.booking-step-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.booking-step-actions>button{min-height:44px;padding:0 22px;border:0;border-radius:999px;background:#c58d43;color:#fff;font-size:10px;font-weight:800;cursor:pointer}.booking-step-actions>button:first-child{background:#eee8df;color:#4d453d}.booking-modal-progress ol li.active{background:#c58d43;color:#fff}.booking-modal-progress ol li.complete{background:#e9ddc9;color:#6c5433}
+@media (max-width:760px) { .pwa-stay-details { grid-template-columns:1fr; } .pwa-stay-details-grid { grid-template-columns:1fr; } }
 .pwa-bottom-nav { display:none; }
 @media (max-width:1160px) { .pwa-install,.pwa-status,.pwa-hero,.pwa-primary-actions,.pwa-section { margin-inline:18px; } }
 @media (max-width:700px) {
