@@ -161,11 +161,10 @@ export default async function DepositPage({
                 InstaPay
               </h2>
               <ol>
-                <li>Open your bank or e-wallet and scan the the configured payment account QR.</li>
+                <li>Open your bank or e-wallet and scan the GCash QR code.</li>
                 <li>
-                  Confirm the recipient is{" "}
-                  <strong>configured account holder</strong>, the configured payment account account
-                  ending in <strong>5650</strong>.
+                  Confirm the recipient is <strong>Jevie C</strong> on GCash,
+                  mobile number <strong>09426701701</strong>.
                 </li>
                 <li>
                   Enter exactly <strong>₱1,000</strong> and complete the
@@ -184,14 +183,14 @@ export default async function DepositPage({
             <div className={styles.qr}>
               <Image
                 src={qrImage}
-                alt="the configured payment account InstaPay QR for configured account holder, account details shown at launch"
+                alt="GCash QR code for Jevie C"
                 priority
                 sizes="(max-width: 520px) 86vw, 420px"
               />
               <a
                 className={styles.downloadQr}
                 href={qrImage.src}
-                download="Uppadar Hollie-the configured payment account-payment-QR.png"
+                download="Uppadar-Hollie-GCash-Jevie-C.png"
               >
                 Download QR code
               </a>
