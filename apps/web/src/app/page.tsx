@@ -3,19 +3,18 @@ import Link from "next/link";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 import UiIcon, { type IconName } from "./UiIcon";
 import { SavedBookingLink } from "./BookingMemory";
-import { galleryImages, galleryVideos, nearbyPlaces, propertyProfile, unitAmenities } from "@/lib/property";
+import BookingLauncher from "./BookingLauncher";
+import { amenityGroups, galleryImages, galleryVideos, nearbyPlaces, propertyProfile, unavailableAmenities } from "@/lib/property";
 
 export const dynamic = "force-dynamic";
 
 const quickFacts: ReadonlyArray<[IconName, string]> = [["bed", "2 Bedrooms"], ["users", "Family ready"], ["wifi", "Fast Wi-Fi"], ["lock", "Smart lock"]];
-const amenityIcons: IconName[] = ["bed", "bookmark", "users", "image", "shower", "kitchen", "sparkles", "wifi", "tv", "lock", "check"];
-
 export default function Home() {
   return <main className="pwa-site" id="home">
     <header className="pwa-header">
       <a className="pwa-logo" href="#home"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie" width={42} height={42} /><span><strong>Uppadar Hollie</strong><small>Staycation Cebu</small></span></a>
       <span className="pwa-online"><i /> Online</span>
-      <div className="pwa-head-actions"><a href="#availability" aria-label="Open booking calendar"><UiIcon name="calendar" size={16} /></a><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer" aria-label="Chat with the host"><UiIcon name="message" size={16} /></a></div>
+      <div className="pwa-head-actions"><BookingLauncher className="pwa-icon-book"><UiIcon name="calendar" size={16} /><span className="sr-only">Open booking form</span></BookingLauncher><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer" aria-label="Chat with the host"><UiIcon name="message" size={16} /></a></div>
     </header>
 
     <div className="pwa-install"><span className="pwa-install-icon"><UiIcon name="install" size={17} /></span><div><strong>Install Uppadar Hollie</strong><small>Fast offline access &amp; instant booking status.</small></div><button type="button">Install</button><button className="pwa-install-close" type="button" aria-label="Dismiss install prompt">×</button></div>
@@ -28,7 +27,7 @@ export default function Home() {
       <div className="pwa-facts">{quickFacts.map(([icon,label]) => <div key={label}><span><UiIcon name={icon} size={19} /></span><strong>{label}</strong></div>)}</div>
     </section>
 
-    <div className="pwa-primary-actions"><a href="#availability"><UiIcon name="calendar" size={17} />Reserve your dates</a><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><UiIcon name="message" size={17} />Chat host</a></div>
+    <div className="pwa-primary-actions"><BookingLauncher><UiIcon name="calendar" size={17} />Reserve your dates</BookingLauncher><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><UiIcon name="message" size={17} />Chat host</a></div>
 
     <section className="pwa-section" id="spaces">
       <div className="pwa-section-title"><div><small>EXPERIENCE THE SPACE</small><h2>Curated corners designed for deep rest &amp; easy living.</h2></div><span>360°<small>VIEW</small></span></div>
@@ -43,8 +42,9 @@ export default function Home() {
     </section>
 
     <section className="pwa-section pwa-amenities" id="amenities">
-      <small>EVERYTHING INCLUDED</small><h2>Stay essentials,<br />already handled.</h2>
-      <div className="pwa-amenity-grid">{unitAmenities.map((item,index) => <article key={item}><span><UiIcon name={amenityIcons[index] || "check"} size={18} /></span><p>{item}</p></article>)}</div>
+      <small>WHAT THIS PLACE OFFERS</small><h2>Stay essentials,<br />already handled.</h2>
+      <div className="pwa-amenity-groups">{amenityGroups.map(group => <article className="pwa-amenity-group" key={group.title}><header><span><UiIcon name={group.icon as IconName} size={19} /></span><h3>{group.title}</h3></header><ul>{group.items.map(item => <li key={item.name}><UiIcon name="check" size={15} /><div><strong>{item.name}</strong>{"detail" in item && item.detail ? <small>{item.detail}</small> : null}</div></li>)}</ul></article>)}</div>
+      <article className="pwa-unavailable"><header><span aria-hidden="true">×</span><div><small>NOT INCLUDED</small><h3>Unavailable at this property</h3></div></header><ul>{unavailableAmenities.map(item => <li key={item}><span aria-hidden="true">×</span><div><strong>{item}</strong>{item === "Carbon monoxide alarm" ? <small>There is no carbon monoxide detector on the property.</small> : null}</div></li>)}</ul></article>
     </section>
 
     <section className="pwa-location" id="location">
@@ -63,6 +63,6 @@ export default function Home() {
 
     <footer className="pwa-footer"><div className="pwa-logo"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="" width={38} height={38} /><span><strong>Uppadar Hollie</strong><small>{propertyProfile.tagline}</small></span></div><div><Link href="/privacy">Privacy</Link><Link href="/cookies">Cookies</Link><span>© {new Date().getFullYear()}</span></div></footer>
 
-    <nav className="pwa-bottom-nav" aria-label="Mobile navigation"><a href="#home"><span><UiIcon name="home" /></span>Explore</a><a href="#spaces"><span><UiIcon name="image" /></span>Spaces</a><a className="pwa-bottom-book" href="#availability"><span><UiIcon name="calendar" /></span>Book</a><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><span><UiIcon name="message" /></span>Chat</a><a href="#location"><span><UiIcon name="pin" /></span>Location</a></nav>
+    <nav className="pwa-bottom-nav" aria-label="Mobile navigation"><a href="#home"><span><UiIcon name="home" /></span>Explore</a><a href="#spaces"><span><UiIcon name="image" /></span>Spaces</a><BookingLauncher className="pwa-bottom-book"><span><UiIcon name="calendar" /></span>Book</BookingLauncher><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><span><UiIcon name="message" /></span>Chat</a><a href="#location"><span><UiIcon name="pin" /></span>Location</a></nav>
   </main>;
 }

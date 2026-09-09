@@ -21,13 +21,13 @@ export const propertyProfile = {
 export const galleryImages = [
   { src: "/images/uppadar-hollie/master-bedroom.jpg", alt: "Master bedroom with queen-size spring mattress and LED vanity mirror" },
   { src: "/images/uppadar-hollie/bunk-bedroom.jpg", alt: "Second bedroom with double-size bunk bed and built-in steps" },
-  { src: "/images/uppadar-hollie/bathroom.jpg", alt: "Clean Uppadar Hollie comfort room with illuminated vanity mirror" },
+  { src: "/images/uppadar-hollie/bathroom-vanity.png", alt: "Clean Uppadar Hollie comfort room with illuminated vanity mirror" },
+  { src: "/images/uppadar-hollie/dining-table.png", alt: "Dining table set for four guests inside Uppadar Hollie" },
   { src: "/images/uppadar-hollie/building.jpg", alt: "Deca Homes Tower 1 building courtyard" },
   { src: "/images/uppadar-hollie/hero.jpg", alt: "Uppadar Hollie living room with illuminated feature wall" },
-  { src: "/images/uppadar-hollie/living-room.jpg", alt: "Cozy Uppadar Hollie lounge with a Netflix-ready smart TV" },
-  { src: "/images/uppadar-hollie/kitchen.jpg", alt: "Fully equipped kitchen and breakfast counter" },
+  { src: "/images/uppadar-hollie/living-room.jpg", alt: "Cozy Uppadar Hollie lounge with a 55-inch HDTV" },
+  { src: "/images/uppadar-hollie/kitchen.jpg", alt: "Guest kitchen and breakfast counter" },
   { src: "/images/uppadar-hollie/kitchen-wide.jpg", alt: "Bright kitchen with refrigerator, appliances, and counter seating" },
-  { src: "/images/uppadar-hollie/dining.jpg", alt: "Prepared dining table inside Uppadar Hollie" },
   { src: "/images/uppadar-hollie/lounge.jpg", alt: "Warm open-plan living room and kitchen" },
 ] as const;
 
@@ -45,22 +45,43 @@ export const amenityHighlights = [
 
 export const stayHighlights = [
   { title: "A true home base", copy: "A fully furnished two-bedroom condo designed for family vacations, friend groups, and business trips in Cebu." },
-  { title: "Cook, connect, unwind", copy: "Prepare meals in the equipped kitchen, stay online with fast Wi-Fi, and relax with a Netflix-ready smart TV." },
+  { title: "Cook, connect, unwind", copy: "Prepare meals in the kitchen, stay online with Wi-Fi, and relax with the 55-inch HDTV." },
   { title: "Easy city access", copy: "Stay at Deca Homes Tower 1 near Oakridge Business Park, restaurants, cafés, shopping, and major business hubs." },
 ] as const;
 
-export const unitAmenities = [
-  "Master bedroom with queen-size spring mattress",
-  "Master wardrobe, blackout blind, LED vanity mirror, window grill, and air conditioner",
-  "Second bedroom with a double-size bunk bed and large spring mattresses",
-  "Second-room wardrobe, vanity mirror, window grill, and air conditioner",
-  "Clean and cozy comfort room",
-  "Fully equipped kitchen",
-  "Cooking utensils and essential kitchen appliances",
-  "High-speed Wi-Fi",
-  "Netflix-ready smart TV",
-  "Smart-lock access and convenient self check-in",
-  "Comfortable arrangements for families, friends, and business travelers",
+export const amenityGroups = [
+  {
+    title: "Bedroom and laundry",
+    icon: "bed",
+    items: [
+      { name: "Essentials", detail: "Towels, bed sheets, soap, and toilet paper" },
+      { name: "Hangers" },
+      { name: "Bed linens" },
+      { name: "Room-darkening shades" },
+      { name: "Iron" },
+      { name: "Clothing storage" },
+    ],
+  },
+  { title: "Entertainment", icon: "tv", items: [{ name: "55-inch HDTV" }] },
+  { title: "Heating and cooling", icon: "sparkles", items: [{ name: "Air conditioning" }] },
+  { title: "Home safety", icon: "check", items: [{ name: "Smoke alarm" }] },
+  { title: "Internet and office", icon: "wifi", items: [{ name: "Wi-Fi" }, { name: "Dedicated workspace" }] },
+  {
+    title: "Kitchen and dining",
+    icon: "kitchen",
+    items: [{ name: "Kitchen", detail: "Space where guests can cook their own meals" }],
+  },
+  { title: "Location features", icon: "pin", items: [{ name: "Laundromat nearby" }] },
+  { title: "Services", icon: "lock", items: [{ name: "Self check-in" }, { name: "Smart lock" }] },
+] as const;
+
+export const unavailableAmenities = [
+  "Exterior security cameras on property",
+  "Washer",
+  "Dryer",
+  "Carbon monoxide alarm",
+  "Heating",
+  "Hot water",
 ] as const;
 
 export const buildingAmenities = [

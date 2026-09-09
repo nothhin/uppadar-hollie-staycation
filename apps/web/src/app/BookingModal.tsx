@@ -3,380 +3,81 @@
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  submitBookingRequestInline,
-  type BookingActionState,
-} from "./book/actions";
+import { submitBookingRequestInline, type BookingActionState } from "./book/actions";
 import { propertyProfile } from "@/lib/property";
-import qrImage from "@/assets/maribank-deposit-qr.png";
 import { showError, showSuccess } from "@/lib/sweetalert";
 import { RememberBooking, rememberBooking } from "./BookingMemory";
-import BookingPriceReceipt from "./BookingPriceReceipt";
+import UiIcon from "./UiIcon";
 
-type BookingModalProps = {
-  checkIn: string;
-  checkOut: string;
-  onClose: () => void;
-};
-
+type BookingModalProps = { checkIn: string; checkOut: string; onClose: () => void };
 const initialState: BookingActionState = { status: "idle" };
 
-export default function BookingModal({
-  checkIn,
-  checkOut,
-  onClose,
-}: BookingModalProps) {
-  const [state, action, pending] = useActionState(
-    submitBookingRequestInline,
-    initialState,
-  );
+export default function BookingModal({ checkIn, checkOut, onClose }: BookingModalProps) {
+  const [state, action, pending] = useActionState(submitBookingRequestInline, initialState);
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
   const [idempotencyKey] = useState(() => crypto.randomUUID());
-  const availabilityNotified = useRef(false);
-  const redirectStarted = useRef(false);
-  const [copied, setCopied] = useState(false);
   const [selectedCheckIn, setSelectedCheckIn] = useState(checkIn);
   const [selectedCheckOut, setSelectedCheckOut] = useState(checkOut);
   const [guests, setGuests] = useState(2);
-  const [parkingType, setParkingType] = useState<"none" | "car" | "motorcycle">(
-    "none",
-  );
-  const bedroomChoice =
-    guests <= 2
-      ? ("bedroom_1" as const)
-      : guests <= 4
-        ? ("bedroom_2" as const)
-        : ("both_bedrooms" as const);
+  const availabilityNotified = useRef(false);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     dialogRef.current?.focus();
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
     window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", closeOnEscape);
-    };
+    return () => { document.body.style.overflow = previousOverflow; window.removeEventListener("keydown", closeOnEscape); };
   }, [onClose]);
 
   useEffect(() => {
-    if (
-      state.status === "success" &&
-      state.depositLink &&
-      !redirectStarted.current
-    ) {
-      redirectStarted.current = true;
-      rememberBooking({
-        url: state.depositLink,
-        reference: state.bookingReference,
-        checkIn: selectedCheckIn,
-        checkOut: selectedCheckOut,
-      });
-      window.dispatchEvent(new Event("snowaz:availability-changed"));
-      window.location.assign(state.depositLink);
-    } else if (state.status === "success" && !availabilityNotified.current) {
+    if (state.status === "success" && !availabilityNotified.current) {
       availabilityNotified.current = true;
+      rememberBooking({ url: state.depositLink ?? "/booking-status", reference: state.bookingReference, checkIn: selectedCheckIn, checkOut: selectedCheckOut });
       window.dispatchEvent(new Event("snowaz:availability-changed"));
-      void showSuccess(
-        "Booking request received. Your dates are held for two hours.",
-      );
+      void showSuccess("Booking request received. The host will review your dates.");
     }
-    if (state.status === "error" && state.message)
-      void showError(state.message);
-  }, [
-    state.status,
-    state.message,
-    state.depositLink,
-    state.bookingReference,
-    selectedCheckIn,
-    selectedCheckOut,
-  ]);
+    if (state.status === "error" && state.message) void showError(state.message);
+  }, [state.status, state.message, state.depositLink, state.bookingReference, selectedCheckIn, selectedCheckOut]);
 
-  return (
-    <div
-      className="booking-modal-backdrop"
-      role="presentation"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose();
-      }}
-    >
-      <div
-        className="booking-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        tabIndex={-1}
-        ref={dialogRef}
-      >
-        <button
-          className="booking-modal-close"
-          type="button"
-          aria-label="Close booking form"
-          onClick={onClose}
-        >
-          ×
-        </button>
-        {state.status === "success" ? (
-          <div className="booking-modal-success" role="status">
-            <RememberBooking
-              booking={{
-                url: state.depositLink ?? "/booking-status",
-                reference: state.bookingReference,
-                checkIn: selectedCheckIn,
-                checkOut: selectedCheckOut,
-              }}
-            />
-            <span aria-hidden="true">✓</span>
-            <p className="eyebrow">Dates held for two hours</p>
-            <h2 id={titleId}>Complete your down payment.</h2>
-            <p>
-              Your booking reference is{" "}
-              <strong>{state.bookingReference}</strong>. Pay the required ₱1,000
-              down payment below, then submit the bank reference for Uppadar Hollie
-              verification. Payment does not confirm the reservation until it is
-              verified in the configured payment account.
-            </p>
-            <BookingPriceReceipt
-              checkIn={selectedCheckIn}
-              checkOut={selectedCheckOut}
-              guests={guests}
-              bedroomChoice={bedroomChoice}
-            />
-            <div className="booking-success-qr">
-              <Image
-                src={qrImage}
-                alt="the configured payment account InstaPay QR for configured account holder, account details shown at launch"
-                sizes="(max-width: 520px) 82vw, 330px"
-              />
-              <strong>configured account holder</strong>
-              <small>the configured payment account · account details shown at launch · exactly ₱1,000</small>
-            </div>
-            <Link
-              className="booking-deposit-link"
-              href={state.depositLink ?? "/"}
-            >
-              I’ve paid — submit bank reference
-            </Link>
-            <div className="booking-contact-actions">
-              <button
-                type="button"
-                onClick={async () => {
-                  await navigator.clipboard.writeText(
-                    `Hello Uppadar Hollie! My booking reference is ${state.bookingReference}. I paid the ₱1,000 booking down payment and I am attaching my receipt for verification.`,
-                  );
-                  setCopied(true);
-                }}
-              >
-                {copied
-                  ? "Message copied—paste in Messenger"
-                  : "Copy receipt message"}
-              </button>
-              <a
-                href={propertyProfile.messengerUrl}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => {
-                  void navigator.clipboard.writeText(
-                    `Hello Uppadar Hollie! My booking reference is ${state.bookingReference}. I paid the ₱1,000 booking down payment and I am attaching my receipt for verification.`,
-                  );
-                  setCopied(true);
-                }}
-              >
-                Open Messenger and attach receipt
-              </a>
-              <a href={`tel:${propertyProfile.phoneHref}`}>Call Uppadar Hollie</a>
-            </div>
-            <small className="booking-deadline">
-              Complete the transfer and submit its reference within two hours or
-              the pending dates may reopen.
-            </small>
-            <button type="button" onClick={onClose}>
-              Return to availability
-            </button>
-          </div>
-        ) : (
-          <>
-            <div className="booking-modal-heading">
-              <p className="eyebrow">Request a reservation</p>
-              <h2 id={titleId}>Plan your Uppadar Hollie stay.</h2>
-              <p>
-                No payment is collected here. This form sends an availability
-                request only.
-              </p>
-            </div>
-            <form action={action} className="booking-modal-form">
-              {state.status === "error" ? (
-                <div className="booking-modal-error" role="alert">
-                  {state.message}
-                </div>
-              ) : null}
-              <input
-                type="hidden"
-                name="idempotencyKey"
-                value={idempotencyKey}
-              />
-              <input type="hidden" name="roomTypeId" value="" />
-              <input type="hidden" name="preferredContact" value="phone" />
-              <input type="hidden" name="bedroomChoice" value={bedroomChoice} />
-              <label>
-                <span>Overnight parking (optional)</span>
-                <select
-                  name="parkingType"
-                  value={parkingType}
-                  onChange={(event) =>
-                    setParkingType(event.target.value as typeof parkingType)
-                  }
-                >
-                  <option value="none">No parking</option>
-                  <option value="car">Car — ₱350/night</option>
-                  <option value="motorcycle">Motorcycle — ₱150/night</option>
-                </select>
-              </label>
-              <label className="booking-honeypot">
-                Website
-                <input name="website" tabIndex={-1} autoComplete="off" />
-              </label>
-              <div className="booking-modal-grid">
-                <label>
-                  <span>Check-in</span>
-                  <input
-                    name="checkIn"
-                    type="date"
-                    value={selectedCheckIn}
-                    onChange={(event) => setSelectedCheckIn(event.target.value)}
-                    required
-                  />
-                </label>
-                <label>
-                  <span>Check-out</span>
-                  <input
-                    name="checkOut"
-                    type="date"
-                    value={selectedCheckOut}
-                    onChange={(event) =>
-                      setSelectedCheckOut(event.target.value)
-                    }
-                    required
-                  />
-                </label>
-              </div>
-              <label>
-                <span>Number of guests (maximum 8)</span>
-                <select
-                  name="guests"
-                  value={guests}
-                  onChange={(event) => setGuests(Number(event.target.value))}
-                  required
-                >
-                  {Array.from({ length: 8 }, (_, index) => index + 1).map(
-                    (guestCount) => (
-                      <option key={guestCount} value={guestCount}>
-                        {guestCount} guest{guestCount === 1 ? "" : "s"}
-                      </option>
-                    ),
-                  )}
-                </select>
-                <small>
-                  1BR for up to 2 guests: ₱1,800/night. 2BR for up to 4 guests:
-                  ₱2,300/night. Additional guests: ₱300 per guest/night.
-                </small>
-              </label>
-              <label>
-                <span>Bedroom selection</span>
-                <select value={bedroomChoice} disabled>
-                  <option value={bedroomChoice}>
-                    {bedroomChoice === "bedroom_1"
-                      ? "Bedroom 1 — standard single bunk bed"
-                      : bedroomChoice === "bedroom_2"
-                        ? "Bedroom 2 — Twin-over-double bunk bed"
-                        : "Both bedrooms"}
-                  </option>
-                </select>
-                <small>
-                  Assigned automatically: 1–2 guests use Bedroom 1, 3–4 use
-                  Bedroom 2, and 5–8 use both bedrooms.
-                </small>
-              </label>
-              <BookingPriceReceipt
-                checkIn={selectedCheckIn}
-                checkOut={selectedCheckOut}
-                guests={guests}
-                bedroomChoice={bedroomChoice}
-                parkingType={parkingType}
-              />
-              <label>
-                <span>Full name</span>
-                <input name="fullName" autoComplete="name" required />
-              </label>
-              <div className="booking-modal-grid">
-                <label>
-                  <span>Email address (optional)</span>
-                  <input name="email" type="email" autoComplete="email" />
-                </label>
-                <label>
-                  <span>Contact number (required)</span>
-                  <input
-                    name="phone"
-                    type="tel"
-                    autoComplete="tel"
-                    inputMode="tel"
-                    placeholder="09xx xxx xxxx"
-                    required
-                  />
-                  <small>
-                    Uppadar Hollie will call this number about your request.
-                  </small>
-                </label>
-              </div>
-              <label>
-                <span>Special requests (optional)</span>
-                <textarea
-                  name="specialRequests"
-                  rows={3}
-                  maxLength={1000}
-                  placeholder="Arrival time, parking request, celebration, or anything Uppadar Hollie should know"
-                />
-              </label>
-              <div className="booking-policy-summary">
-                <strong>Before you send</strong>
-                <ul>
-                  <li>
-                    Your dates will be held as pending for two hours while you
-                    send the required ₱1,000 down payment.
-                  </li>
-                  <li>Quiet hours are from 11:00 PM to 7:00 AM.</li>
-                  <li>No smoking inside the unit; a ₱5,000 penalty applies.</li>
-                  <li>
-                    Payment remains pending until Uppadar Hollie verifies it in
-                    the configured payment account.
-                  </li>
-                </ul>
-              </div>
-              <label className="booking-modal-consent">
-                <input name="consent" type="checkbox" required />
-                <span>
-                  I agree that Uppadar Hollie may use my contact and stay details to
-                  respond to this request. I have read the{" "}
-                  <Link href="/privacy">Privacy Notice</Link>,{" "}
-                  <Link href="/cookies">Cookie Notice</Link>, and booking notes
-                  above.
-                </span>
-              </label>
-              <button
-                className="booking-modal-submit"
-                type="submit"
-                disabled={pending}
-              >
-                {pending ? "Sending request…" : "Send booking request"}
-              </button>
-            </form>
-          </>
-        )}
-      </div>
+  const adjustGuests = (change: number) => setGuests((value) => Math.min(8, Math.max(1, value + change)));
+
+  return <div className="booking-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div className="booking-modal booking-modal-stitch" role="dialog" aria-modal="true" aria-labelledby={titleId} tabIndex={-1} ref={dialogRef}>
+      <header className="booking-modal-brandbar">
+        <div><Image src="/images/uppadar-hollie/logo-transparent.png" alt="" width={38} height={38}/><span><strong>Uppadar Hollie</strong><small>ONLINE</small></span></div>
+        <strong>Availability and booking</strong>
+        <button type="button" aria-label="Close booking form" onClick={onClose}>×</button>
+      </header>
+      {state.status === "success" ? <section className="booking-modal-success" role="status">
+        <RememberBooking booking={{ url: state.depositLink ?? "/booking-status", reference: state.bookingReference, checkIn: selectedCheckIn, checkOut: selectedCheckOut }}/>
+        <span aria-hidden="true">✓</span><p className="eyebrow">Request received</p>
+        <h2 id={titleId}>Thank you. We&apos;ll be in touch.</h2>
+        <p>Your reference is <strong>{state.bookingReference}</strong>. Your stay is not confirmed yet; the host will contact you with availability, the final rate, current rules, and payment instructions.</p>
+        <a className="booking-deposit-link" href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><UiIcon name="message" size={17}/>Follow up on Messenger</a>
+        <button type="button" onClick={onClose}>Return to the property</button>
+      </section> : <>
+        <section className="booking-modal-progress" aria-label="Booking progress"><div><b>1</b><strong>Step 1: Dates &amp; room</strong><small>Step 1 of 3</small></div><ol><li>1. Select stay</li><li>2. Guest details</li><li>3. Confirmed</li></ol></section>
+        <div className="booking-modal-scroll">
+          <div className="booking-modal-heading"><p className="eyebrow"><UiIcon name="check" size={12}/> Live availability · Direct with host</p><h2 id={titleId}>Reserve Your Sanctuary</h2><p>Choose your preferred dates and send your stay details. The host will confirm the final rate directly with you.</p></div>
+          <form action={action} className="booking-modal-form booking-stitch-form">
+            {state.status === "error" ? <div className="booking-modal-error" role="alert">{state.message}</div> : null}
+            <input type="hidden" name="idempotencyKey" value={idempotencyKey}/><input type="hidden" name="roomTypeId" value=""/><input type="hidden" name="preferredContact" value="phone"/><input type="hidden" name="bedroomChoice" value="both_bedrooms"/><input type="hidden" name="parkingType" value="none"/>
+            <label className="booking-honeypot">Website<input name="website" tabIndex={-1} autoComplete="off"/></label>
+            <section className="booking-suite-section"><span>SUITE CONFIGURATION</span><article><div><strong>Entire two-bedroom condo</strong><small>Queen master · Double-size bunk room · Kitchen</small></div><b>Ask host</b></article></section>
+            <section className="booking-date-section"><div className="booking-section-label"><span>CALENDAR</span><small>Choose your preferred stay</small></div><div className="booking-modal-grid"><label><span>Check-in</span><input name="checkIn" type="date" value={selectedCheckIn} onChange={(event) => setSelectedCheckIn(event.target.value)} required/></label><label><span>Check-out</span><input name="checkOut" type="date" value={selectedCheckOut} onChange={(event) => setSelectedCheckOut(event.target.value)} required/></label></div></section>
+            <section className="booking-stay-details"><h3><UiIcon name="sparkles" size={17}/> Stay Details</h3><div className="booking-guest-row"><div><strong>Guests</strong><small>Final occupancy confirmed by host</small></div><div><button type="button" aria-label="Remove guest" onClick={() => adjustGuests(-1)}>−</button><output>{guests}</output><button type="button" aria-label="Add guest" onClick={() => adjustGuests(1)}>+</button></div><input type="hidden" name="guests" value={guests}/></div></section>
+            <div className="booking-preview-photos"><figure><Image src="/images/uppadar-hollie/master-bedroom.jpg" alt="Master bedroom" fill sizes="220px"/><figcaption>Master bedroom</figcaption></figure><figure><Image src="/images/uppadar-hollie/dining-table.png" alt="Living and dining area" fill sizes="220px"/><figcaption>Living &amp; dining</figcaption></figure></div>
+            <section className="booking-contact-section"><div className="booking-section-label"><span>GUEST DETAILS</span><small>How should the host contact you?</small></div><label><span>Full name</span><input name="fullName" autoComplete="name" required/></label><div className="booking-modal-grid"><label><span>Email address (optional)</span><input name="email" type="email" autoComplete="email"/></label><label><span>Contact number</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="09xx xxx xxxx" required/></label></div><label><span>Special requests (optional)</span><textarea name="specialRequests" rows={3} maxLength={1000} placeholder="Arrival time, celebration, or anything the host should know"/></label></section>
+            <div className="booking-rate-note"><UiIcon name="check" size={18}/><div><strong>Rate confirmed by host</strong><small>No payment is collected in this form. Current rates, policies, and payment instructions are sent after review.</small></div></div>
+            <label className="booking-modal-consent"><input name="consent" type="checkbox" required/><span>I agree that Uppadar Hollie may use my contact and stay details to respond to this request. I have read the <Link href="/privacy">Privacy Notice</Link> and <Link href="/cookies">Cookie Notice</Link>.</span></label>
+            <div className="booking-saved-note"><UiIcon name="bookmark" size={17}/><div><strong>Saved to this device</strong><small>Your booking details remain available on this device.</small></div></div>
+            <div className="booking-host-row"><span>Questions? Host assistance</span><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><UiIcon name="message" size={15}/>Reserve via Messenger</a></div>
+            <button className="booking-modal-submit" type="submit" disabled={pending}><UiIcon name="message" size={17}/>{pending ? "Sending request…" : "Submit direct request"}</button>
+          </form>
+        </div>
+      </>}
     </div>
-  );
+  </div>;
 }

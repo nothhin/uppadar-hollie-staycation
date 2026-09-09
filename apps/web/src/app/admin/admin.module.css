@@ -2,14 +2,14 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: 250px minmax(0, 1fr);
-  background: #f7f3ed;
-  color: #1b263b;
+  background: #f8f4ed;
+  color: #302a25;
 }
 .sidebar {
   height: 100vh;
   position: sticky;
   top: 0;
-  background: #1b263b;
+  background: #2d261f;
   color: white;
   padding: 25px 18px;
   display: flex;
@@ -21,6 +21,12 @@
   gap: 12px;
   padding: 0 8px 28px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+}
+.adminBrand img {
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fffaf3;
+  box-shadow: 0 0 0 3px rgba(183, 138, 67, 0.22);
 }
 .adminBrand > span {
   width: 40px;
@@ -58,7 +64,7 @@
   align-items: center;
   gap: 12px;
   color: rgba(255, 255, 255, 0.65);
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 12px;
 }
 .sidebar nav a span {
@@ -91,15 +97,15 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #dfa064;
-  box-shadow: 0 0 0 4px rgba(223, 160, 100, 0.14);
+  background: #d7a85e;
+  box-shadow: 0 0 0 4px rgba(215, 168, 94, 0.16);
 }
 .workspace {
   min-width: 0;
 }
 .topbar {
   min-height: 72px;
-  background: white;
+  background: #fffdf9;
   border-bottom: 1px solid #e4ddd1;
   padding: 0 36px;
   display: flex;
@@ -251,7 +257,8 @@
   min-height: 148px;
   padding: 20px;
   border: 1px solid #e2dbcf;
-  background: white;
+  border-radius: 16px;
+  background: #fffdf9;
   display: grid;
 }
 .metricsGrid article > span {

@@ -71,7 +71,7 @@ export default async function AdminDashboard({
     <main className={styles.dashboardShell}>
       <aside className={styles.sidebar}>
         <Link className={styles.adminBrand} href="/">
-          <Image src="/images/uppadar-hollie/logo.jpg" alt="Uppadar Hollie Staycation Cebu" width={58} height={58} />
+          <Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie Staycation Cebu" width={58} height={58} />
           <div>
             <strong>Uppadar Hollie</strong>
             <small>Staycation · Condo Rental</small>
@@ -162,16 +162,16 @@ export default async function AdminDashboard({
           >
             <article className={styles.compactPanel}>
               <p className={styles.eyebrow}>Stay rates</p>
-              <h2>1BR or 2BR pricing</h2>
+              <h2>Confirm the current rate</h2>
               <p>
-                1BR is ₱1,800/night for up to two guests. 2BR is ₱2,300/night
-                for up to four guests, plus ₱300 per additional guest/night.
+                Review the requested dates and guest count, then confirm the
+                owner-approved rate with the guest before accepting payment.
               </p>
-              <span>Maximum 8 guests</span>
+              <span>Rates are confirmed by the host</span>
             </article>
             <article className={styles.compactPanel}>
               <p className={styles.eyebrow}>Deposit policy</p>
-              <h2>₱1,000 down payment</h2>
+              <h2>Verify before confirming</h2>
               <p>
                 Verify every payment in the configured payment account. The down payment is deducted
                 from the guest’s total accommodation payment.
@@ -180,13 +180,12 @@ export default async function AdminDashboard({
             </article>
             <article className={styles.compactPanel}>
               <p className={styles.eyebrow}>House rules</p>
-              <h2>Quiet hours: 11 PM–7 AM</h2>
+              <h2>Confirm rules with every guest</h2>
               <p>
-                Commercial photography is allowed. No smoking inside—the stated
-                penalty is ₱5,000. At checkout, gather towels, discard trash,
-                turn things off, return the keys, and lock up.
+                Send the current owner-approved house rules before confirming a
+                stay. Record any special agreement in the booking notes.
               </p>
-              <span>Rules must be acknowledged</span>
+              <span>Owner confirmation required</span>
             </article>
           </section>
           <section id="settings" className={styles.compactPanel}>

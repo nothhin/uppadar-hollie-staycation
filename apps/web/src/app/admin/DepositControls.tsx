@@ -38,7 +38,7 @@ export function DepositControls({ bookingId, bookingStatus = "pending", depositS
     const form = event.currentTarget;
     if (form.dataset.confirmed === "true") return;
     event.preventDefault();
-    const confirmed = await confirmAction("Confirm this ₱1,000 payment?", "Only continue after matching the sender and transaction reference in the configured payment account. This will confirm the booking and block its dates.", "Confirm payment");
+    const confirmed = await confirmAction("Confirm this payment?", "Only continue after matching the amount, sender, and transaction reference in the configured payment account. This will confirm the booking and block its dates.", "Confirm payment");
     if (confirmed) { form.dataset.confirmed = "true"; form.requestSubmit(); }
   };
 
@@ -47,7 +47,7 @@ export function DepositControls({ bookingId, bookingStatus = "pending", depositS
 
   const active = !["cancelled", "declined"].includes(bookingStatus);
   return <div className="deposit-admin-actions">
-    {active && depositStatus === "not_requested" ? <form action={startAction}><input type="hidden" name="bookingId" value={bookingId} /><button disabled={startPending}>{startPending ? "Preparing…" : "Prepare legacy deposit link"}</button></form> : null}
+    {active && depositStatus === "not_requested" ? <form action={startAction}><input type="hidden" name="bookingId" value={bookingId} /><button disabled={startPending}>{startPending ? "Preparing…" : "Prepare secure payment link"}</button></form> : null}
     {active && depositStatus === "awaiting_payment" ? <form action={recordAction} className="deposit-record-form" onSubmit={(event) => { void confirmPayment(event); }}><input type="hidden" name="bookingId" value={bookingId} /><small>For a receipt received through Messenger, verify it in the configured payment account first.</small><input name="senderName" placeholder="Sender/account name" required minLength={2} maxLength={120} /><input name="paymentReference" placeholder="Transaction reference" required minLength={6} maxLength={80} /><button disabled={recordPending}>{recordPending ? "Recording…" : "Record payment & confirm"}</button></form> : null}
     {active && depositStatus === "submitted" ? <form action={verifyAction} onSubmit={(event) => { void confirmPayment(event); }}><input type="hidden" name="bookingId" value={bookingId} /><button disabled={verifyPending}>{verifyPending ? "Verifying…" : "Verify in the configured payment account & confirm"}</button></form> : null}
     {depositStatus === "verified" || depositStatus === "refund_pending" ? <form action={refundAction}><input type="hidden" name="bookingId" value={bookingId} /><input name="refundReference" placeholder="Refund reference" required minLength={6} maxLength={80} /><button disabled={refundPending}>{refundPending ? "Saving…" : "Mark refunded"}</button></form> : null}

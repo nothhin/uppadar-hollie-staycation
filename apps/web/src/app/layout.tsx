@@ -10,7 +10,7 @@ const displayFont = EB_Garamond({ variable: "--font-display", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: { default: "Uppadar Hollie Staycation Cebu | Condo in Banilad", template: "%s | Uppadar Hollie" },
-  description: "Stay in a fully furnished two-bedroom condo with Wi-Fi, Netflix-ready TV, equipped kitchen, and smart self check-in at Deca Homes Tower 1, Banilad, Cebu City.",
+  description: "Stay in a fully furnished two-bedroom condo with Wi-Fi, a 55-inch HDTV, kitchen, air conditioning, and smart self check-in at Deca Homes Tower 1, Banilad, Cebu City.",
   applicationName: "Uppadar Hollie Staycation Cebu",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
