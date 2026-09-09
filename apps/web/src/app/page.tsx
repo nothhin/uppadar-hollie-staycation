@@ -2,77 +2,59 @@ import Image from "next/image";
 import Link from "next/link";
 import AvailabilityCalendar from "./AvailabilityCalendar";
 import { SavedBookingLink } from "./BookingMemory";
-import ScrollReveal from "./ScrollReveal";
-import { buildingAmenities, checkoutRules, galleryImages, galleryVideos, houseRules, nearbyPlaces, propertyProfile, unitAmenities } from "@/lib/property";
+import { galleryImages, galleryVideos, nearbyPlaces, propertyProfile, unitAmenities } from "@/lib/property";
 
 export const dynamic = "force-dynamic";
-const amenityPills = ["2 bedrooms", "Fast Wi-Fi", "Netflix-ready", "Full kitchen", "Smart lock", "Self check-in"];
+
+const quickFacts = [["▣", "2 Beds"], ["♟", "Family ready"], ["⌁", "Fast Wi-Fi"], ["⌂", "Smart lock"]] as const;
 
 export default function Home() {
-  return <main className="uh-site"><ScrollReveal />
-    <nav className="uh-nav" aria-label="Primary navigation">
-      <a className="uh-brand" href="#home"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie logo" width={46} height={46} /><span><strong>Uppadar Hollie</strong><small>Cebu City staycation</small></span></a>
-      <div className="uh-nav-links"><a href="#spaces">The space</a><a href="#amenities">What&apos;s inside</a><a href="#location">Neighborhood</a></div>
-      <a className="uh-button uh-button-small" href="#availability">Check dates</a>
-    </nav>
+  return <main className="pwa-site" id="home">
+    <header className="pwa-header">
+      <a className="pwa-logo" href="#home"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie" width={42} height={42} /><span><strong>Uppadar Hollie</strong><small>Staycation Cebu</small></span></a>
+      <span className="pwa-online"><i /> Online</span>
+      <div className="pwa-head-actions"><a href="#availability" aria-label="Open booking">▣</a><button type="button" aria-label="Open profile">♟</button></div>
+    </header>
 
-    <section className="uh-hero" id="home">
-      <div className="uh-hero-copy">
-        <p className="uh-kicker"><span>●</span> Your easy Cebu home base</p>
-        <h1>Stay comfy.<br />Live <em>local.</em></h1>
-        <p className="uh-lede">A cheerful two-bedroom condo in Banilad for family trips, friend getaways, and work visits that deserve a little more room.</p>
-        <div className="uh-actions"><a className="uh-button" href="#availability">Find your dates <span>→</span></a><a className="uh-text-link" href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">Chat with your host</a></div>
-        <div className="uh-mini-proof"><strong>Right where you need to be.</strong><span>Deca Homes Tower 1 · near Oakridge Business Park</span></div>
-      </div>
-      <div className="uh-hero-visual">
-        <div className="uh-postcard"><Image src="/images/uppadar-hollie/hero.jpg" alt="Warm living room at Uppadar Hollie" fill preload sizes="(max-width: 850px) 92vw, 48vw" /><span>Make yourself at home ☺</span></div>
-        <div className="uh-room-note"><strong>2</strong><span>cozy<br />bedrooms</span></div>
-        <div className="uh-location-stamp"><span>CEB</span><strong>Banilad</strong><small>Cebu City</small></div>
-      </div>
+    <div className="pwa-install"><span className="pwa-install-icon">▣</span><div><strong>Install Uppadar Hollie</strong><small>Fast offline access &amp; instant booking status.</small></div><button type="button">Install</button><span>×</span></div>
+    <div className="pwa-status"><span><i /> Online · Ready to book</span><span>⚡ Instant sync active</span></div>
+
+    <section className="pwa-hero">
+      <Image src="/images/uppadar-hollie/hero.jpg" alt="Uppadar Hollie condo living room" fill priority sizes="(max-width: 720px) 100vw, 760px" />
+      <div className="pwa-hero-top"><span>● Banilad, Cebu City</span><strong>Direct booking</strong></div>
+      <div className="pwa-hero-copy"><small>YOUR HOME AWAY FROM HOME</small><h1>Your cozy escape,<br />away from home.</h1><p>Comfort. Convenience. Cebu.</p></div>
+      <div className="pwa-facts">{quickFacts.map(([icon,label]) => <div key={label}><span>{icon}</span><strong>{label}</strong></div>)}</div>
     </section>
 
-    <section className="uh-marquee" aria-label="Property amenities">{amenityPills.map((item) => <span key={item}>{item}</span>)}</section>
+    <div className="pwa-primary-actions"><a href="#availability">▣ &nbsp;Reserve your dates</a><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">▱ &nbsp;Chat host</a></div>
 
-    <section className="uh-welcome" data-reveal>
-      <p className="uh-section-no">01 / WELCOME IN</p>
-      <div><h2>A city stay that feels like somebody thought of everything.</h2><p>Drop your bags, cook something good, stream a movie, and settle in. Uppadar Hollie keeps the practical things simple so your Cebu days can be the fun part.</p></div>
+    <section className="pwa-section" id="spaces">
+      <div className="pwa-section-title"><div><small>EXPERIENCE THE SPACE</small><h2>Curated corners designed for deep rest &amp; easy living.</h2></div><span>360°<small>VIEW</small></span></div>
+      <div className="pwa-gallery">{galleryImages.slice(0,5).map((image,index) => <figure key={image.src} className={index === 0 ? "pwa-gallery-main" : ""}><Image src={image.src} alt={image.alt} fill sizes="(max-width: 720px) 70vw, 360px" /></figure>)}</div>
+      <div className="pwa-tour-links">{galleryVideos.map((video,index) => <a key={video.src} href={video.src} target="_blank" rel="noreferrer">▶ Watch tour {index+1}</a>)}</div>
     </section>
 
-    <section className="uh-tour" id="spaces" data-reveal>
-      <div className="uh-section-heading"><div><p className="uh-section-no">02 / TAKE A LOOK</p><h2>Your little corner<br />of Cebu.</h2></div><p>Bright spaces, warm details, and enough room for your crew. Here&apos;s a peek before you arrive.</p></div>
-      <div className="uh-photo-grid">
-        {galleryImages.map((image, index) => <figure key={image.src} className={`uh-photo uh-photo-${index + 1}`}><Image src={image.src} alt={image.alt} fill sizes="(max-width: 700px) 92vw, 45vw" />{index === 0 && <figcaption>Living room · movie nights welcome</figcaption>}</figure>)}
-      </div>
-      <div className="uh-video-row"><div><strong>Want the full walk-through?</strong><span>See the space in motion on Facebook.</span></div>{galleryVideos.map((video, index) => <a key={video.src} href={video.src} target="_blank" rel="noreferrer"><span>▶</span> Tour {index + 1}</a>)}</div>
+    <section className="pwa-section pwa-amenities" id="amenities">
+      <small>EVERYTHING INCLUDED</small><h2>Stay essentials,<br />already handled.</h2>
+      <div className="pwa-amenity-grid">{unitAmenities.map((item,index) => <article key={item}><span>{["▣","⌁","♨","▤","◉","⌂","◇","✓","♟"][index] || "✓"}</span><p>{item}</p></article>)}</div>
     </section>
 
-    <section className="uh-amenities" id="amenities" data-reveal>
-      <div className="uh-amenity-intro"><p className="uh-section-no">03 / THE GOOD STUFF</p><h2>Everything for an easy stay.</h2><p>No hotel-room shuffle. You have the everyday comforts that make longer weekends and busy work trips feel effortless.</p><a className="uh-text-link" href="#availability">Ready to pick dates?</a></div>
-      <div className="uh-feature-cards">
-        <article className="uh-feature-main"><span className="uh-icon">⌂</span><h3>Room for your people</h3><p>Two comfortable bedrooms, including a double-deck bed, give families and groups space to actually unwind.</p><strong>Sleep easy in Cebu</strong></article>
-        <article><span className="uh-icon">⌁</span><h3>Cook &amp; connect</h3><p>Complete kitchen essentials, high-speed Wi-Fi, and a Netflix-ready smart TV.</p></article>
-        <article><span className="uh-icon">↗</span><h3>Come and go easily</h3><p>Smart-lock access makes secure self check-in simple—even after a full travel day.</p></article>
-      </div>
+    <section className="pwa-location" id="location">
+      <div><small>YOUR CEBU HOME BASE</small><h2>Close to the city.<br />Cozy when you&apos;re home.</h2><address>{propertyProfile.address}</address><ul>{nearbyPlaces.map(place => <li key={place}>{place}</li>)}</ul><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(propertyProfile.address)}`} target="_blank" rel="noreferrer">Open in Google Maps ↗</a></div>
+      <Image src="/images/uppadar-hollie/lounge.jpg" alt="Uppadar Hollie lounge and kitchen" width={520} height={640} />
     </section>
 
-    <section className="uh-details" data-reveal>
-      <article><h3>Inside the condo</h3><ul>{unitAmenities.map((item) => <li key={item}>{item}</li>)}</ul></article>
-      <article><h3>Building &amp; area</h3><ul>{buildingAmenities.map((item) => <li key={item}>{item}</li>)}</ul></article>
-      <article className="uh-rules"><h3>Good to know</h3><ul>{[...houseRules, ...checkoutRules].map((item) => <li key={item}>{item}</li>)}</ul></article>
+    <section className="pwa-booking" id="availability">
+      <div className="pwa-book-heading"><span>LIVE AVAILABILITY · DIRECT WITH HOST</span><h2>Reserve your Cebu stay.</h2><p>Choose your preferred dates and contact Uppadar Hollie directly. Rates and guest limits will be confirmed by the host.</p></div>
+      <div className="pwa-config-card"><span>STAY CONFIGURATION</span><article><div><strong>Entire two-bedroom condo</strong><small>Fully furnished · Kitchen · Smart lock</small></div><b>Ask host</b></article><article><div><strong>Perfect for your Cebu visit</strong><small>Family · Friends · Business travel</small></div><b>Flexible</b></article></div>
+      {propertyProfile.bookingConfigured ? <AvailabilityCalendar /> : <div className="pwa-calendar-placeholder"><div><span>CALENDAR</span><strong>Booking calendar setup</strong></div><p>The live client account will be connected before deployment. Message the host now to ask about open dates.</p><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">▱ Message host on Messenger</a></div>}
+      <div className="pwa-returning"><strong>Already sent a request?</strong><SavedBookingLink /></div>
     </section>
 
-    <section className="uh-location" id="location" data-reveal>
-      <div className="uh-location-photo"><Image src="/images/uppadar-hollie/lounge.jpg" alt="Open-plan lounge and kitchen at Uppadar Hollie" fill sizes="(max-width: 800px) 92vw, 48vw" /><span>Close to the city.<br />Cozy when you&apos;re home.</span></div>
-      <div className="uh-location-copy"><p className="uh-section-no">04 / AROUND THE CORNER</p><h2>Banilad puts Cebu within easy reach.</h2><address>{propertyProfile.address}</address><ul>{nearbyPlaces.map((place) => <li key={place}>{place}</li>)}</ul><a className="uh-button uh-button-light" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(propertyProfile.address)}`} target="_blank" rel="noreferrer">Open in Google Maps →</a></div>
-    </section>
+    <section className="pwa-host"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie logo" width={110} height={110} /><div><small>DIRECT OWNER ASSISTANCE</small><h2>Questions before booking?</h2><p>Talk directly with Uppadar Hollie for availability, current promotions, policies, and anything you need for a comfortable Cebu stay.</p><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">Chat with the host →</a></div></section>
 
-    <section className="uh-book" id="availability" data-reveal>
-      <div className="uh-book-copy"><p className="uh-section-no">05 / LET&apos;S MAKE PLANS</p><h2>Cebu is calling.<br />Pick your dates.</h2><p>Message Uppadar Hollie for current rates, promotions, guest limits, and availability.</p><div className="uh-book-links"><div><strong>Already requested?</strong><SavedBookingLink /></div><div><strong>Book with a real person</strong><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">Message us on Facebook →</a></div></div></div>
-      {propertyProfile.bookingConfigured ? <AvailabilityCalendar /> : <div className="uh-setup-card"><span>CALENDAR COMING SOON</span><h3>We&apos;re getting the booking calendar ready.</h3><p>Until the client&apos;s new booking account is connected, send your preferred dates directly through the official Facebook page.</p><a className="uh-button" href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">Message on Facebook →</a><a className="uh-text-link" href={propertyProfile.airbnbUrl} target="_blank" rel="noreferrer">Or view the Airbnb listing</a></div>}
-    </section>
+    <footer className="pwa-footer"><div className="pwa-logo"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="" width={38} height={38} /><span><strong>Uppadar Hollie</strong><small>{propertyProfile.tagline}</small></span></div><div><Link href="/privacy">Privacy</Link><Link href="/cookies">Cookies</Link><span>© {new Date().getFullYear()}</span></div></footer>
 
-    <section className="uh-closing" data-reveal><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie logo" width={128} height={128} /><div><p>Comfort. Convenience. Cebu.</p><h2>Come for the city.<br />Stay for the <em>homey</em> feeling.</h2><div className="uh-actions"><a className="uh-button" href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">Start a conversation</a><a className="uh-text-link" href={propertyProfile.facebookUrl} target="_blank" rel="noreferrer">Follow on Facebook</a></div></div></section>
-
-    <footer className="uh-footer"><div className="uh-brand"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="" width={42} height={42} /><span><strong>Uppadar Hollie</strong><small>{propertyProfile.tagline}</small></span></div><p>{propertyProfile.address}</p><div><Link href="/privacy">Privacy</Link><Link href="/cookies">Cookies</Link><span>© {new Date().getFullYear()}</span></div></footer>
+    <nav className="pwa-bottom-nav" aria-label="Mobile navigation"><a href="#home"><span>⌂</span>Explore</a><a href="#spaces"><span>▧</span>Spaces</a><a className="pwa-bottom-book" href="#availability"><span>▣</span>Book</a><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><span>▱</span>Chat</a><a href="#location"><span>⌖</span>Location</a></nav>
   </main>;
 }
