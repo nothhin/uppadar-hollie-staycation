@@ -103,6 +103,21 @@ export const checkoutRules = [
   "Return access items as instructed",
 ] as const;
 
+export const stayDetails = {
+  checkIn: "2:00 PM",
+  checkOut: "11:00 AM",
+  reminders: [
+    "Turn off all lights and air conditioning before leaving, except the refrigerator.",
+    "Leave the smart-lock keycard and RFID card inside the unit and securely lock the door.",
+  ],
+} as const;
+
+export const serviceContacts = [
+  { label: "Customer service", name: "Jevie / Barbie", phone: "09426701701" },
+  { label: "Housekeeping", name: "Jen", phone: "09974455343" },
+  { label: "Maintenance", name: "Tim", phone: "09126680231" },
+] as const;
+
 export const nearbyPlaces = [
   "Minutes from Oakridge Business Park",
   "Near restaurants, cafés, and shopping centers",

@@ -4,7 +4,7 @@ import AvailabilityCalendar from "./AvailabilityCalendar";
 import UiIcon, { type IconName } from "./UiIcon";
 import { SavedBookingLink } from "./BookingMemory";
 import BookingLauncher from "./BookingLauncher";
-import { amenityGroups, galleryImages, galleryVideos, nearbyPlaces, propertyProfile, unavailableAmenities } from "@/lib/property";
+import { amenityGroups, galleryImages, galleryVideos, nearbyPlaces, propertyProfile, serviceContacts, stayDetails, unavailableAmenities } from "@/lib/property";
 
 export const dynamic = "force-dynamic";
 
@@ -41,11 +41,15 @@ export default function Home() {
       <article><div className="pwa-room-photo"><Image src="/images/uppadar-hollie/bunk-bedroom.jpg" alt="Second bedroom with double-size bunk bed" fill sizes="(max-width: 700px) 100vw, 50vw" /></div><div className="pwa-room-copy"><span>SECOND BEDROOM</span><h3>Double-size bunk room</h3><p>A roomy bunk setup with large spring mattresses, ideal for family members or friends sharing the stay.</p><ul><li>Double-size bunk bed</li><li>Large spring mattresses</li><li>Built-in wardrobe</li><li>Vanity mirror</li><li>Safety window grill</li><li>Air conditioner</li></ul></div></article>
     </section>
 
-    <section className="pwa-section pwa-amenities" id="amenities">
+      <section className="pwa-section pwa-amenities" id="amenities">
       <small>WHAT THIS PLACE OFFERS</small><h2>Stay essentials,<br />already handled.</h2>
       <div className="pwa-amenity-groups">{amenityGroups.map(group => <article className="pwa-amenity-group" key={group.title}><header><span><UiIcon name={group.icon as IconName} size={19} /></span><h3>{group.title}</h3></header><ul>{group.items.map(item => <li key={item.name}><UiIcon name="check" size={15} /><div><strong>{item.name}</strong>{"detail" in item && item.detail ? <small>{item.detail}</small> : null}</div></li>)}</ul></article>)}</div>
       <article className="pwa-unavailable"><header><span aria-hidden="true">×</span><div><small>NOT INCLUDED</small><h3>Unavailable at this property</h3></div></header><ul>{unavailableAmenities.map(item => <li key={item}><span aria-hidden="true">×</span><div><strong>{item}</strong>{item === "Carbon monoxide alarm" ? <small>There is no carbon monoxide detector on the property.</small> : null}</div></li>)}</ul></article>
-    </section>
+      </section>
+      <section className="pwa-section pwa-stay-details" id="stay-details">
+        <div><small>BEFORE YOU ARRIVE</small><h2>Important stay details</h2><p>We’re available around the clock for questions, housekeeping, and maintenance support.</p></div>
+        <div className="pwa-stay-details-grid"><article><strong>Check-in</strong><span>{stayDetails.checkIn}</span></article><article><strong>Check-out</strong><span>{stayDetails.checkOut}</span></article><article className="pwa-stay-reminders"><strong>Leaving the unit</strong><ul>{stayDetails.reminders.map(item => <li key={item}>{item}</li>)}</ul></article><article className="pwa-stay-contacts"><strong>Need help?</strong>{serviceContacts.map(contact => <a key={contact.label} href={`tel:${contact.phone}`}><span>{contact.label}</span>{contact.name} · {contact.phone}</a>)}</article></div>
+      </section>
 
     <section className="pwa-location" id="location">
       <div><small>YOUR CEBU HOME BASE</small><h2>Close to the city.<br />Cozy when you&apos;re home.</h2><address>{propertyProfile.address}</address><ul>{nearbyPlaces.map(place => <li key={place}>{place}</li>)}</ul><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(propertyProfile.address)}`} target="_blank" rel="noreferrer">Open in Google Maps ↗</a></div>
