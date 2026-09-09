@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { EB_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "sweetalert2/dist/sweetalert2.min.css";
 import GuestMenu from "./GuestMenu";
 import BrowserViewPrompt from "./BrowserViewPrompt";
 
 const bodyFont = Plus_Jakarta_Sans({ variable: "--font-body", subsets: ["latin"] });
-const displayFont = Cormorant_Garamond({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
+const displayFont = EB_Garamond({ variable: "--font-display", subsets: ["latin"], weight: ["400", "500", "600"] });
 
 export const metadata: Metadata = {
   title: { default: "Uppadar Hollie Staycation Cebu | Condo in Banilad", template: "%s | Uppadar Hollie" },
