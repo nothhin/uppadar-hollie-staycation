@@ -136,7 +136,7 @@ describe("money calculations", () => {
       parkingChargeMinor: 0,
       totalMinor: 660_000,
       downPaymentMinor: 100_000,
-      remainingBalanceMinor: 560_000,
+      remainingBalanceMinor: 660_000,
     });
   });
   it("adds optional parking per night", () => {

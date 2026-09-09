@@ -169,7 +169,7 @@ export function calculateSnowazBookingReceipt(
     parkingChargeMinor,
     totalMinor,
     downPaymentMinor,
-    remainingBalanceMinor: totalMinor - downPaymentMinor,
+    remainingBalanceMinor: totalMinor,
   } as const;
 }
 

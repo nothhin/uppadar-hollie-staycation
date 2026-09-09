@@ -19,7 +19,7 @@ import { GuestCountEditor } from "./GuestCountEditor";
 import { DeviceStatusAlerts } from "./DeviceStatusAlerts";
 
 export const metadata: Metadata = {
-  title: "Booking down payment | Uppadar Hollie Staycation Cebu",
+  title: "Refundable security deposit | Uppadar Hollie Staycation Cebu",
   robots: { index: false, follow: false },
 };
 export const dynamic = "force-dynamic";
@@ -156,7 +156,7 @@ export default async function DepositPage({
           <>
             <section className={styles.instructions}>
               <h2>
-                Pay {php.format(request.depositAmountMinor / 100)} through
+                Pay refundable security deposit of {php.format(request.depositAmountMinor / 100)} through
                 InstaPay
               </h2>
               <ol>
@@ -166,7 +166,7 @@ export default async function DepositPage({
                   mobile number <strong>09426701701</strong>.
                 </li>
                 <li>
-                  Enter exactly <strong>₱1,000</strong> and complete the
+                  Enter exactly <strong>₱1,000</strong> as the refundable security deposit and complete the
                   transfer.
                 </li>
                 <li>

@@ -121,7 +121,7 @@ export default function BookingPriceReceipt({
           <dd>{php.format(receipt.totalMinor / 100)}</dd>
         </div>
         <div className="booking-receipt-down">
-          <dt>Required down payment</dt>
+          <dt>Refundable security deposit</dt>
           <dd>{php.format(receipt.downPaymentMinor / 100)}</dd>
         </div>
         <div>
@@ -130,8 +130,8 @@ export default function BookingPriceReceipt({
         </div>
       </dl>
       <p>
-        The ₱1,000 down payment is deducted from the total accommodation payment
-        and is verified manually.
+        The ₱1,000 security deposit is refundable after checkout and is separate
+        from the accommodation total. It is verified manually.
       </p>
     </aside>
   );
