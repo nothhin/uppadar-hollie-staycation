@@ -10,7 +10,7 @@ export default async function AdminLogin({ searchParams }: { searchParams: Promi
   const { error } = await searchParams;
   return <main className={styles.shell}>
     <section className={styles.card}>
-      <Link href="/" className={styles.brand}><Image src="/images/uppadar-hollie/logo.jpg" alt="Uppadar Hollie Staycation Cebu" width={58} height={58} /><div><strong>Uppadar Hollie Staycation Cebu</strong><small>Staycation · Condo Rental</small></div></Link>
+      <Link href="/" className={styles.brand}><Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie Staycation Cebu" width={58} height={58} /><div><strong>Uppadar Hollie Staycation Cebu</strong><small>Staycation · Condo Rental</small></div></Link>
       <div className={styles.copy}><p>STAFF PORTAL</p><h1>Welcome back.</h1><span>Sign in with the staff account issued by the property administrator.</span></div>
       {error === "not-authorized" ? <p className={styles.error}>This account is not an active Uppadar Hollie staff account.</p> : null}
       <LoginForm />

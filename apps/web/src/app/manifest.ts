@@ -12,9 +12,9 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#4a2d24",
     icons: [
       {
-        src: "/images/uppadar-hollie/logo.jpg",
+        src: "/images/uppadar-hollie/logo-transparent.png",
         sizes: "200x200",
-        type: "image/jpeg",
+        type: "image/png",
         purpose: "any",
       },
     ],
