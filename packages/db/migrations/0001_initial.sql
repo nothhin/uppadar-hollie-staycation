@@ -1,4 +1,5 @@
-create extension if not exists btree_gist;
+create schema if not exists extensions;
+create extension if not exists btree_gist with schema extensions;
 create extension if not exists pgcrypto;
 
 create type publication_status as enum ('draft', 'published', 'archived');

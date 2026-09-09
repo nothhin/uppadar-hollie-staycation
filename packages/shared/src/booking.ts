@@ -58,8 +58,7 @@ export const reservationRequestSchema = staySchema.extend({
   idempotencyKey: z.string().uuid(),
 });
 
-export const bookingEnquirySchema = staySchema
-  .extend({
+export const bookingEnquirySchema = staySchema.extend({
     roomTypeId: z.string().uuid().optional().or(z.literal("")),
     guests: z.coerce.number().int().min(1).max(8),
     bedroomChoice: bedroomChoiceSchema,
@@ -77,14 +76,13 @@ export const bookingEnquirySchema = staySchema
     }),
     idempotencyKey: z.string().uuid(),
     website: z.string().max(0).optional().or(z.literal("")),
-  })
-  .refine(
+  }).refine(
     ({ guests, bedroomChoice }) =>
-      guests < 1 ||
-      guests > 8 ||
-      bedroomChoice === automaticBedroomChoice(guests),
+      bedroomChoice === "both_bedrooms" ||
+      (bedroomChoice === "bedroom_1" && guests <= 2) ||
+      (bedroomChoice === "bedroom_2" && guests <= 4),
     {
-      message: "The bedroom is assigned automatically from the guest count.",
+      message: "The selected space cannot accommodate that many guests.",
       path: ["bedroomChoice"],
     },
   );
@@ -117,13 +115,17 @@ export function calculateStayTotalMinor(
   return total;
 }
 
-export function calculateSnowazNightlyRateMinor(guests: number) {
+export function calculateSnowazNightlyRateMinor(
+  guests: number,
+  bedroomChoice: "bedroom_1" | "bedroom_2" | "both_bedrooms" = automaticBedroomChoice(guests),
+) {
   if (!Number.isSafeInteger(guests) || guests < 1 || guests > 8) {
     throw new RangeError("Guest count must be a whole number from 1 to 8.");
   }
 
-  if (guests <= 2) return 180_000;
-  return 230_000 + Math.max(0, guests - 4) * 30_000;
+  if (bedroomChoice === "bedroom_1") return 240_000;
+  if (bedroomChoice === "bedroom_2") return 210_000;
+  return 420_000;
 }
 
 export function automaticBedroomChoice(guests: number) {
@@ -141,18 +143,19 @@ export function calculateSnowazBookingReceipt(
   checkOut: string,
   guests: number,
   parkingType: "none" | "car" | "motorcycle" = "none",
+  bedroomChoice: "bedroom_1" | "bedroom_2" | "both_bedrooms" = "both_bedrooms",
 ) {
   const nights = stayNights(checkIn, checkOut);
-  const nightlyRateMinor = calculateSnowazNightlyRateMinor(guests);
-  const baseNightlyRateMinor = guests <= 2 ? 180_000 : 230_000;
+  const nightlyRateMinor = calculateSnowazNightlyRateMinor(guests, bedroomChoice);
+  const baseNightlyRateMinor = nightlyRateMinor;
   const parkingNightlyRateMinor =
     parkingType === "car" ? 35_000 : parkingType === "motorcycle" ? 15_000 : 0;
   const parkingChargeMinor = parkingNightlyRateMinor * nights;
   const totalMinor =
     calculateStayTotalMinor(nightlyRateMinor, nights) + parkingChargeMinor;
   const downPaymentMinor = Math.min(100_000, totalMinor);
-  const additionalGuests = Math.max(0, guests - 4);
-  const additionalGuestChargeMinor = additionalGuests * 30_000 * nights;
+  const additionalGuests = 0;
+  const additionalGuestChargeMinor = 0;
 
   return {
     nights,
