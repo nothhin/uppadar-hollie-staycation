@@ -39,6 +39,7 @@ export default function BookingModal({ checkIn, checkOut, onClose }: BookingModa
       rememberBooking({ url: state.depositLink ?? "/booking-status", reference: state.bookingReference, checkIn: selectedCheckIn, checkOut: selectedCheckOut });
       window.dispatchEvent(new Event("snowaz:availability-changed"));
       void showSuccess("Booking request received. The host will review your dates.");
+      window.location.assign(state.depositLink ?? "/booking-status");
     }
     if (state.status === "error" && state.message) void showError(state.message);
   }, [state.status, state.message, state.depositLink, state.bookingReference, selectedCheckIn, selectedCheckOut]);
