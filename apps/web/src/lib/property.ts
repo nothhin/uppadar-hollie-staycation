@@ -59,29 +59,30 @@ export const amenityGroups = [
       { name: "Bed linens" },
       { name: "Room-darkening shades" },
       { name: "Iron" },
+      { name: "Ironing table" },
+      { name: "Hair blower" },
+      { name: "Hair iron" },
       { name: "Clothing storage" },
     ],
   },
   { title: "Entertainment", icon: "tv", items: [{ name: "55-inch HDTV" }] },
-  { title: "Heating and cooling", icon: "sparkles", items: [{ name: "Air conditioning" }] },
-  { title: "Home safety", icon: "check", items: [{ name: "Smoke alarm" }] },
+  { title: "Heating and cooling", icon: "sparkles", items: [{ name: "Air conditioning" }, { name: "Tower fan" }, { name: "Emergency generator", detail: "Backup power in case of a brownout" }] },
+  { title: "Home safety", icon: "check", items: [{ name: "Smoke alarm" }, { name: "Exterior doorbell camera" }, { name: "Smart lock with built-in safety camera" }] },
   { title: "Internet and office", icon: "wifi", items: [{ name: "Wi-Fi" }, { name: "Dedicated workspace" }] },
   {
     title: "Kitchen and dining",
     icon: "kitchen",
-    items: [{ name: "Kitchen", detail: "Space where guests can cook their own meals" }],
+    items: [{ name: "Kitchen", detail: "Space where guests can cook their own meals" }, { name: "Hot and cold water" }],
   },
   { title: "Location features", icon: "pin", items: [{ name: "Laundromat nearby" }] },
-  { title: "Services", icon: "lock", items: [{ name: "Self check-in" }, { name: "Smart lock" }] },
+  { title: "Services", icon: "lock", items: [{ name: "Self check-in" }, { name: "Smart lock" }, { name: "Hot and cold shower" }, { name: "24-hour customer service" }, { name: "24-hour maintenance service" }, { name: "Housekeeping" }] },
 ] as const;
 
 export const unavailableAmenities = [
-  "Exterior security cameras on property",
   "Washer",
   "Dryer",
   "Carbon monoxide alarm",
   "Heating",
-  "Hot water",
 ] as const;
 
 export const buildingAmenities = [
