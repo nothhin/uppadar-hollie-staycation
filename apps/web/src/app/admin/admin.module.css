@@ -1455,6 +1455,8 @@
   }
 }
 
+.deposit-guide-form{display:grid;gap:8px;margin-top:12px;padding:12px;border:1px solid #e5d5c4;border-radius:10px;background:#fff8ef}.deposit-guide-form strong{font-size:11px}.deposit-guide-form small{color:#75685e;font-size:9px;line-height:1.45}.deposit-guide-form input{width:100%;min-height:38px;padding:0 10px;border:1px solid #ddd1c4;border-radius:8px;background:#fff;font-size:10px}.deposit-guide-form button{min-height:38px;border:0;border-radius:999px;background:#3c342d;color:#fff;font-size:9px;font-weight:800;cursor:pointer}
+
 /* Calm operations layout: keep the workspace scannable at a glance. */
 .dashboardShell {
   background: #f5f1eb;
