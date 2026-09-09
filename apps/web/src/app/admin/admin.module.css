@@ -1474,6 +1474,7 @@
   border-radius: 12px;
   background: #fffaf3;
   box-shadow: none;
+  filter: brightness(0) saturate(100%) invert(80%) sepia(16%) saturate(520%) hue-rotate(355deg) brightness(94%);
 }
 .sidebar nav {
   margin-top: 18px;

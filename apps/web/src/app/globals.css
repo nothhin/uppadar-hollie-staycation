@@ -2124,6 +2124,8 @@ body:has(.pwa-site) .guest-menu-toggle { display:none; }
 .pwa-header { min-height:76px; padding:12px clamp(18px,4vw,54px); display:flex; align-items:center; gap:13px; border-bottom:1px solid var(--pwa-line); background:rgba(255,253,248,.97); }
 .pwa-logo { display:inline-flex; align-items:center; gap:8px; }
 .pwa-logo img { object-fit:contain; }
+.pwa-logo img { filter: brightness(0) saturate(100%) invert(80%) sepia(16%) saturate(520%) hue-rotate(355deg) brightness(94%); }
+img[src*="logo-transparent"] { filter: brightness(0) saturate(100%) invert(80%) sepia(16%) saturate(520%) hue-rotate(355deg) brightness(94%); }
 .pwa-logo span { display:grid; }
 .pwa-logo strong { font-size:13px; font-weight:800; }
 .pwa-logo small { color:var(--pwa-muted); font-size:8px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
