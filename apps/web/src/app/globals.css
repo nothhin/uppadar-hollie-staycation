@@ -2180,6 +2180,7 @@ body:has(.pwa-site) .guest-menu-toggle { display:none; }
 .pwa-room-photo img { object-fit:cover; }
 .pwa-room-copy { padding:clamp(32px,5vw,64px); display:flex; flex-direction:column; justify-content:center; }
 .pwa-room-copy h3 { margin:10px 0 12px; font-size:clamp(34px,4vw,52px); line-height:1; }
+.pwa-room-price { display:inline-flex; align-self:flex-start; margin-top:11px; padding:7px 11px; border:1px solid rgba(139,100,44,.3); border-radius:999px; color:var(--pwa-gold-dark); font-size:11px; letter-spacing:.04em; }
 .pwa-room-copy p { color:var(--pwa-muted); font-size:11px; line-height:1.7; }
 .pwa-room-copy ul { margin:18px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:9px 22px; list-style:none; }
 .pwa-room-copy li { padding-left:14px; position:relative; color:#5f574e; font-size:9px; line-height:1.45; }
