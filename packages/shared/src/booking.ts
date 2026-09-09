@@ -123,9 +123,8 @@ export function calculateSnowazNightlyRateMinor(
     throw new RangeError("Guest count must be a whole number from 1 to 8.");
   }
 
-  if (bedroomChoice === "bedroom_1") return 240_000;
-  if (bedroomChoice === "bedroom_2") return 210_000;
-  return 420_000;
+  if (bedroomChoice === "bedroom_1" || bedroomChoice === "bedroom_2") return 170_000 + Math.max(0, guests - 2) * 25_000;
+  return 220_000;
 }
 
 export function automaticBedroomChoice(guests: number) {
@@ -154,8 +153,8 @@ export function calculateSnowazBookingReceipt(
   const totalMinor =
     calculateStayTotalMinor(nightlyRateMinor, nights) + parkingChargeMinor;
   const downPaymentMinor = Math.min(100_000, totalMinor);
-  const additionalGuests = 0;
-  const additionalGuestChargeMinor = 0;
+  const additionalGuests = bedroomChoice === "both_bedrooms" ? 0 : Math.max(0, guests - 2);
+  const additionalGuestChargeMinor = additionalGuests * 25_000;
 
   return {
     nights,
