@@ -5,6 +5,7 @@ import { submitBookingRequest } from "./actions";
 import { propertyProfile } from "@/lib/property";
 import styles from "./book.module.css";
 import BookingPriceFields from "./BookingPriceFields";
+import BookingIdempotencyInput from "./BookingIdempotencyInput";
 import UiIcon from "../UiIcon";
 
 export const metadata: Metadata = { title: "Request a booking" };
@@ -21,7 +22,7 @@ export default async function BookingPage({ searchParams }: { searchParams: Prom
       <form action={submitBookingRequest} className={styles.form}>
         <div className={styles.formHeading}><span>SUITE CONFIGURATION</span><h2>Entire two-bedroom condo</h2><p>Queen master bedroom · Double-size bunk room · Fully equipped kitchen</p><strong>Rate confirmed by host</strong></div>
         {params.error ? <div className={styles.error} role="alert">We couldn’t submit those details. Check every field or contact us directly.</div> : null}
-        <input type="hidden" name="idempotencyKey" value={crypto.randomUUID()} /><input type="hidden" name="roomTypeId" value="" /><input type="hidden" name="preferredContact" value="phone" />
+        <BookingIdempotencyInput /><input type="hidden" name="roomTypeId" value="" /><input type="hidden" name="preferredContact" value="phone" />
         <label className={styles.honeypot}>Website<input name="website" tabIndex={-1} autoComplete="off" /></label>
         <BookingPriceFields initialCheckIn={params.checkIn} initialCheckOut={params.checkOut} initialGuests={params.guests} />
         <label><span>Full name</span><input name="fullName" autoComplete="name" required /></label>
