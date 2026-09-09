@@ -12,7 +12,6 @@ import { MessengerReceiptLink } from "../../MessengerReceiptLink";
 import { ForgetBookingIfMatches, RememberBooking } from "../../BookingMemory";
 import { BookingReferenceCard } from "../../BookingReferenceCard";
 import { formatStayDate, formatStayRange } from "@/lib/date-format";
-import { submitDepositReference } from "./actions";
 import styles from "./deposit.module.css";
 import BookingPriceReceipt from "../../BookingPriceReceipt";
 import { LiveRouteRefresh } from "../../LiveRouteRefresh";
@@ -196,66 +195,9 @@ export default async function DepositPage({
               </a>
             </div>
             <section className={styles.proofOptions}>
-              <p className={styles.eyebrow}>Choose how to send proof</p>
-              <div className={styles.proofGrid}>
-                <article>
-                  <span>Option 1</span>
-                  <h2>Enter the transfer details</h2>
-                  <p>
-                    Use the secure form below if you have the sender name and
-                    transaction reference.
-                  </p>
-                </article>
-                <article>
-                  <span>Option 2</span>
-                  <h2>Send the receipt in Messenger</h2>
-                  <p>
-                    Use the prepared message, then attach a clear screenshot of
-                    your successful receipt.
-                  </p>
-                  <MessengerReceiptLink
-                    className={styles.messengerAction}
-                    message={`Hello Uppadar Hollie! I am ${request.fullName}. I paid the ₱1,000 booking down payment for my stay on ${formatStayDate(request.checkIn)} to ${formatStayDate(request.checkOut)}. I am attaching my payment receipt for verification.`}
-                  />
-                </article>
-              </div>
+              <p className={styles.eyebrow}>Required payment proof</p>
+              <div className={styles.proofGrid}><article><span>Messenger only</span><h2>Send your receipt screenshot</h2><p>Open Messenger, paste the prepared message, and attach a clear screenshot of your successful GCash transfer. The host will verify it manually, then send your private guest access guide.</p><MessengerReceiptLink className={styles.messengerAction} label="Copy message and open Messenger" message={`Hello Uppadar Hollie! I am ${request.fullName}. I paid the ₱${(request.depositAmountMinor / 100).toLocaleString()} booking down payment for my stay on ${formatStayDate(request.checkIn)} to ${formatStayDate(request.checkOut)}. I am attaching my GCash payment receipt for verification.`}/></article></div>
             </section>
-            <form action={submitDepositReference} className={styles.form}>
-              <input type="hidden" name="token" value={token} />
-              <p className={styles.formTitle}>Submit sender and reference</p>
-              <label>
-                <span>Sender/account name</span>
-                <input
-                  name="senderName"
-                  autoComplete="name"
-                  required
-                  maxLength={120}
-                />
-              </label>
-              <label>
-                <span>Transaction reference number</span>
-                <input name="reference" required minLength={6} maxLength={80} />
-              </label>
-              <label className={styles.check}>
-                <input
-                  name="confirmedAmount"
-                  type="checkbox"
-                  value="1000"
-                  required
-                />
-                <span>
-                  I sent exactly ₱1,000 and understand that Uppadar Hollie will verify
-                  it in the configured payment account before confirming the reservation.
-                </span>
-              </label>
-              {query.error ? (
-                <p className={styles.error} role="alert">
-                  We could not save those details. Check the information or
-                  request a new private link from Uppadar Hollie.
-                </p>
-              ) : null}
-              <button type="submit">Submit payment reference</button>
-            </form>
           </>
         )}
         <footer id="cancellation-help">
