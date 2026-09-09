@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "sweetalert2/dist/sweetalert2.min.css";
 import GuestMenu from "./GuestMenu";
 import BrowserViewPrompt from "./BrowserViewPrompt";
 
-const bodyFont = Montserrat({ variable: "--font-body", subsets: ["latin"] });
-const displayFont = Cormorant_Garamond({ variable: "--font-display", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const bodyFont = Plus_Jakarta_Sans({ variable: "--font-body", subsets: ["latin"] });
+const displayFont = Plus_Jakarta_Sans({ variable: "--font-display", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: { default: "Uppadar Hollie Staycation Cebu | Condo in Banilad", template: "%s | Uppadar Hollie" },

@@ -14,6 +14,7 @@ Thumbs.db
 .legacy-app-git/
 .legacy-vercel-casa/
 .mcp.json
+work/
 
 # Previous property research retained locally, never published with SnowAZ.
 apps/web/public/images/casa-marga/
