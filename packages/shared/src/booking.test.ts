@@ -111,11 +111,12 @@ describe("booking enquiries", () => {
 
 describe("money calculations", () => {
   it("uses the provisional Uppadar bedroom prices", () => {
-    expect(calculateSnowazNightlyRateMinor(2, "bedroom_1")).toBe(240_000);
-    expect(calculateSnowazNightlyRateMinor(2, "bedroom_2")).toBe(210_000);
-    expect(calculateSnowazNightlyRateMinor(2, "both_bedrooms")).toBe(420_000);
-    expect(calculateSnowazNightlyRateMinor(5, "both_bedrooms")).toBe(420_000);
-    expect(calculateSnowazNightlyRateMinor(8, "both_bedrooms")).toBe(420_000);
+    expect(calculateSnowazNightlyRateMinor(2, "bedroom_1")).toBe(170_000);
+    expect(calculateSnowazNightlyRateMinor(2, "bedroom_2")).toBe(170_000);
+    expect(calculateSnowazNightlyRateMinor(4, "bedroom_2")).toBe(220_000);
+    expect(calculateSnowazNightlyRateMinor(2, "both_bedrooms")).toBe(220_000);
+    expect(calculateSnowazNightlyRateMinor(5, "both_bedrooms")).toBe(220_000);
+    expect(calculateSnowazNightlyRateMinor(8, "both_bedrooms")).toBe(220_000);
     expect(() => calculateSnowazNightlyRateMinor(9)).toThrow(RangeError);
   });
 
@@ -126,16 +127,16 @@ describe("money calculations", () => {
       nights: 3,
       guests: 5,
       bedrooms: 2,
-      baseNightlyRateMinor: 420_000,
-      nightlyRateMinor: 420_000,
+      baseNightlyRateMinor: 220_000,
+      nightlyRateMinor: 220_000,
       additionalGuests: 0,
       additionalGuestChargeMinor: 0,
       parkingType: "none",
       parkingNightlyRateMinor: 0,
       parkingChargeMinor: 0,
-      totalMinor: 1_260_000,
+      totalMinor: 660_000,
       downPaymentMinor: 100_000,
-      remainingBalanceMinor: 1_160_000,
+      remainingBalanceMinor: 560_000,
     });
   });
   it("adds optional parking per night", () => {
