@@ -34,6 +34,12 @@ export default function Home() {
       <div className="pwa-tour-links">{galleryVideos.map((video,index) => <a key={video.src} href={video.src} target="_blank" rel="noreferrer">▶ Watch tour {index+1}</a>)}</div>
     </section>
 
+    <section className="pwa-rooms" id="rooms">
+      <div className="pwa-rooms-heading"><small>SLEEPING SPACES</small><h2>Two rooms made<br />for real rest.</h2><p>Both bedrooms are air-conditioned and thoughtfully fitted for comfort, storage, privacy, and safety.</p></div>
+      <article><div className="pwa-room-photo"><Image src="/images/uppadar-hollie/master-bedroom.jpg" alt="Master bedroom with queen-size bed" fill sizes="(max-width: 700px) 100vw, 50vw" /></div><div className="pwa-room-copy"><span>MASTER BEDROOM</span><h3>Queen-size comfort</h3><p>A comfy queen-size spring mattress with the practical details you want for an easy stay.</p><ul><li>Queen-size spring mattress</li><li>Built-in wardrobe</li><li>Blackout blind</li><li>Vanity mirror with LED light</li><li>Safety window grill</li><li>Air conditioner</li></ul></div></article>
+      <article><div className="pwa-room-photo"><Image src="/images/uppadar-hollie/bunk-bedroom.jpg" alt="Second bedroom with double-size bunk bed" fill sizes="(max-width: 700px) 100vw, 50vw" /></div><div className="pwa-room-copy"><span>SECOND BEDROOM</span><h3>Double-size bunk room</h3><p>A roomy bunk setup with large spring mattresses, ideal for family members or friends sharing the stay.</p><ul><li>Double-size bunk bed</li><li>Large spring mattresses</li><li>Built-in wardrobe</li><li>Vanity mirror</li><li>Safety window grill</li><li>Air conditioner</li></ul></div></article>
+    </section>
+
     <section className="pwa-section pwa-amenities" id="amenities">
       <small>EVERYTHING INCLUDED</small><h2>Stay essentials,<br />already handled.</h2>
       <div className="pwa-amenity-grid">{unitAmenities.map((item,index) => <article key={item}><span>{["▣","⌁","♨","▤","◉","⌂","◇","✓","♟"][index] || "✓"}</span><p>{item}</p></article>)}</div>
@@ -47,7 +53,7 @@ export default function Home() {
     <section className="pwa-booking" id="availability">
       <div className="pwa-book-heading"><span>LIVE AVAILABILITY · DIRECT WITH HOST</span><h2>Reserve your Cebu stay.</h2><p>Choose your preferred dates and contact Uppadar Hollie directly. Rates and guest limits will be confirmed by the host.</p></div>
       <div className="pwa-config-card"><span>STAY CONFIGURATION</span><article><div><strong>Entire two-bedroom condo</strong><small>Fully furnished · Kitchen · Smart lock</small></div><b>Ask host</b></article><article><div><strong>Perfect for your Cebu visit</strong><small>Family · Friends · Business travel</small></div><b>Flexible</b></article></div>
-      {propertyProfile.bookingConfigured ? <AvailabilityCalendar /> : <div className="pwa-calendar-placeholder"><div><span>CALENDAR</span><strong>Booking calendar setup</strong></div><p>The live client account will be connected before deployment. Message the host now to ask about open dates.</p><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer">▱ Message host on Messenger</a></div>}
+      <AvailabilityCalendar />
       <div className="pwa-returning"><strong>Already sent a request?</strong><SavedBookingLink /></div>
     </section>
 

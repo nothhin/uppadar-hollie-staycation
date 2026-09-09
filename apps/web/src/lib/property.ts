@@ -19,6 +19,10 @@ export const propertyProfile = {
 } as const;
 
 export const galleryImages = [
+  { src: "/images/uppadar-hollie/master-bedroom.jpg", alt: "Master bedroom with queen-size spring mattress and LED vanity mirror" },
+  { src: "/images/uppadar-hollie/bunk-bedroom.jpg", alt: "Second bedroom with double-size bunk bed and built-in steps" },
+  { src: "/images/uppadar-hollie/bathroom.jpg", alt: "Clean Uppadar Hollie comfort room with illuminated vanity mirror" },
+  { src: "/images/uppadar-hollie/building.jpg", alt: "Deca Homes Tower 1 building courtyard" },
   { src: "/images/uppadar-hollie/hero.jpg", alt: "Uppadar Hollie living room with illuminated feature wall" },
   { src: "/images/uppadar-hollie/living-room.jpg", alt: "Cozy Uppadar Hollie lounge with a Netflix-ready smart TV" },
   { src: "/images/uppadar-hollie/kitchen.jpg", alt: "Fully equipped kitchen and breakfast counter" },
@@ -46,8 +50,10 @@ export const stayHighlights = [
 ] as const;
 
 export const unitAmenities = [
-  "Two comfortable bedrooms",
-  "Double-deck bed in one bedroom",
+  "Master bedroom with queen-size spring mattress",
+  "Master wardrobe, blackout blind, LED vanity mirror, window grill, and air conditioner",
+  "Second bedroom with a double-size bunk bed and large spring mattresses",
+  "Second-room wardrobe, vanity mirror, window grill, and air conditioner",
   "Clean and cozy comfort room",
   "Fully equipped kitchen",
   "Cooking utensils and essential kitchen appliances",
