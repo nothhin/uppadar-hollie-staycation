@@ -1455,6 +1455,115 @@
   }
 }
 
+/* Calm operations layout: keep the workspace scannable at a glance. */
+.dashboardShell {
+  background: #f5f1eb;
+}
+.sidebar {
+  background: #241f1b;
+  padding: 22px 16px;
+}
+.adminBrand {
+  padding: 0 8px 22px;
+}
+.adminBrand img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fffaf3;
+  box-shadow: none;
+}
+.sidebar nav {
+  margin-top: 18px;
+  gap: 3px;
+}
+.sidebar nav a {
+  min-height: 40px;
+  border-radius: 9px;
+}
+.sidebar nav a span {
+  width: 22px;
+  text-align: center;
+}
+.sidebar nav a:hover,
+.sidebar nav .activeNav {
+  background: #4a3a2f;
+}
+.topbar {
+  min-height: 78px;
+  padding: 0 clamp(22px, 4vw, 58px);
+  background: rgba(255, 253, 249, .94);
+}
+.content {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding-top: 34px;
+}
+.welcome h1 {
+  font-size: clamp(38px, 4vw, 54px);
+  letter-spacing: -.025em;
+}
+.welcome > div:first-child > p:last-child {
+  max-width: 560px;
+  line-height: 1.6;
+}
+.liveBadge {
+  border-radius: 12px;
+  border-left-width: 4px;
+  box-shadow: 0 10px 26px rgba(74, 52, 35, .05);
+}
+.metricsGrid {
+  gap: 14px;
+  margin: 30px 0 26px;
+}
+.metricsGrid article {
+  min-height: 132px;
+  border: 1px solid #e7ddd1;
+  border-radius: 14px;
+  background: #fffdf9;
+  box-shadow: 0 8px 22px rgba(74, 52, 35, .035);
+}
+.panel,
+.ratesSection,
+.inventorySection,
+.compactPanel {
+  border: 1px solid #e5dbcf;
+  border-radius: 14px;
+  background: #fffdf9;
+  box-shadow: 0 8px 22px rgba(74, 52, 35, .035);
+}
+.panelHeading h2,
+.sectionHeading h2 {
+  letter-spacing: -.015em;
+}
+.operationsCardGrid {
+  gap: 12px;
+}
+.operationsBookingCard {
+  border-radius: 13px;
+  box-shadow: none;
+}
+.operationsLowerGrid {
+  gap: 16px;
+}
+.operationsSidePanel {
+  min-width: 0;
+}
+@media (max-width: 720px) {
+  .sidebar {
+    padding: 18px 14px;
+  }
+  .content {
+    padding-top: 22px;
+  }
+  .welcome h1 {
+    font-size: 40px;
+  }
+  .metricsGrid article {
+    min-height: 90px;
+  }
+}
+
 /* Uppadar Hollie guest-brand visual system */
 .dashboardShell {
   background:
