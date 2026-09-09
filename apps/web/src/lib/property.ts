@@ -72,7 +72,7 @@ export const amenityGroups = [
   {
     title: "Kitchen and dining",
     icon: "kitchen",
-    items: [{ name: "Kitchen", detail: "Space where guests can cook their own meals" }, { name: "Hot and cold water" }],
+    items: [{ name: "Kitchen", detail: "Space where guests can cook their own meals" }, { name: "Hot and cold water" }, { name: "Complimentary welcome items", detail: "2 bottled waters, coffee, and sugar" }],
   },
   { title: "Location features", icon: "pin", items: [{ name: "Laundromat nearby" }] },
   { title: "Services", icon: "lock", items: [{ name: "Self check-in" }, { name: "Smart lock" }, { name: "Hot and cold shower" }, { name: "24-hour customer service" }, { name: "24-hour maintenance service" }, { name: "Housekeeping" }] },
