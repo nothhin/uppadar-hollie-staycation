@@ -1459,6 +1459,50 @@
   display: none;
 }
 
+.adminQuickActions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 24px 0 16px;
+}
+.adminQuickActions a {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #e6dacb;
+  border-radius: 14px;
+  background: #fffaf4;
+  color: #4a3b31;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(65,48,35,.05);
+}
+.adminQuickActions a:hover { border-color: #bd8a3d; background: #f8eee1; }
+.adminQuickActions a > span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #f0dfc4; color: #9f6d2d; font-size: 18px; font-weight: 800; }
+.adminQuickActions small { font-size: 9px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.sanctuaryCard { margin-bottom: 20px; padding: 20px; border: 1px solid #dfd0be; border-radius: 16px; background: #fffaf3; box-shadow: 0 10px 28px rgba(65,48,35,.06); }
+.sanctuaryHeader, .sanctuaryBody { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.sanctuaryHeader h2 { margin: 4px 0 0; font-family: var(--font-display),serif; font-size: 26px; font-weight: 600; }
+.statusPill { padding: 6px 10px; border-radius: 999px; background: #e6f3e8; color: #28734d; font-size: 8px; font-weight: 800; letter-spacing: .08em; }
+.sanctuaryBody { margin-top: 17px; padding-top: 15px; border-top: 1px solid #eee1d2; }
+.sanctuaryBody strong, .sanctuaryBody small { display: block; }
+.sanctuaryBody strong { font-size: 14px; }
+.sanctuaryBody small { margin-top: 4px; color: #776b61; font-size: 10px; }
+.sanctuaryMeta { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.sanctuaryMeta span { padding: 7px 9px; border-radius: 999px; background: #f1e7da; color: #735f4d; font-size: 8px; font-weight: 800; }
+
+@media (max-width: 720px) {
+  .adminQuickActions { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 0 12px; }
+  .adminQuickActions a { min-height: 58px; padding: 9px 10px; }
+  .adminQuickActions a > span { width: 26px; height: 26px; font-size: 15px; }
+  .adminQuickActions small { font-size: 8px; }
+  .sanctuaryCard { padding: 16px; }
+  .sanctuaryHeader h2 { font-size: 22px; }
+  .sanctuaryBody { align-items: flex-start; flex-direction: column; }
+  .sanctuaryMeta { justify-content: flex-start; }
+}
+
 @media (max-width: 720px) {
   .adminBottomNav {
     position: fixed;

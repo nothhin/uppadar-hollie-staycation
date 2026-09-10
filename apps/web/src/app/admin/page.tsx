@@ -120,6 +120,16 @@ export default async function AdminDashboard({
               </span>
             </div>
           </section>
+          <section className={styles.adminQuickActions} aria-label="Quick host actions">
+            <Link href="#booking-requests"><span aria-hidden="true">＋</span><small>New enquiry</small></Link>
+            <Link href="#calendar"><span aria-hidden="true">▣</span><small>Block dates</small></Link>
+            <Link href="/admin/confirmed"><span aria-hidden="true">✓</span><small>Confirmed stays</small></Link>
+            <Link href="/admin/operations"><span aria-hidden="true">₱</span><small>Rate override</small></Link>
+          </section>
+          <section className={styles.sanctuaryCard} aria-label="Property status">
+            <div className={styles.sanctuaryHeader}><div><p className={styles.eyebrow}>Sanctuary status</p><h2>Unit 654 · Two-bedroom condo</h2></div><span className={styles.statusPill}>LIVE</span></div>
+            <div className={styles.sanctuaryBody}><div><strong>{staying ? "Currently staying" : "Ready for guests"}</strong><small>{staying ? `${staying} confirmed stay in the condo` : "No active guest stay right now"}</small></div><div className={styles.sanctuaryMeta}><span>{confirmed.length} confirmed</span><span>{requests.length} awaiting action</span></div></div>
+          </section>
       <section className={styles.metricsGrid} aria-label="Property summary">
             {[
               {
