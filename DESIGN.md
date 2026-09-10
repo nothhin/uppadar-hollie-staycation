@@ -109,3 +109,12 @@ The design and interaction hierarchy mirror the Stitch nodes. SnowAZ business da
 ## Accessibility
 
 Maintain semantic landmarks and headings, useful image alternatives, visible keyboard focus, minimum 44px touch targets, form labels, status text in addition to color, and reduced-motion compatibility.
+
+## Supplied Stitch source exports
+
+The user supplied the rendered HTML exports used as the exact source reference:
+
+- `C:/Users/Welmar/.codex/attachments/f08d0f6f-3343-4621-85dd-d2ee9434bead/pasted-text.txt` — host overview screen.
+- `C:/Users/Welmar/.codex/attachments/53e8544b-5671-487d-81ed-760309d08965/pasted-text.txt` — host calendar screen.
+
+Preserve the exported composition: fixed translucent cream header, live-sync row, quick actions, sanctuary card, dense calendar/filter panel, floating primary action, and fixed five-item bottom navigation. Exact visual tokens are `#fcf9f3` surface, `#f6f1ea` ivory, `#be8a45` primary container, `#9a6b2d` deep gold, `#1c1b18` charcoal, and `#827567` outline, with Plus Jakarta Sans for UI and EB Garamond for display headings. Replace SnowAZ text and sample data with Uppadar Hollie data.
