@@ -26,6 +26,8 @@
 }
 .card {
   width: min(720px, calc(100% - 32px));
+  min-width: 0;
+  box-sizing: border-box;
   margin: 48px auto 0;
   padding: clamp(24px, 6vw, 54px);
   background: #fff;
@@ -302,7 +304,7 @@
     grid-template-columns: 1fr;
   }
 }
-.guestEditor{display:grid;gap:1rem;padding:1.25rem;border:1px solid rgba(31,91,67,.2);border-radius:1rem;background:#f6fbf8}.guestEditor h2,.guestEditor p{margin:.2rem 0}.guestEditor form{display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end}.guestEditor label{display:grid;gap:.35rem}.guestEditor select{min-height:46px;border:1px solid #c8d8cf;border-radius:.65rem;background:#fff;padding:.65rem}.guestEditor button{min-height:46px}@media(max-width:640px){.guestEditor form{grid-template-columns:1fr}.guestEditor button{width:100%}}
+.guestEditor{display:grid;gap:1rem;min-width:0;width:100%;box-sizing:border-box;padding:1.25rem;border:1px solid rgba(31,91,67,.2);border-radius:1rem;background:#f6fbf8}.guestEditor h2,.guestEditor p{margin:.2rem 0}.guestEditor form{display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;min-width:0;align-items:end}.guestEditor label{display:grid;gap:.35rem;min-width:0}.guestEditor select{display:block;width:100%;min-width:0;max-width:100%;min-height:46px;border:1px solid #c8d8cf;border-radius:.65rem;background:#fff;padding:.65rem;text-overflow:ellipsis}.guestEditor button{min-height:46px}@media(max-width:640px){.guestEditor form{grid-template-columns:minmax(0,1fr)}.guestEditor button{width:100%}}
 .card :global(.device-status-alerts) {
   display: flex;
   align-items: center;
