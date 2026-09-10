@@ -80,7 +80,7 @@ export const bookingEnquirySchema = staySchema.extend({
     ({ guests, bedroomChoice }) =>
       bedroomChoice === "both_bedrooms" ||
       (bedroomChoice === "bedroom_1" && guests <= 2) ||
-      (bedroomChoice === "bedroom_2" && guests <= 4),
+      (bedroomChoice === "bedroom_2" && guests <= 6),
     {
       message: "The selected space cannot accommodate that many guests.",
       path: ["bedroomChoice"],
@@ -123,7 +123,12 @@ export function calculateSnowazNightlyRateMinor(
     throw new RangeError("Guest count must be a whole number from 1 to 6.");
   }
 
-  if (bedroomChoice === "bedroom_1" || bedroomChoice === "bedroom_2") return 170_000 + Math.max(0, guests - 2) * 25_000;
+  if (bedroomChoice === "bedroom_1") return 170_000;
+  if (bedroomChoice === "bedroom_2") {
+    if (guests <= 2) return 170_000;
+    if (guests === 3) return 195_000;
+    return 210_000 + Math.max(0, guests - 4) * 25_000;
+  }
   return 220_000;
 }
 
@@ -132,9 +137,7 @@ export function automaticBedroomChoice(guests: number) {
     throw new RangeError("Guest count must be a whole number from 1 to 6.");
   return guests <= 2
     ? ("bedroom_1" as const)
-    : guests <= 4
-      ? ("bedroom_2" as const)
-      : ("both_bedrooms" as const);
+    : ("bedroom_2" as const);
 }
 
 export function calculateSnowazBookingReceipt(
@@ -154,7 +157,7 @@ export function calculateSnowazBookingReceipt(
     calculateStayTotalMinor(nightlyRateMinor, nights) + parkingChargeMinor;
   const downPaymentMinor = Math.min(100_000, totalMinor);
   const additionalGuests = bedroomChoice === "both_bedrooms" ? 0 : Math.max(0, guests - 2);
-  const additionalGuestChargeMinor = additionalGuests * 25_000;
+  const additionalGuestChargeMinor = bedroomChoice === "bedroom_2" ? Math.max(0, nightlyRateMinor - 170_000) * nights : 0;
 
   return {
     nights,

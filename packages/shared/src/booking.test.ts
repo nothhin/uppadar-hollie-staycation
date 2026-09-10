@@ -90,14 +90,14 @@ describe("booking enquiries", () => {
         bedroomChoice: "bedroom_2",
       }).success,
     ).toBe(true));
-  it("requires both bedrooms above four guests", () =>
+  it("allows Bedroom 2 for up to six guests", () =>
     expect(
       bookingEnquirySchema.safeParse({
         ...request,
-        guests: "5",
+        guests: "6",
         bedroomChoice: "bedroom_2",
       }).success,
-    ).toBe(false));
+    ).toBe(true));
   it("rejects more than six guests", () =>
     expect(
       bookingEnquirySchema.safeParse({ ...request, guests: "7" }).success,
@@ -113,7 +113,9 @@ describe("money calculations", () => {
   it("uses the provisional Uppadar bedroom prices", () => {
     expect(calculateSnowazNightlyRateMinor(2, "bedroom_1")).toBe(170_000);
     expect(calculateSnowazNightlyRateMinor(2, "bedroom_2")).toBe(170_000);
-    expect(calculateSnowazNightlyRateMinor(4, "bedroom_2")).toBe(220_000);
+    expect(calculateSnowazNightlyRateMinor(3, "bedroom_2")).toBe(195_000);
+    expect(calculateSnowazNightlyRateMinor(4, "bedroom_2")).toBe(210_000);
+    expect(calculateSnowazNightlyRateMinor(5, "bedroom_2")).toBe(235_000);
     expect(calculateSnowazNightlyRateMinor(2, "both_bedrooms")).toBe(220_000);
     expect(calculateSnowazNightlyRateMinor(5, "both_bedrooms")).toBe(220_000);
     expect(calculateSnowazNightlyRateMinor(6, "both_bedrooms")).toBe(220_000);

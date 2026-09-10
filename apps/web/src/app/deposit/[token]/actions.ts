@@ -29,7 +29,7 @@ export async function updatePendingGuestCount(
       (value) =>
         value.bedroom === "both_bedrooms" ||
         (value.bedroom === "bedroom_1" && value.guests <= 2) ||
-        (value.bedroom === "bedroom_2" && value.guests <= 4),
+        (value.bedroom === "bedroom_2" && value.guests <= 6),
     )
     .safeParse({
       token: formData.get("token"),
