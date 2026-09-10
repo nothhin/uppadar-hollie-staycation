@@ -67,6 +67,6 @@ export default function Home() {
 
     <footer className="pwa-footer"><div className="pwa-logo"><Image src="/images/uppadar-hollie/logo-transparent.png" alt="" width={38} height={38} /><span><strong>Uppadar Hollie</strong><small>{propertyProfile.tagline}</small></span></div><div><Link href="/privacy">Privacy</Link><Link href="/cookies">Cookies</Link><span>© {new Date().getFullYear()}</span></div></footer>
 
-    <nav className="pwa-bottom-nav" aria-label="Mobile navigation"><a href="#home"><span><UiIcon name="home" /></span>Explore</a><a href="#spaces"><span><UiIcon name="image" /></span>Spaces</a><BookingLauncher className="pwa-bottom-book"><span><UiIcon name="calendar" /></span>Book</BookingLauncher><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer"><span><UiIcon name="message" /></span>Chat</a><a href="#location"><span><UiIcon name="pin" /></span>Location</a></nav>
+    <nav className="pwa-bottom-nav" aria-label="Mobile navigation"><a href="#home"><span><UiIcon name="home" /></span>Explore</a><a href="#rooms"><span><UiIcon name="bed" /></span>Bedrooms</a><BookingLauncher className="pwa-bottom-book"><span><UiIcon name="calendar" /></span>Book</BookingLauncher><a href="#amenities"><span><UiIcon name="sparkles" /></span>Amenities</a><a href="#host"><span><UiIcon name="message" /></span>Host</a></nav>
   </main>;
 }
