@@ -1503,31 +1503,6 @@
   .sanctuaryMeta { justify-content: flex-start; }
 }
 
-/* Supplied Stitch host dashboard: dark host suite rail, translucent live bar,
-   ivory workspace, and champagne-gold operational controls. */
-@media (min-width: 721px) {
-  .dashboardShell { grid-template-columns: 288px minmax(0, 1fr); background: #f6f1ea; }
-  .sidebar { background: #18181b; border-right: 1px solid #2d2b27; padding: 0; box-shadow: 12px 0 30px rgba(28,27,24,.12); }
-  .adminBrand { min-height: 106px; padding: 20px; background: #1a1917; border-bottom-color: #2d2b27; }
-  .adminBrand img { width: 44px; height: 44px; border-radius: 12px; background: #282622; border-color: rgba(190,138,69,.3); }
-  .adminBrand strong { color: #dfc293; font-size: 24px; }
-  .adminBrand small { color: #9a6b2d; }
-  .sidebar nav { margin: 0; padding: 16px 14px; gap: 4px; }
-  .sidebar nav::before { content: "HOST MANAGEMENT"; padding: 0 12px 8px; color: #6b665c; font-size: 10px; font-weight: 800; letter-spacing: .16em; }
-  .sidebar nav a { min-height: 42px; color: #d4cfc7; border-radius: 12px; }
-  .sidebar nav a span { display: none; }
-  .sidebar nav a:hover, .sidebar nav .activeNav { background: #be8a45; color: #fff; box-shadow: 0 5px 14px rgba(190,138,69,.2); }
-  .sidebarFooter { margin: auto 14px 14px; padding: 12px; border: 1px solid #383329; border-radius: 12px; background: #22201b; }
-  .topbar { height: 64px; min-height: 64px; padding: 0 32px; background: rgba(253,252,250,.9); border-bottom-color: #e0d3c0; box-shadow: 0 1px 10px rgba(43,38,32,.05); }
-  .topbar > div:first-of-type { display: flex; align-items: center; gap: 10px; }
-  .topbar > div:first-of-type::before { content: "●"; color: #16834b; font-size: 12px; }
-  .content { max-width: 1440px; padding: 32px; }
-  .welcome { padding: 24px; border: 1px solid #e4d8c9; border-radius: 16px; background: #fdfcfa; box-shadow: 0 12px 28px rgba(43,38,32,.07); }
-  .welcome h1 { font-size: 38px; }
-  .metricsGrid article { border-radius: 14px; box-shadow: 0 8px 20px rgba(43,38,32,.05); }
-  .panel, .ratesSection, .inventorySection, .compactPanel { border-radius: 16px; box-shadow: 0 12px 28px rgba(43,38,32,.06); }
-}
-
 @media (max-width: 720px) {
   .adminBottomNav {
     position: fixed;
