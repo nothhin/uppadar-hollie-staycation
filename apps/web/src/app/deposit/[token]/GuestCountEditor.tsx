@@ -36,6 +36,19 @@ export function GuestCountEditor({
   }, [state]);
   const chooseGuests = (value: number) => {
     setGuests(value);
+    if (value > 2 && bedroom === "bedroom_1") {
+      void showError(
+        "The Master bedroom can accommodate a maximum of 2 guests. Switch to the Second bedroom (bunk bed) for more than 2 guests.",
+      );
+    }
+  };
+  const chooseBedroom = (value: string) => {
+    setBedroom(value);
+    if (value === "bedroom_1" && guests > 2) {
+      void showError(
+        "The Master bedroom can accommodate a maximum of 2 guests. Choose the Second bedroom (bunk bed) or the entire two-bedroom condo.",
+      );
+    }
   };
   return (
     <section className={styles.guestEditor}>
@@ -76,7 +89,7 @@ export function GuestCountEditor({
         </label>
         <label>
           <span>Bedroom selection</span>
-          <select name="bedroom" value={bedroom} onChange={(event) => setBedroom(event.target.value)}>
+          <select name="bedroom" value={bedroom} onChange={(event) => chooseBedroom(event.target.value)}>
             <option value="bedroom_1">Master bedroom — up to 2 guests</option>
             <option value="bedroom_2">Second bedroom — up to 4 guests</option>
             <option value="both_bedrooms">Entire two-bedroom condo — up to 8 guests</option>
