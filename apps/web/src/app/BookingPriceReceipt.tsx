@@ -14,6 +14,8 @@ type BookingPriceReceiptProps = {
   guests: number;
   bedroomChoice?: "bedroom_1" | "bedroom_2" | "both_bedrooms";
   parkingType?: "none" | "car" | "motorcycle";
+  earlyCheckInHours?: number;
+  lateCheckoutHours?: number;
 };
 
 const bedroomLabels = {
@@ -28,6 +30,8 @@ export default function BookingPriceReceipt({
   guests,
   bedroomChoice,
   parkingType = "none",
+  earlyCheckInHours = 0,
+  lateCheckoutHours = 0,
 }: BookingPriceReceiptProps) {
   let receipt: ReturnType<typeof calculateSnowazBookingReceipt> | null = null;
   try {
@@ -37,6 +41,8 @@ export default function BookingPriceReceipt({
       guests,
       parkingType,
       bedroomChoice,
+      earlyCheckInHours,
+      lateCheckoutHours,
     );
   } catch {
     // The form fields provide their own validation while the receipt waits for valid values.
@@ -117,6 +123,7 @@ export default function BookingPriceReceipt({
             <dd>+{php.format(receipt.parkingChargeMinor / 100)}</dd>
           </div>
         ) : null}
+        {receipt.timeExtensionChargeMinor > 0 ? <div className="booking-receipt-additional"><dt>Early / late time<br /><small>{receipt.earlyCheckInHours} early + {receipt.lateCheckoutHours} late hour(s) × ₱150</small></dt><dd>+{php.format(receipt.timeExtensionChargeMinor / 100)}</dd></div> : null}
         <div className="booking-receipt-total">
           <dt>Total accommodation</dt>
           <dd>{php.format(receipt.totalMinor / 100)}</dd>

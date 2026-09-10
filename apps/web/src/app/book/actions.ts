@@ -40,6 +40,8 @@ async function saveBookingRequest(formData: FormData) {
   const bookingRequests = [
     `Bedroom selection: ${bedroomLabel}`,
     parsed.data.specialRequests,
+    parsed.data.earlyCheckInHours ? `Early check-in: ${parsed.data.earlyCheckInHours} hour(s) at ₱150/hour` : "",
+    parsed.data.lateCheckoutHours ? `Late checkout: ${parsed.data.lateCheckoutHours} hour(s) at ₱150/hour` : "",
   ]
     .filter(Boolean)
     .join("\n");

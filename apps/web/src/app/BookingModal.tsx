@@ -39,6 +39,8 @@ export default function BookingModal({
   const [parkingType, setParkingType] = useState<"none" | "car" | "motorcycle">(
     "none",
   );
+  const [earlyCheckInHours, setEarlyCheckInHours] = useState(0);
+  const [lateCheckoutHours, setLateCheckoutHours] = useState(0);
   const availabilityNotified = useRef(false);
 
   useEffect(() => {
@@ -194,6 +196,8 @@ export default function BookingModal({
                   value={bedroomChoice}
                 />
                 <input type="hidden" name="parkingType" value={parkingType} />
+                <input type="hidden" name="earlyCheckInHours" value={earlyCheckInHours} />
+                <input type="hidden" name="lateCheckoutHours" value={lateCheckoutHours} />
                 <label className="booking-honeypot">
                   Website
                   <input name="website" tabIndex={-1} autoComplete="off" />
@@ -232,6 +236,13 @@ export default function BookingModal({
                         <b>{price}</b>
                       </button>
                     ))}
+                  </div>
+                </section>
+                <section className="booking-time-section">
+                  <div className="booking-section-label"><span>OPTIONAL EXTRA TIME</span><small>Regular check-in is 2:00 PM · check-out is 11:00 AM · ₱150/hour</small></div>
+                  <div className="booking-modal-grid">
+                    <label><span>Early check-in</span><select value={earlyCheckInHours} onChange={(event) => setEarlyCheckInHours(Number(event.target.value))}><option value={0}>No early check-in</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} early · ₱{hour * 150}</option>)}</select></label>
+                    <label><span>Late checkout</span><select value={lateCheckoutHours} onChange={(event) => setLateCheckoutHours(Number(event.target.value))}><option value={0}>No late checkout</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} late · ₱{hour * 150}</option>)}</select></label>
                   </div>
                 </section>
                 <section className="booking-date-section">
@@ -385,6 +396,8 @@ export default function BookingModal({
                     guests={guests}
                     bedroomChoice={bedroomChoice}
                     parkingType={parkingType}
+                    earlyCheckInHours={earlyCheckInHours}
+                    lateCheckoutHours={lateCheckoutHours}
                   />
                   <div className="booking-rate-note">
                     <UiIcon name="check" size={18} />

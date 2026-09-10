@@ -19,6 +19,8 @@ export default function BookingPriceFields({
   const [guests, setGuests] = useState(() => Number(initialGuests) || 2);
   const [bedroomChoice, setBedroomChoice] = useState("bedroom_1");
   const [parkingType, setParkingType] = useState("none");
+  const [earlyCheckInHours, setEarlyCheckInHours] = useState(0);
+  const [lateCheckoutHours, setLateCheckoutHours] = useState(0);
 
   return (
     <>
@@ -74,6 +76,10 @@ export default function BookingPriceFields({
           <option value="motorcycle">Motorcycle parking · ₱150 / night</option>
         </select>
       </label>
+      <div className={styles.grid}>
+        <label><span>Early check-in (optional)</span><select name="earlyCheckInHours" value={earlyCheckInHours} onChange={(event) => setEarlyCheckInHours(Number(event.target.value))}><option value={0}>No early check-in</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} early · ₱{hour * 150}</option>)}</select></label>
+        <label><span>Late checkout (optional)</span><select name="lateCheckoutHours" value={lateCheckoutHours} onChange={(event) => setLateCheckoutHours(Number(event.target.value))}><option value={0}>No late checkout</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} late · ₱{hour * 150}</option>)}</select></label>
+      </div>
     </>
   );
 }
