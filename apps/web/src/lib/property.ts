@@ -21,6 +21,10 @@ export const propertyProfile = {
 export const galleryImages = [
   { src: "/images/uppadar-hollie/master-bedroom.jpg", alt: "Master bedroom with queen-size spring mattress and LED vanity mirror" },
   { src: "/images/uppadar-hollie/bunk-bedroom.jpg", alt: "Second bedroom with double-size bunk bed and built-in steps" },
+  { src: "/images/uppadar-hollie/second-bedroom-bunk-wide.png", alt: "Wide view of the second bedroom with double-size bunk beds, wardrobe, and storage" },
+  { src: "/images/uppadar-hollie/living-dining-area.png", alt: "Open-plan Uppadar Hollie living room and dining area with smart TV" },
+  { src: "/images/uppadar-hollie/living-dining-overview.png", alt: "Uppadar Hollie dining table, lounge seating, and decorative shelving" },
+  { src: "/images/uppadar-hollie/entertainment-wall-tv.png", alt: "55-inch smart HDTV and warm wood entertainment wall" },
   { src: "/images/uppadar-hollie/bathroom-vanity.png", alt: "Clean Uppadar Hollie comfort room with illuminated vanity mirror" },
   { src: "/images/uppadar-hollie/dining-table.png", alt: "Dining table set for four guests inside Uppadar Hollie" },
   { src: "/images/uppadar-hollie/building.jpg", alt: "Deca Homes Tower 1 building courtyard" },
