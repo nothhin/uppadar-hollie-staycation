@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import BookingPriceReceipt from "../../BookingPriceReceipt";
 import { showError, showSuccess } from "@/lib/sweetalert";
 import { updatePendingGuestCount, type GuestCountState } from "./actions";
@@ -26,14 +27,18 @@ export function GuestCountEditor({
   const [guests, setGuests] = useState(initialGuests);
   const [bedroom, setBedroom] = useState(initialBedroom);
   const [parkingType, setParkingType] = useState(initialParking);
+  const router = useRouter();
   const [state, action, pending] = useActionState(
     updatePendingGuestCount,
     initialState,
   );
   useEffect(() => {
-    if (state.status === "success") void showSuccess(state.message);
+    if (state.status === "success") {
+      void showSuccess(state.message);
+      router.refresh();
+    }
     if (state.status === "error") void showError(state.message);
-  }, [state]);
+  }, [router, state]);
   const chooseGuests = (value: number) => {
     setGuests(value);
     if (value > 2 && bedroom === "bedroom_1") {

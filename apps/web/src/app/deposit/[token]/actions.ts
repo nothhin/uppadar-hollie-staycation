@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import {
   hashDepositToken,
@@ -59,6 +60,7 @@ export async function updatePendingGuestCount(
       message:
         "This booking can no longer be edited because payment proof was submitted or the link expired.",
     };
+  revalidatePath(`/deposit/${parsed.data.token}`);
   return {
     status: "success",
     message: "Guest count, bedroom, and booking total updated.",
