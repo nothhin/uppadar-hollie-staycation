@@ -87,7 +87,7 @@ export function GuestCountEditor({
             value={guests}
             onChange={(event) => chooseGuests(Number(event.target.value))}
           >
-            {Array.from({ length: 8 }, (_, index) => index + 1).map((count) => (
+            {Array.from({ length: 6 }, (_, index) => index + 1).map((count) => (
               <option key={count} value={count}>
                 {count} guest{count === 1 ? "" : "s"}
               </option>
@@ -99,7 +99,7 @@ export function GuestCountEditor({
           <select name="bedroom" value={bedroom} onChange={(event) => chooseBedroom(event.target.value)}>
             <option value="bedroom_1">Master bedroom — up to 2 guests</option>
             <option value="bedroom_2">Second bedroom — up to 4 guests</option>
-            <option value="both_bedrooms">Entire two-bedroom condo — up to 8 guests</option>
+            <option value="both_bedrooms">Entire two-bedroom condo — up to 6 guests</option>
           </select>
         </label>
         <button disabled={pending}>

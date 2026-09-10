@@ -56,7 +56,7 @@ export default function BookingPriceFields({
           onChange={(event) => setGuests(Number(event.target.value))}
           required
         >
-          {Array.from({ length: 8 }, (_, index) => index + 1).map(
+          {Array.from({ length: 6 }, (_, index) => index + 1).map(
             (guestCount) => (
               <option key={guestCount} value={guestCount}>
                 {guestCount} guest{guestCount === 1 ? "" : "s"}

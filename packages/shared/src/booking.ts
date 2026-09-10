@@ -37,7 +37,7 @@ export const staySchema = z
   });
 
 export const availabilitySearchSchema = staySchema.extend({
-  guests: z.coerce.number().int().min(1).max(8),
+  guests: z.coerce.number().int().min(1).max(6),
 });
 
 export const guestDetailsSchema = z.object({
@@ -48,7 +48,7 @@ export const guestDetailsSchema = z.object({
 
 export const reservationRequestSchema = staySchema.extend({
   roomTypeId: z.string().uuid(),
-  guests: z.coerce.number().int().min(1).max(8),
+  guests: z.coerce.number().int().min(1).max(6),
   guest: guestDetailsSchema,
   specialRequests: z.string().trim().max(1_000).optional().or(z.literal("")),
   consent: z.literal(true, {
@@ -60,7 +60,7 @@ export const reservationRequestSchema = staySchema.extend({
 
 export const bookingEnquirySchema = staySchema.extend({
     roomTypeId: z.string().uuid().optional().or(z.literal("")),
-    guests: z.coerce.number().int().min(1).max(8),
+    guests: z.coerce.number().int().min(1).max(6),
     bedroomChoice: bedroomChoiceSchema,
     parkingType: parkingTypeSchema.default("none"),
     fullName: z.string().trim().min(2).max(120),
@@ -119,8 +119,8 @@ export function calculateSnowazNightlyRateMinor(
   guests: number,
   bedroomChoice: "bedroom_1" | "bedroom_2" | "both_bedrooms" = automaticBedroomChoice(guests),
 ) {
-  if (!Number.isSafeInteger(guests) || guests < 1 || guests > 8) {
-    throw new RangeError("Guest count must be a whole number from 1 to 8.");
+  if (!Number.isSafeInteger(guests) || guests < 1 || guests > 6) {
+    throw new RangeError("Guest count must be a whole number from 1 to 6.");
   }
 
   if (bedroomChoice === "bedroom_1" || bedroomChoice === "bedroom_2") return 170_000 + Math.max(0, guests - 2) * 25_000;
@@ -128,8 +128,8 @@ export function calculateSnowazNightlyRateMinor(
 }
 
 export function automaticBedroomChoice(guests: number) {
-  if (!Number.isSafeInteger(guests) || guests < 1 || guests > 8)
-    throw new RangeError("Guest count must be a whole number from 1 to 8.");
+  if (!Number.isSafeInteger(guests) || guests < 1 || guests > 6)
+    throw new RangeError("Guest count must be a whole number from 1 to 6.");
   return guests <= 2
     ? ("bedroom_1" as const)
     : guests <= 4

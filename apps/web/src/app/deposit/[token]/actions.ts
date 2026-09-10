@@ -21,7 +21,7 @@ export async function updatePendingGuestCount(
   const parsed = z
     .object({
       token: z.string().refine(isValidDepositToken),
-      guests: z.coerce.number().int().min(1).max(8),
+      guests: z.coerce.number().int().min(1).max(6),
       bedroom: z.enum(["bedroom_1", "bedroom_2", "both_bedrooms"]),
       parkingType: z.enum(["none", "car", "motorcycle"]),
     })
@@ -61,6 +61,9 @@ export async function updatePendingGuestCount(
         "This booking can no longer be edited because payment proof was submitted or the link expired.",
     };
   revalidatePath(`/deposit/${parsed.data.token}`);
+  revalidatePath("/admin");
+  revalidatePath("/admin/confirmed");
+  revalidatePath("/admin/operations");
   return {
     status: "success",
     message: "Guest count, bedroom, and booking total updated.",

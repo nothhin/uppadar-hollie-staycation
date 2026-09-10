@@ -84,7 +84,7 @@ export default function BookingModal({
   ]);
 
   const adjustGuests = (change: number) =>
-    setGuests((value) => Math.min(8, Math.max(1, value + change)));
+    setGuests((value) => Math.min(6, Math.max(1, value + change)));
 
   return (
     <div

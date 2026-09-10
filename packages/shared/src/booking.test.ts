@@ -116,8 +116,8 @@ describe("money calculations", () => {
     expect(calculateSnowazNightlyRateMinor(4, "bedroom_2")).toBe(220_000);
     expect(calculateSnowazNightlyRateMinor(2, "both_bedrooms")).toBe(220_000);
     expect(calculateSnowazNightlyRateMinor(5, "both_bedrooms")).toBe(220_000);
-    expect(calculateSnowazNightlyRateMinor(8, "both_bedrooms")).toBe(220_000);
-    expect(() => calculateSnowazNightlyRateMinor(9)).toThrow(RangeError);
+    expect(calculateSnowazNightlyRateMinor(6, "both_bedrooms")).toBe(220_000);
+    expect(() => calculateSnowazNightlyRateMinor(7)).toThrow(RangeError);
   });
 
   it("builds a receipt with the required down payment and remaining balance", () => {
