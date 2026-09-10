@@ -125,3 +125,7 @@ Additional customer-facing source exports supplied by the user:
 - `C:/Users/Welmar/.codex/attachments/d22f0103-7331-4889-9700-49e30baf8885/pasted-text.txt` — customer Reserve Your Sanctuary booking page.
 
 These customer exports are separate from the host overview and host calendar exports above. Their bottom navigation is Explore, Bedrooms, Book, Amenities, and Host; it must not be reused as the admin navigation.
+
+Booking request source export:
+
+- `C:/Users/Welmar/.codex/attachments/ec6056ba-43b2-4ca7-87a1-06980bf2052b/pasted-text.txt` — the exact Availability and Booking request view, including the three-step progress header, room selector, visual calendar, guest controls, parking option, calculated reserve summary, Messenger CTA, direct request CTA, and customer bottom navigation.
