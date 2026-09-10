@@ -97,7 +97,7 @@ export default function BookingPriceReceipt({
               Additional pax
               <br />
               <small>
-                {receipt.additionalGuests} pax × ₱300 × {receipt.nights} night
+                {receipt.additionalGuests} pax × ₱250 × {receipt.nights} night
                 {receipt.nights === 1 ? "" : "s"}
               </small>
             </dt>
