@@ -33,6 +33,15 @@ export const galleryImages = [
   { src: "/images/uppadar-hollie/kitchen.jpg", alt: "Guest kitchen and breakfast counter" },
   { src: "/images/uppadar-hollie/kitchen-wide.jpg", alt: "Bright kitchen with refrigerator, appliances, and counter seating" },
   { src: "/images/uppadar-hollie/lounge.jpg", alt: "Warm open-plan living room and kitchen" },
+  { src: "/images/uppadar-hollie/kitchen-breakfast-counter.png", alt: "Uppadar Hollie kitchen with breakfast counter and pendant lights" },
+  { src: "/images/uppadar-hollie/dining-shelf-table.png", alt: "Dining table and decorative display shelving" },
+  { src: "/images/uppadar-hollie/bathroom-vanity-shower.png", alt: "Bathroom vanity and glass shower enclosure" },
+  { src: "/images/uppadar-hollie/bathroom-hot-shower.png", alt: "Bathroom hot-water shower with rain shower head" },
+  { src: "/images/uppadar-hollie/complimentary-coffee.png", alt: "Complimentary coffee sachets and cups" },
+  { src: "/images/uppadar-hollie/welcome-sign.png", alt: "Welcome to Uppadar Hollie Staycation sign" },
+  { src: "/images/uppadar-hollie/building-corridor.png", alt: "Urban Deca Homes Tower 1 hallway" },
+  { src: "/images/uppadar-hollie/building-courtyard.png", alt: "Urban Deca Homes Tower 1 courtyard and parking area" },
+  { src: "/images/uppadar-hollie/living-kitchen-evening.png", alt: "Warm evening view of the Uppadar Hollie living room and kitchen" },
 ] as const;
 
 export const galleryVideos = [
