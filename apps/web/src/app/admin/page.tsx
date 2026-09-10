@@ -74,14 +74,14 @@ export default async function AdminDashboard({
           <Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie Staycation Cebu" width={58} height={58} />
           <div>
             <strong>Uppadar Hollie</strong>
-            <small>Staycation · Condo Rental</small>
+            <small>Host workspace · Cebu</small>
           </div>
         </Link>
         <AdminNav activeClassName={styles.activeNav} />
         <div className={styles.sidebarFooter}>
           <span className={styles.statusDot} />
           <div>
-            <strong>Live operations</strong>
+            <strong>Uppadar live</strong>
             <AdminLiveRefresh />
           </div>
         </div>
@@ -110,7 +110,7 @@ export default async function AdminDashboard({
             <div>
               <p className={styles.eyebrow}>Uppadar Hollie operations</p>
               <h1>Good day.</h1>
-              <p>One condo, one live calendar, and one clear guest workflow.</p>
+            <p>One welcoming home, one live calendar, and one clear guest journey.</p>
             </div>
             <div className={styles.liveBadge}>
               <strong>System online</strong>
@@ -123,9 +123,9 @@ export default async function AdminDashboard({
       <section className={styles.metricsGrid} aria-label="Property summary">
             {[
               {
-                label: "Booking requests",
+            label: "Stay enquiries",
                 value: requests.length,
-                note: "Awaiting admin action",
+                note: "Awaiting host action",
               },
               {
                 label: "Confirmed stays",

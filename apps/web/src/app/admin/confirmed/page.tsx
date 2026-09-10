@@ -37,10 +37,10 @@ export default async function ConfirmedBookingsPage() {
     <aside className={styles.sidebar}>
       <Link className={styles.adminBrand} href="/">
         <Image src="/images/uppadar-hollie/logo-transparent.png" alt="Uppadar Hollie" width={48} height={48}/>
-        <div><strong>Uppadar Hollie</strong><small>Property admin</small></div>
+        <div><strong>Uppadar Hollie</strong><small>Host workspace · Cebu</small></div>
       </Link>
       <AdminNav activeClassName={styles.activeNav}/>
-      <div className={styles.sidebarFooter}><span className={styles.statusDot}/><div><strong>Live operations</strong><AdminLiveRefresh/></div></div>
+      <div className={styles.sidebarFooter}><span className={styles.statusDot}/><div><strong>Uppadar live</strong><AdminLiveRefresh/></div></div>
     </aside>
     <section className={styles.workspace}>
       <header className={styles.topbar}>
