@@ -74,11 +74,11 @@ describe("booking enquiries", () => {
         .success,
     ).toBe(true);
   });
-  it("accepts up to eight guests when both bedrooms are selected", () =>
+  it("accepts up to six guests when both bedrooms are selected", () =>
     expect(
       bookingEnquirySchema.safeParse({
         ...request,
-        guests: "8",
+        guests: "6",
         bedroomChoice: "both_bedrooms",
       }).success,
     ).toBe(true));
@@ -98,9 +98,9 @@ describe("booking enquiries", () => {
         bedroomChoice: "bedroom_2",
       }).success,
     ).toBe(false));
-  it("rejects more than eight guests", () =>
+  it("rejects more than six guests", () =>
     expect(
-      bookingEnquirySchema.safeParse({ ...request, guests: "9" }).success,
+      bookingEnquirySchema.safeParse({ ...request, guests: "7" }).success,
     ).toBe(false));
   it("does not accept an alternate preferred contact method", () =>
     expect(
