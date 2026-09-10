@@ -17,6 +17,7 @@ export function AdminCalendar({ bookings }: { bookings: AdminEnquiry[] }) {
     date: string;
     bookings: AdminEnquiry[];
   } | null>(null);
+  const [filter, setFilter] = useState<"all" | "bedroom_1" | "bedroom_2" | "both_bedrooms">("all");
   const active = useMemo(
     () =>
       bookings.filter(
@@ -24,6 +25,7 @@ export function AdminCalendar({ bookings }: { bookings: AdminEnquiry[] }) {
       ),
     [bookings],
   );
+  const visible = useMemo(() => filter === "all" ? active : active.filter((item) => item.bedroomChoice === filter), [active, filter]);
   const first = new Date(month.getFullYear(), month.getMonth(), 1);
   const days = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
   const cells = Array.from({ length: first.getDay() + days }, (_, index) =>
@@ -63,6 +65,7 @@ export function AdminCalendar({ bookings }: { bookings: AdminEnquiry[] }) {
           </h2>
         </div>
         <div className={styles.calendarControls}>
+          <button type="button" onClick={() => setMonth(new Date())}>Today</button>
           <button
             type="button"
             onClick={() =>
@@ -81,6 +84,14 @@ export function AdminCalendar({ bookings }: { bookings: AdminEnquiry[] }) {
           </button>
         </div>
       </div>
+      <div className={styles.calendarPulse}>
+        <div><span>OCCUPIED</span><strong>{Math.round((visible.reduce((n, item) => n + Math.max(0, Math.min(days, Math.ceil((new Date(item.checkOut).getTime() - new Date(item.checkIn).getTime()) / 86400000))), 0) / days) * 100)}%</strong><small>this month</small></div>
+        <div><span>STAYS</span><strong>{visible.length}</strong><small>active reservations</small></div>
+        <div><span>ROOM</span><strong>₱1,700</strong><small>starting nightly rate</small></div>
+      </div>
+      <div className={styles.calendarFilters} aria-label="Calendar filters">
+        {([["all", "All stays"], ["both_bedrooms", "Entire condo"], ["bedroom_1", "Master bedroom"], ["bedroom_2", "Second bedroom"]] as const).map(([value, label]) => <button key={value} type="button" className={filter === value ? styles.calendarFilterActive : undefined} onClick={() => setFilter(value)}>{label}</button>)}
+      </div>
       <div className={styles.adminCalendarGrid}>
         {weekdays.map((day) => (
           <span className={styles.calendarWeekday} key={day}>
@@ -90,7 +101,7 @@ export function AdminCalendar({ bookings }: { bookings: AdminEnquiry[] }) {
         {cells.map((date, index) => {
           if (!date) return <span key={`empty-${index}`} />;
           const value = iso(date);
-          const matches = active.filter(
+          const matches = visible.filter(
             (item) => item.checkIn <= value && item.checkOut > value,
           );
           const confirmed = matches.some((item) => item.status === "confirmed");
