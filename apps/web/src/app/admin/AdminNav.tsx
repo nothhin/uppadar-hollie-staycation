@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 const navigation = [
-  { label: "Overview", href: "/admin#overview", id: "overview" },
-  { label: "Stay enquiries", href: "/admin#booking-requests", id: "booking-requests" },
-  { label: "Stay calendar", href: "/admin#calendar", id: "calendar" },
-  { label: "Confirmed stays", href: "/admin/confirmed", id: "confirmed" },
-  { label: "Housekeeping & finance", href: "/admin/operations", id: "operations" },
-  { label: "Guest guide", href: "/admin#guest-rules", id: "guest-rules" },
-  { label: "Property settings", href: "/admin#settings", id: "settings" },
+  { label: "Dashboard / Overview", href: "/admin#overview", id: "overview" },
+  { label: "Reservations & Calendar", href: "/admin#calendar", id: "calendar" },
+  { label: "Guest Messaging", href: "/admin#booking-requests", id: "booking-requests" },
+  { label: "Room Pricing & Rates", href: "/admin#guest-rules", id: "guest-rules" },
+  { label: "Housekeeping & Keycodes", href: "/admin/operations", id: "operations" },
+  { label: "Analytics & Deposits", href: "/admin/confirmed", id: "confirmed" },
 ] as const;
 
 function useActiveSection() {
