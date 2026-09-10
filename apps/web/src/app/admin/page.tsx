@@ -165,45 +165,6 @@ export default async function AdminDashboard({
       </Link>
       <BookingRequestsPanel enquiries={enquiries} canManage={canManage} />
           <AdminCalendar bookings={enquiries} />
-          <section
-            id="guest-rules"
-            className={styles.adminSectionGrid}
-            aria-label="Uppadar Hollie operating rules"
-          >
-            <article className={styles.compactPanel}>
-              <p className={styles.eyebrow}>Stay rates</p>
-              <h2>Confirm the current rate</h2>
-              <p>
-                Review the requested dates and guest count, then confirm the
-                owner-approved rate with the guest before accepting payment.
-              </p>
-              <span>Rates are confirmed by the host</span>
-            </article>
-            <article className={styles.compactPanel}>
-              <p className={styles.eyebrow}>Deposit policy</p>
-              <h2>Verify before confirming</h2>
-              <p>
-                Verify every payment in the configured payment account. The down payment is deducted
-                from the guest’s total accommodation payment.
-              </p>
-              <span>Manual bank verification</span>
-            </article>
-            <article className={styles.compactPanel}>
-              <p className={styles.eyebrow}>House rules</p>
-              <h2>Confirm rules with every guest</h2>
-              <p>
-                Send the current owner-approved house rules before confirming a
-                stay. Record any special agreement in the booking notes.
-              </p>
-              <span>Owner confirmation required</span>
-            </article>
-          </section>
-          <section id="settings" className={styles.compactPanel}>
-            <p className={styles.eyebrow}>Property settings</p>
-            <h2>Uppadar Hollie Staycation Cebu</h2>
-            <p>{propertyProfile.address}</p>
-            <span>Single-condo mode · {propertyProfile.timezone}</span>
-          </section>
         </div>
       </section>
       <AdminBottomNav className={styles.adminBottomNav} activeClassName={styles.adminBottomNavActive} />

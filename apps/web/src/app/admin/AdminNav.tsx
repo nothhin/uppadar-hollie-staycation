@@ -10,8 +10,6 @@ const navigation = [
   { label: "Stay calendar", href: "/admin#calendar", id: "calendar" },
   { label: "Confirmed stays", href: "/admin/confirmed", id: "confirmed" },
   { label: "Housekeeping & finance", href: "/admin/operations", id: "operations" },
-  { label: "Guest guide", href: "/admin#guest-rules", id: "guest-rules" },
-  { label: "Property settings", href: "/admin#settings", id: "settings" },
 ] as const;
 
 function useActiveSection() {

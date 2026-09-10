@@ -695,6 +695,42 @@
   line-height: 1.45;
   text-align: right;
 }
+:global(.deposit-workflow-header) {
+  width: 100%;
+  display: grid;
+  gap: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e0d5;
+}
+:global(.deposit-workflow-header span) {
+  color: #aa7730;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+:global(.deposit-workflow-header strong) { color: #2e2823; font-size: 14px; }
+:global(.deposit-workflow-header small) { max-width: none; text-align: left; }
+:global(.deposit-action-card) {
+  width: 100%;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e5ddd2;
+  border-radius: 10px;
+  background: #fffdfa;
+  box-sizing: border-box;
+}
+:global(.deposit-action-card h4) { margin: 0; color: #332b25; font-size: 12px; }
+:global(.deposit-action-card p) { margin: 0; color: #7c7167; font-size: 9px; line-height: 1.45; }
+:global(.deposit-action-card form) { display: grid; justify-content: stretch; gap: 7px; }
+:global(.deposit-action-card label) { display: grid; gap: 4px; color: #6f655c; font-size: 9px; font-weight: 700; }
+:global(.deposit-action-card label input) { width: 100%; box-sizing: border-box; }
+:global(.deposit-action-primary) { border-color: #d0a15e; background: #fff9ef; }
+:global(.deposit-action-danger) { border-color: #ead0cb; background: #fff8f7; }
+:global(.deposit-action-danger h4) { color: #8f3e34; }
+:global(.deposit-admin-actions .deposit-action-card button),
+:global(.deposit-admin-actions .deposit-action-card a) { width: 100%; }
 .emptyState {
   height: 270px;
   display: grid;
