@@ -82,7 +82,11 @@ export default function BookingModal({
   ]);
 
   const adjustGuests = (change: number) =>
-    setGuests((value) => Math.min(6, Math.max(1, value + change)));
+    setGuests((value) => {
+      const next = Math.min(6, Math.max(1, value + change));
+      if (next > 2) setBedroomChoice("bedroom_2");
+      return next;
+    });
 
   return (
     <div
