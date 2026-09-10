@@ -225,6 +225,8 @@ export async function verifyDeposit(
       message: "A submitted deposit is required before verification.",
     };
   revalidatePath("/admin");
+  revalidatePath("/admin/confirmed");
+  revalidatePath("/admin/operations");
   revalidatePath("/");
   return {
     status: "success",
@@ -270,6 +272,8 @@ export async function recordAndVerifyDeposit(
         "This payment hold expired or the booking can no longer be confirmed. Check the dates before proceeding.",
     };
   revalidatePath("/admin");
+  revalidatePath("/admin/confirmed");
+  revalidatePath("/admin/operations");
   revalidatePath("/");
   return {
     status: "success",
