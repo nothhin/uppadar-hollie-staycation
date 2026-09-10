@@ -17,7 +17,7 @@ export default function BookingPriceFields({
   const [checkIn, setCheckIn] = useState(initialCheckIn);
   const [checkOut, setCheckOut] = useState(initialCheckOut);
   const [guests, setGuests] = useState(() => Number(initialGuests) || 2);
-  const [bedroomChoice, setBedroomChoice] = useState("both_bedrooms");
+  const [bedroomChoice, setBedroomChoice] = useState("bedroom_1");
   const [parkingType, setParkingType] = useState("none");
 
   return (
@@ -46,7 +46,7 @@ export default function BookingPriceFields({
       </div>
       <fieldset className={styles.roomChoice}>
         <legend>Choose your stay</legend>
-        {[{ value: "both_bedrooms", title: "Entire two-bedroom condo", detail: "Queen master · Double-size bunk room", rate: "₱2,200 / night" }, { value: "bedroom_1", title: "Master bedroom", detail: "Queen-size comfort bed · Up to 2 guests", rate: "₱1,700 / night" }, { value: "bedroom_2", title: "Double-size bunk room", detail: "Up to 2 guests · +₱250 per additional guest", rate: "₱1,700 / night" }].map((room) => <label key={room.value} className={bedroomChoice === room.value ? styles.roomChoiceActive : undefined}><input type="radio" name="bedroomChoice" value={room.value} checked={bedroomChoice === room.value} onChange={(event) => setBedroomChoice(event.target.value)} /><span><strong>{room.title}</strong><small>{room.detail}</small></span><b>{room.rate}</b></label>)}
+        {[{ value: "bedroom_1", title: "Master bedroom", detail: "Queen-size comfort bed · Up to 2 guests", rate: "₱1,700 / night" }, { value: "bedroom_2", title: "Double-size bunk room", detail: "2 guests ₱1,700 · 3 guests ₱1,950 · 4 guests ₱2,100 · +₱250 per guest after 4", rate: "From ₱1,700 / night" }].map((room) => <label key={room.value} className={bedroomChoice === room.value ? styles.roomChoiceActive : undefined}><input type="radio" name="bedroomChoice" value={room.value} checked={bedroomChoice === room.value} onChange={(event) => setBedroomChoice(event.target.value)} /><span><strong>{room.title}</strong><small>{room.detail}</small></span><b>{room.rate}</b></label>)}
       </fieldset>
       <label>
         <span>Number of guests</span>

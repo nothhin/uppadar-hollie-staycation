@@ -35,9 +35,7 @@ export default function BookingModal({
   const [selectedCheckIn, setSelectedCheckIn] = useState(checkIn);
   const [selectedCheckOut, setSelectedCheckOut] = useState(checkOut);
   const [guests, setGuests] = useState(2);
-  const [bedroomChoice, setBedroomChoice] = useState<
-    "both_bedrooms" | "bedroom_1" | "bedroom_2"
-  >("both_bedrooms");
+  const [bedroomChoice, setBedroomChoice] = useState<"bedroom_1" | "bedroom_2">("bedroom_1");
   const [parkingType, setParkingType] = useState<"none" | "car" | "motorcycle">(
     "none",
   );
@@ -201,12 +199,6 @@ export default function BookingModal({
                   <div className="booking-room-options">
                     {(
                       [
-                        [
-                          "both_bedrooms",
-                          "Entire two-bedroom condo",
-                          "Queen master · Double-size bunk room · Kitchen",
-                          "₱2,200 / night",
-                        ],
                         [
                           "bedroom_1",
                           "Master bedroom",
