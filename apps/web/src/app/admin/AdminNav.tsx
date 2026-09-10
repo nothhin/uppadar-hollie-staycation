@@ -54,3 +54,15 @@ export function AdminMobileNav({ classes }: { classes: MobileNavClasses }) {
 
   return <><button className={classes.button} type="button" aria-label="Open admin navigation" aria-expanded={open} aria-controls="mobile-admin-navigation" onClick={()=>setOpen(true)}><span aria-hidden="true"><i/><i/><i/></span></button>{drawer}</>;
 }
+
+export function AdminBottomNav({ className, activeClassName }: { className: string; activeClassName: string }) {
+  const active = useActiveSection();
+  const items = [
+    { label: "Overview", href: "/admin#overview", id: "overview", icon: "⌂" },
+    { label: "Calendar", href: "/admin#calendar", id: "calendar", icon: "□" },
+    { label: "Enquiries", href: "/admin#booking-requests", id: "booking-requests", icon: "◎" },
+    { label: "Stays", href: "/admin/confirmed", id: "confirmed", icon: "◇" },
+    { label: "More", href: "/admin/operations", id: "operations", icon: "≡" },
+  ] as const;
+  return <nav className={className} aria-label="Mobile host workspace">{items.map(item => <a className={active === item.id ? activeClassName : undefined} href={item.href} key={item.id}><span aria-hidden="true">{item.icon}</span><small>{item.label}</small></a>)}</nav>;
+}

@@ -5,7 +5,7 @@ import { propertyProfile } from "@/lib/property";
 import { requireStaff } from "@/lib/server/admin-auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { signOut } from "./actions";
-import { AdminMobileNav, AdminNav } from "./AdminNav";
+import { AdminBottomNav, AdminMobileNav, AdminNav } from "./AdminNav";
 import { AdminLiveRefresh } from "./AdminLiveRefresh";
 import { AdminFlashAlert } from "./AdminFlashAlert";
 import { AdminCalendar } from "./AdminCalendar";
@@ -196,6 +196,7 @@ export default async function AdminDashboard({
           </section>
         </div>
       </section>
+      <AdminBottomNav className={styles.adminBottomNav} activeClassName={styles.adminBottomNavActive} />
     </main>
   );
 }

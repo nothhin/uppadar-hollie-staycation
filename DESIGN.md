@@ -4,6 +4,8 @@ source: https://stitch.withgoogle.com/projects/8516570275133104702
 screens:
   explore: 19c4b3d21b3f4b3f9db8783a9dcc7834
   booking: d25e769c34114f8f9d5aca18ff7b1031
+  admin-overview: 1b558b13939a4a2483ea9512af241583
+  admin-calendar: 6fa982f15d314d309de8cc5e90dd7077
 colors:
   surface: '#fcf9f3'
   surface-container-lowest: '#ffffff'
@@ -71,6 +73,21 @@ The mobile PWA composition follows the Stitch screen in this order: compact bran
 ## Booking screen
 
 The booking route follows the second Stitch node: Step 1 of 3 progress indicator, live-availability overline, suite selection cards, public calendar with Open/Selected/Pending/Booked states, guest and stay details, visual room tiles, transparent reservation summary, offline-draft notice, Messenger option, and direct-request CTA.
+
+## Admin overview screen
+
+The host workspace follows Stitch node `1b558b13939a4a2483ea9512af241583`: a compact Uppadar brand and live-sync header, quick operational actions, a clear unit-status hero, an operations pulse, financial summary cards, guest pipeline cards, and a persistent mobile navigation. SnowAZ names, IoT controls, figures, and fictional guests shown in the Stitch mockup are reference content only and must never appear in production.
+
+## Admin calendar screen
+
+The admin calendar follows Stitch node `6fa982f15d314d309de8cc5e90dd7077`: month and Today controls, occupancy and stay summaries, room filters, a dense seven-column calendar, explicit Open/Request/Confirmed states, and contextual reservation details. The desktop layout expands the same hierarchy without changing the mobile-first ordering.
+
+## Admin responsive behavior
+
+- Mobile under 768px: compact host header, horizontally scrollable filters, dense calendar cells, stacked operational cards, and fixed five-item bottom navigation.
+- Tablet 768–1023px: two-column operational cards with calendar controls kept on one row.
+- Desktop 1024px and above: persistent dark espresso sidebar, wide content canvas, four-column pulse cards, and full booking detail panels.
+- Admin screens use only Uppadar Hollie terminology and live database values. Internal legacy database function names are implementation details and are never rendered.
 
 ## Responsive behavior
 

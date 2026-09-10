@@ -4,7 +4,7 @@ import Link from "next/link";
 import { requireStaff } from "@/lib/server/admin-auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { signOut } from "../actions";
-import { AdminMobileNav, AdminNav } from "../AdminNav";
+import { AdminBottomNav, AdminMobileNav, AdminNav } from "../AdminNav";
 import { AdminLiveRefresh } from "../AdminLiveRefresh";
 import { ConfirmedBookingsPanel } from "../ConfirmedBookingsPanel";
 import type { AdminEnquiry } from "../BookingRequestsPanel";
@@ -55,6 +55,7 @@ export default async function ConfirmedBookingsPage() {
         </section>
         <ConfirmedBookingsPanel bookings={enquiries} canManage={canManage}/>
       </div>
+      <AdminBottomNav className={styles.adminBottomNav} activeClassName={styles.adminBottomNavActive}/>
     </section>
   </main>;
 }
