@@ -118,3 +118,10 @@ The user supplied the rendered HTML exports used as the exact source reference:
 - `C:/Users/Welmar/.codex/attachments/53e8544b-5671-487d-81ed-760309d08965/pasted-text.txt` — host calendar screen.
 
 Preserve the exported composition: fixed translucent cream header, live-sync row, quick actions, sanctuary card, dense calendar/filter panel, floating primary action, and fixed five-item bottom navigation. Exact visual tokens are `#fcf9f3` surface, `#f6f1ea` ivory, `#be8a45` primary container, `#9a6b2d` deep gold, `#1c1b18` charcoal, and `#827567` outline, with Plus Jakarta Sans for UI and EB Garamond for display headings. Replace SnowAZ text and sample data with Uppadar Hollie data.
+
+Additional customer-facing source exports supplied by the user:
+
+- `C:/Users/Welmar/.codex/attachments/8a4b960a-c5f9-497a-b633-a8d5a29e4dd4/pasted-text.txt` — customer Explore/property page.
+- `C:/Users/Welmar/.codex/attachments/d22f0103-7331-4889-9700-49e30baf8885/pasted-text.txt` — customer Reserve Your Sanctuary booking page.
+
+These customer exports are separate from the host overview and host calendar exports above. Their bottom navigation is Explore, Bedrooms, Book, Amenities, and Host; it must not be reused as the admin navigation.
