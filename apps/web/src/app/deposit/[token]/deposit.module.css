@@ -212,6 +212,23 @@
   .form button {
     width: 100%;
   }
+
+  .card :global(.booking-receipt > header) {
+    align-items: flex-start;
+    padding: 15px 14px;
+    gap: 10px;
+  }
+  .card :global(.booking-receipt > header strong) { font-size: 19px; }
+  .card :global(.booking-receipt > header span) { flex: none; font-size: 8px; }
+  .card :global(.booking-receipt dl) { padding: 10px 14px; }
+  .card :global(.booking-receipt dl div) {
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .card :global(.booking-receipt dt),
+  .card :global(.booking-receipt dd) { min-width: 0; overflow-wrap: anywhere; }
+  .card :global(.booking-receipt dd) { max-width: 58%; }
+  .card :global(.booking-receipt > p) { padding: 12px 14px 15px; }
 }
 .proofOptions {
   padding: 30px 0 0;
