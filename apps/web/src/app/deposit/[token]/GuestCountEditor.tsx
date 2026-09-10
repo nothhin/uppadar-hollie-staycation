@@ -37,16 +37,18 @@ export function GuestCountEditor({
   const chooseGuests = (value: number) => {
     setGuests(value);
     if (value > 2 && bedroom === "bedroom_1") {
+      setBedroom("bedroom_2");
       void showError(
-        "The Master bedroom can accommodate a maximum of 2 guests. Switch to the Second bedroom (bunk bed) for more than 2 guests.",
+        "The Master bedroom can accommodate a maximum of 2 guests. We switched your selection to the Second bedroom (bunk bed).",
       );
     }
   };
   const chooseBedroom = (value: string) => {
     setBedroom(value);
     if (value === "bedroom_1" && guests > 2) {
+      setBedroom("bedroom_2");
       void showError(
-        "The Master bedroom can accommodate a maximum of 2 guests. Choose the Second bedroom (bunk bed) or the entire two-bedroom condo.",
+        "The Master bedroom can accommodate a maximum of 2 guests. We switched your selection back to the Second bedroom (bunk bed).",
       );
     }
   };
