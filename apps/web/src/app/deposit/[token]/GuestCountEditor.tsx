@@ -23,8 +23,6 @@ export function GuestCountEditor({
   initialBedroom: string;
   initialParking: "none" | "car" | "motorcycle";
 }) {
-  const assignedBedroom = (value: number) =>
-    value <= 2 ? "bedroom_1" : value <= 4 ? "bedroom_2" : "both_bedrooms";
   const [guests, setGuests] = useState(initialGuests);
   const [bedroom, setBedroom] = useState(initialBedroom);
   const [parkingType, setParkingType] = useState(initialParking);
@@ -38,7 +36,6 @@ export function GuestCountEditor({
   }, [state]);
   const chooseGuests = (value: number) => {
     setGuests(value);
-    setBedroom(assignedBedroom(value));
   };
   return (
     <section className={styles.guestEditor}>
@@ -78,17 +75,12 @@ export function GuestCountEditor({
           </select>
         </label>
         <label>
-          <span>Assigned bedroom</span>
-          <select value={bedroom} disabled>
-            <option value={bedroom}>
-              {bedroom === "bedroom_1"
-                ? "Bedroom 1"
-                : bedroom === "bedroom_2"
-                  ? "Bedroom 2"
-                  : "Both bedrooms"}
-            </option>
+          <span>Bedroom selection</span>
+          <select name="bedroom" value={bedroom} onChange={(event) => setBedroom(event.target.value)}>
+            <option value="bedroom_1">Master bedroom — up to 2 guests</option>
+            <option value="bedroom_2">Second bedroom — up to 4 guests</option>
+            <option value="both_bedrooms">Entire two-bedroom condo — up to 8 guests</option>
           </select>
-          <input type="hidden" name="bedroom" value={bedroom} />
         </label>
         <button disabled={pending}>
           {pending ? "Updating…" : "Update guests and total"}

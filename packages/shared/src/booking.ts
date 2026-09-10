@@ -159,7 +159,7 @@ export function calculateSnowazBookingReceipt(
   return {
     nights,
     guests,
-    bedrooms: guests <= 2 ? 1 : 2,
+    bedrooms: bedroomChoice === "both_bedrooms" ? 2 : 1,
     baseNightlyRateMinor,
     nightlyRateMinor,
     additionalGuests,

@@ -17,9 +17,9 @@ type BookingPriceReceiptProps = {
 };
 
 const bedroomLabels = {
-  bedroom_1: "Bedroom 1",
-  bedroom_2: "Bedroom 2",
-  both_bedrooms: "Both bedrooms",
+  bedroom_1: "Master bedroom",
+  bedroom_2: "Second bedroom",
+  both_bedrooms: "Entire two-bedroom condo",
 } as const;
 
 export default function BookingPriceReceipt({
@@ -36,6 +36,7 @@ export default function BookingPriceReceipt({
       checkOut,
       guests,
       parkingType,
+      bedroomChoice,
     );
   } catch {
     // The form fields provide their own validation while the receipt waits for valid values.
