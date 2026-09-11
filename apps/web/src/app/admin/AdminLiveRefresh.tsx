@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export function AdminLiveRefresh() {
   const router = useRouter();
-  const [lastUpdated, setLastUpdated] = useState(() => new Date());
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   useEffect(() => {
     let refreshing = false;
     const refresh = () => {
@@ -28,5 +28,5 @@ export function AdminLiveRefresh() {
       document.removeEventListener("visibilitychange", refreshWhenVisible);
     };
   }, [router]);
-  return <small>{`Auto-updated ${lastUpdated.toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit" })}`}</small>;
+  return <small>{lastUpdated ? `Auto-updated ${lastUpdated.toLocaleTimeString("en-PH", { hour: "numeric", minute: "2-digit" })}` : "Live updates enabled"}</small>;
 }

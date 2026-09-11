@@ -74,14 +74,6 @@ describe("booking enquiries", () => {
         .success,
     ).toBe(true);
   });
-  it("accepts up to six guests when both bedrooms are selected", () =>
-    expect(
-      bookingEnquirySchema.safeParse({
-        ...request,
-        guests: "6",
-        bedroomChoice: "both_bedrooms",
-      }).success,
-    ).toBe(true));
   it("allows Bedroom 2 for three or four guests", () =>
     expect(
       bookingEnquirySchema.safeParse({
@@ -116,37 +108,53 @@ describe("money calculations", () => {
     expect(calculateSnowazNightlyRateMinor(3, "bedroom_2")).toBe(195_000);
     expect(calculateSnowazNightlyRateMinor(4, "bedroom_2")).toBe(210_000);
     expect(calculateSnowazNightlyRateMinor(5, "bedroom_2")).toBe(235_000);
-    expect(calculateSnowazNightlyRateMinor(2, "both_bedrooms")).toBe(220_000);
-    expect(calculateSnowazNightlyRateMinor(5, "both_bedrooms")).toBe(220_000);
-    expect(calculateSnowazNightlyRateMinor(6, "both_bedrooms")).toBe(220_000);
     expect(() => calculateSnowazNightlyRateMinor(7)).toThrow(RangeError);
   });
 
   it("builds a receipt with the required down payment and remaining balance", () => {
     expect(
-      calculateSnowazBookingReceipt("2026-09-01", "2026-09-04", 5),
+      calculateSnowazBookingReceipt("2026-09-01", "2026-09-04", 5, "none", "bedroom_2"),
     ).toEqual({
       nights: 3,
       guests: 5,
-      bedrooms: 2,
-      baseNightlyRateMinor: 220_000,
-      nightlyRateMinor: 220_000,
-      additionalGuests: 0,
-      additionalGuestChargeMinor: 0,
+      bedrooms: 1,
+      baseNightlyRateMinor: 170_000,
+      nightlyRateMinor: 235_000,
+      additionalGuests: 3,
+      additionalGuestChargeMinor: 195_000,
+      accommodationSubtotalMinor: 705_000,
       parkingType: "none",
       parkingNightlyRateMinor: 0,
       parkingChargeMinor: 0,
       earlyCheckInHours: 0,
+      earlyCheckInTime: null,
+      earlyCheckInFeeMinor: 0,
       lateCheckoutHours: 0,
+      lateCheckoutTime: null,
+      lateCheckoutFeeMinor: 0,
       timeExtensionChargeMinor: 0,
-      totalMinor: 660_000,
+      extrasTotalMinor: 0,
+      totalMinor: 705_000,
       downPaymentMinor: 100_000,
-      remainingBalanceMinor: 660_000,
+      remainingBalanceMinor: 705_000,
     });
   });
   it("adds optional parking per night", () => {
     expect(calculateSnowazBookingReceipt("2026-09-01", "2026-09-03", 2, "car").parkingChargeMinor).toBe(70_000);
     expect(calculateSnowazBookingReceipt("2026-09-01", "2026-09-03", 2, "motorcycle").parkingChargeMinor).toBe(30_000);
+  });
+  it("itemizes early and late time without multiplying the fee by nights", () => {
+    const receipt = calculateSnowazBookingReceipt("2026-09-01", "2026-09-04", 3, "car", "bedroom_2", 2, 3);
+    expect(receipt).toMatchObject({
+      earlyCheckInTime: "12:00",
+      earlyCheckInFeeMinor: 30_000,
+      lateCheckoutTime: "14:00",
+      lateCheckoutFeeMinor: 45_000,
+      accommodationSubtotalMinor: 585_000,
+      parkingChargeMinor: 105_000,
+      extrasTotalMinor: 180_000,
+      totalMinor: 765_000,
+    });
   });
   it("calculates totals only with integer minor units", () => {
     expect(calculateStayTotalMinor(250_000, 3)).toBe(750_000);

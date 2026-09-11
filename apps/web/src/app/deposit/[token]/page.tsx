@@ -53,11 +53,17 @@ export default async function DepositPage({
   const request = row
     ? {
         fullName: row.full_name as string,
+        email: (row.email as string | null) ?? "",
+        phone: row.phone as string,
+        bookingReference: row.booking_reference as string,
         checkIn: row.check_in as string,
         checkOut: row.check_out as string,
         guestCount: row.guest_count as number,
         bedroomChoice: row.bedroom_choice as string,
         parkingType: row.parking_type as "none" | "car" | "motorcycle",
+        earlyCheckInHours: Number(row.early_check_in_hours ?? 0),
+        lateCheckoutHours: Number(row.late_checkout_hours ?? 0),
+        bookingStatus: row.booking_status as string,
         depositStatus: row.deposit_status as string,
         depositAmountMinor: Number(row.deposit_amount_minor),
         depositTokenExpiresAt: row.deposit_token_expires_at
@@ -79,9 +85,7 @@ export default async function DepositPage({
     "partially_withheld",
     "forfeited",
   ].includes(request.depositStatus);
-  const bookingReference = /^SNOWAZ-[A-Z0-9]{8}$/.test(query.reference ?? "")
-    ? query.reference
-    : undefined;
+  const bookingReference = request.bookingReference || (/^UPPADAR-[A-Z0-9]{8}$/.test(query.reference ?? "") ? query.reference : undefined);
   return (
     <main className={styles.shell}>
       <LiveRouteRefresh />
@@ -125,6 +129,14 @@ export default async function DepositPage({
             initialGuests={request.guestCount}
             initialBedroom={request.bedroomChoice}
             initialParking={request.parkingType}
+            initialEarlyCheckInHours={request.earlyCheckInHours}
+            initialLateCheckoutHours={request.lateCheckoutHours}
+            bookingReference={bookingReference}
+            customerName={request.fullName}
+            customerEmail={request.email}
+            customerPhone={request.phone}
+            bookingStatus={request.bookingStatus}
+            paymentStatus={request.depositStatus}
           />
         ) : (
           <BookingPriceReceipt
@@ -133,6 +145,14 @@ export default async function DepositPage({
             guests={request.guestCount}
             bedroomChoice={request.bedroomChoice as "bedroom_1" | "bedroom_2" | "both_bedrooms"}
             parkingType={request.parkingType}
+            earlyCheckInHours={request.earlyCheckInHours}
+            lateCheckoutHours={request.lateCheckoutHours}
+            bookingReference={bookingReference}
+            customerName={request.fullName}
+            customerEmail={request.email}
+            customerPhone={request.phone}
+            bookingStatus={request.bookingStatus}
+            paymentStatus={request.depositStatus}
           />
         )}
         {finished ? (

@@ -63,8 +63,8 @@ export const bookingEnquirySchema = staySchema.extend({
     guests: z.coerce.number().int().min(1).max(6),
     bedroomChoice: bedroomChoiceSchema,
     parkingType: parkingTypeSchema.default("none"),
-    earlyCheckInHours: z.coerce.number().int().min(0).max(12).default(0),
-    lateCheckoutHours: z.coerce.number().int().min(0).max(12).default(0),
+    earlyCheckInHours: z.coerce.number().int().min(0).max(5).default(0),
+    lateCheckoutHours: z.coerce.number().int().min(0).max(5).default(0),
     fullName: z.string().trim().min(2).max(120),
     email: z.union([
       z.literal(""),
@@ -151,18 +151,32 @@ export function calculateSnowazBookingReceipt(
   earlyCheckInHours = 0,
   lateCheckoutHours = 0,
 ) {
+  if (!Number.isSafeInteger(earlyCheckInHours) || earlyCheckInHours < 0 || earlyCheckInHours > 5)
+    throw new RangeError("Early check-in must be a whole number from 0 to 5 hours.");
+  if (!Number.isSafeInteger(lateCheckoutHours) || lateCheckoutHours < 0 || lateCheckoutHours > 5)
+    throw new RangeError("Late checkout must be a whole number from 0 to 5 hours.");
   const nights = stayNights(checkIn, checkOut);
   const nightlyRateMinor = calculateSnowazNightlyRateMinor(guests, bedroomChoice);
-  const baseNightlyRateMinor = nightlyRateMinor;
+  const baseNightlyRateMinor = bedroomChoice === "both_bedrooms" ? 220_000 : 170_000;
   const parkingNightlyRateMinor =
     parkingType === "car" ? 35_000 : parkingType === "motorcycle" ? 15_000 : 0;
   const parkingChargeMinor = parkingNightlyRateMinor * nights;
-  const timeExtensionChargeMinor = (earlyCheckInHours + lateCheckoutHours) * 15_000;
-  const totalMinor =
-    calculateStayTotalMinor(nightlyRateMinor, nights) + parkingChargeMinor + timeExtensionChargeMinor;
-  const downPaymentMinor = Math.min(100_000, totalMinor);
+  const earlyCheckInFeeMinor = earlyCheckInHours * 15_000;
+  const lateCheckoutFeeMinor = lateCheckoutHours * 15_000;
+  const timeExtensionChargeMinor = earlyCheckInFeeMinor + lateCheckoutFeeMinor;
   const additionalGuests = bedroomChoice === "both_bedrooms" ? 0 : Math.max(0, guests - 2);
   const additionalGuestChargeMinor = bedroomChoice === "bedroom_2" ? Math.max(0, nightlyRateMinor - 170_000) * nights : 0;
+  const accommodationSubtotalMinor =
+    calculateStayTotalMinor(baseNightlyRateMinor, nights) + additionalGuestChargeMinor;
+  const extrasTotalMinor = parkingChargeMinor + timeExtensionChargeMinor;
+  const totalMinor = accommodationSubtotalMinor + extrasTotalMinor;
+  const downPaymentMinor = Math.min(100_000, totalMinor);
+  const earlyCheckInTime = earlyCheckInHours
+    ? `${String(14 - earlyCheckInHours).padStart(2, "0")}:00`
+    : null;
+  const lateCheckoutTime = lateCheckoutHours
+    ? `${String(11 + lateCheckoutHours).padStart(2, "0")}:00`
+    : null;
 
   return {
     nights,
@@ -172,12 +186,18 @@ export function calculateSnowazBookingReceipt(
     nightlyRateMinor,
     additionalGuests,
     additionalGuestChargeMinor,
+    accommodationSubtotalMinor,
     parkingType,
     parkingNightlyRateMinor,
     parkingChargeMinor,
     earlyCheckInHours,
+    earlyCheckInTime,
+    earlyCheckInFeeMinor,
     lateCheckoutHours,
+    lateCheckoutTime,
+    lateCheckoutFeeMinor,
     timeExtensionChargeMinor,
+    extrasTotalMinor,
     totalMinor,
     downPaymentMinor,
     remainingBalanceMinor: totalMinor,

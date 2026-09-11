@@ -16,6 +16,12 @@ type BookingPriceReceiptProps = {
   parkingType?: "none" | "car" | "motorcycle";
   earlyCheckInHours?: number;
   lateCheckoutHours?: number;
+  bookingReference?: string;
+  customerName?: string;
+  customerEmail?: string;
+  customerPhone?: string;
+  bookingStatus?: string;
+  paymentStatus?: string;
 };
 
 const bedroomLabels = {
@@ -32,6 +38,12 @@ export default function BookingPriceReceipt({
   parkingType = "none",
   earlyCheckInHours = 0,
   lateCheckoutHours = 0,
+  bookingReference,
+  customerName,
+  customerEmail,
+  customerPhone,
+  bookingStatus,
+  paymentStatus,
 }: BookingPriceReceiptProps) {
   let receipt: ReturnType<typeof calculateSnowazBookingReceipt> | null = null;
   try {
@@ -75,6 +87,11 @@ export default function BookingPriceReceipt({
         <span>Estimate</span>
       </header>
       <dl>
+        {bookingReference ? <div><dt>Booking reference</dt><dd>{bookingReference}</dd></div> : null}
+        {customerName ? <div><dt>Guest</dt><dd>{customerName}</dd></div> : null}
+        {customerPhone || customerEmail ? <div><dt>Contact</dt><dd>{[customerPhone, customerEmail].filter(Boolean).join(" · ")}</dd></div> : null}
+        <div><dt>Check-in</dt><dd>{checkIn}</dd></div>
+        <div><dt>Check-out</dt><dd>{checkOut}</dd></div>
         <div>
           <dt>Stay</dt>
           <dd>
@@ -93,6 +110,7 @@ export default function BookingPriceReceipt({
               : `${receipt.bedrooms} bedroom${receipt.bedrooms === 1 ? "" : "s"}`}
           </dd>
         </div>
+        <div><dt>Room description</dt><dd>{bedroomChoice === "bedroom_1" ? "Queen bed · Up to 2 guests" : bedroomChoice === "bedroom_2" ? "Double-size bunk bed · Up to 6 guests" : "Two-bedroom condo"}</dd></div>
         <div>
           <dt>Base nightly rate</dt>
           <dd>{php.format(receipt.baseNightlyRateMinor / 100)}</dd>
@@ -123,9 +141,12 @@ export default function BookingPriceReceipt({
             <dd>+{php.format(receipt.parkingChargeMinor / 100)}</dd>
           </div>
         ) : null}
-        {receipt.timeExtensionChargeMinor > 0 ? <div className="booking-receipt-additional"><dt>Early / late time<br /><small>{receipt.earlyCheckInHours} early + {receipt.lateCheckoutHours} late hour(s) × ₱150</small></dt><dd>+{php.format(receipt.timeExtensionChargeMinor / 100)}</dd></div> : null}
+        {receipt.earlyCheckInFeeMinor > 0 ? <div className="booking-receipt-additional"><dt>Early check-in<br /><small>{receipt.earlyCheckInHours} hour{receipt.earlyCheckInHours === 1 ? "" : "s"} early · {receipt.earlyCheckInTime} · ₱150/hour</small></dt><dd>+{php.format(receipt.earlyCheckInFeeMinor / 100)}</dd></div> : null}
+        {receipt.lateCheckoutFeeMinor > 0 ? <div className="booking-receipt-additional"><dt>Late checkout<br /><small>{receipt.lateCheckoutHours} hour{receipt.lateCheckoutHours === 1 ? "" : "s"} late · {receipt.lateCheckoutTime} · ₱150/hour</small></dt><dd>+{php.format(receipt.lateCheckoutFeeMinor / 100)}</dd></div> : null}
+        <div><dt>Accommodation subtotal</dt><dd>{php.format(receipt.accommodationSubtotalMinor / 100)}</dd></div>
+        {receipt.extrasTotalMinor > 0 ? <div><dt>Extras total</dt><dd>+{php.format(receipt.extrasTotalMinor / 100)}</dd></div> : null}
         <div className="booking-receipt-total">
-          <dt>Total accommodation</dt>
+          <dt>Final total</dt>
           <dd>{php.format(receipt.totalMinor / 100)}</dd>
         </div>
         <div className="booking-receipt-down">
@@ -136,6 +157,8 @@ export default function BookingPriceReceipt({
           <dt>Remaining balance</dt>
           <dd>{php.format(receipt.remainingBalanceMinor / 100)}</dd>
         </div>
+        {bookingStatus ? <div><dt>Booking status</dt><dd>{bookingStatus.replaceAll("_", " ")}</dd></div> : null}
+        {paymentStatus ? <div><dt>Payment status</dt><dd>{paymentStatus.replaceAll("_", " ")}</dd></div> : null}
       </dl>
       <p>
         The ₱1,000 security deposit is refundable after checkout and is separate

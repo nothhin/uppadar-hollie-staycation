@@ -16,6 +16,14 @@ export function GuestCountEditor({
   initialGuests,
   initialBedroom,
   initialParking,
+  initialEarlyCheckInHours,
+  initialLateCheckoutHours,
+  bookingReference,
+  customerName,
+  customerEmail,
+  customerPhone,
+  bookingStatus,
+  paymentStatus,
 }: {
   token: string;
   checkIn: string;
@@ -23,10 +31,20 @@ export function GuestCountEditor({
   initialGuests: number;
   initialBedroom: string;
   initialParking: "none" | "car" | "motorcycle";
+  initialEarlyCheckInHours: number;
+  initialLateCheckoutHours: number;
+  bookingReference?: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  bookingStatus: string;
+  paymentStatus: string;
 }) {
   const [guests, setGuests] = useState(initialGuests);
   const [bedroom, setBedroom] = useState(initialBedroom);
   const [parkingType, setParkingType] = useState(initialParking);
+  const [earlyCheckInHours, setEarlyCheckInHours] = useState(initialEarlyCheckInHours);
+  const [lateCheckoutHours, setLateCheckoutHours] = useState(initialLateCheckoutHours);
   const router = useRouter();
   const [state, action, pending] = useActionState(
     updatePendingGuestCount,
@@ -99,9 +117,14 @@ export function GuestCountEditor({
           <select name="bedroom" value={bedroom} onChange={(event) => chooseBedroom(event.target.value)}>
             <option value="bedroom_1">Master bedroom — up to 2 guests</option>
             <option value="bedroom_2">Second bedroom — up to 6 guests</option>
-            <option value="both_bedrooms">Entire two-bedroom condo — up to 6 guests</option>
           </select>
         </label>
+        <fieldset>
+          <legend>Optional Extra Time</legend>
+          <p>Regular check-in is 2:00 PM and checkout is 11:00 AM. Optional time is ₱150/hour, subject to host availability.</p>
+          <label><span>Early check-in</span><select name="earlyCheckInHours" value={earlyCheckInHours} onChange={(event) => setEarlyCheckInHours(Number(event.target.value))}><option value={0}>None</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour===1?"":"s"} early · {14-hour}:00 · ₱{hour*150}</option>)}</select></label>
+          <label><span>Late checkout</span><select name="lateCheckoutHours" value={lateCheckoutHours} onChange={(event) => setLateCheckoutHours(Number(event.target.value))}><option value={0}>None</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour===1?"":"s"} late · {11+hour}:00 · ₱{hour*150}</option>)}</select></label>
+        </fieldset>
         <button disabled={pending}>
           {pending ? "Updating…" : "Update guests and total"}
         </button>
@@ -112,6 +135,14 @@ export function GuestCountEditor({
         guests={guests}
         bedroomChoice={bedroom as "bedroom_1" | "bedroom_2" | "both_bedrooms"}
         parkingType={parkingType}
+        earlyCheckInHours={earlyCheckInHours}
+        lateCheckoutHours={lateCheckoutHours}
+        bookingReference={bookingReference}
+        customerName={customerName}
+        customerEmail={customerEmail}
+        customerPhone={customerPhone}
+        bookingStatus={bookingStatus}
+        paymentStatus={paymentStatus}
       />
       <small>
         Changes are allowed only before payment details or a receipt are

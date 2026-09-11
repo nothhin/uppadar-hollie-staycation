@@ -59,6 +59,8 @@ async function saveBookingRequest(formData: FormData) {
         guests: parsed.data.guests,
         bedroom_selection: parsed.data.bedroomChoice,
         parking_selection: parsed.data.parkingType,
+        early_check_in_hours: parsed.data.earlyCheckInHours,
+        late_checkout_hours: parsed.data.lateCheckoutHours,
         requests: bookingRequests,
         contact_method: parsed.data.preferredContact,
         consent_version: "booking-request-v2",

@@ -31,7 +31,7 @@ export default function BookingModal({
   );
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
-  const [idempotencyKey] = useState(() => crypto.randomUUID());
+  const idempotencyInputRef = useRef<HTMLInputElement>(null);
   const [selectedCheckIn, setSelectedCheckIn] = useState(checkIn);
   const [selectedCheckOut, setSelectedCheckOut] = useState(checkOut);
   const [guests, setGuests] = useState(2);
@@ -176,6 +176,7 @@ export default function BookingModal({
               </div>
               <form
                 action={action}
+                onSubmit={() => { if (idempotencyInputRef.current && !idempotencyInputRef.current.value) idempotencyInputRef.current.value = crypto.randomUUID(); }}
                 className="booking-modal-form booking-stitch-form"
               >
                 {state.status === "error" ? (
@@ -186,7 +187,8 @@ export default function BookingModal({
                 <input
                   type="hidden"
                   name="idempotencyKey"
-                  value={idempotencyKey}
+                  defaultValue=""
+                  ref={idempotencyInputRef}
                 />
                 <input type="hidden" name="roomTypeId" value="" />
                 <input type="hidden" name="preferredContact" value="phone" />
@@ -216,8 +218,8 @@ export default function BookingModal({
                         [
                           "bedroom_2",
                           "Second bedroom",
-                          "Double-size bunk bed · Shared kitchen and bathroom",
-                          "₱1,700 / night",
+                          "Double-size bunk bed · 2–6 guests · Occupancy pricing applies",
+                          "₱1,700–₱2,600 / night",
                         ],
                       ] as const
                     ).map(([value, title, detail, price]) => (
@@ -305,6 +307,10 @@ export default function BookingModal({
                     </div>
                     <input type="hidden" name="guests" value={guests} />
                   </div>
+                  <div className="booking-selected-room-copy">
+                    <strong>{bedroomChoice === "bedroom_1" ? "Master bedroom" : "Second bedroom"}</strong>
+                    <small>{bedroomChoice === "bedroom_1" ? "Queen bed · Maximum 2 guests · ₱1,700/night" : "Double-size bunk bed · Up to 6 guests · 2 pax ₱1,700 · 3 pax ₱1,950 · 4 pax ₱2,100 · +₱250 per guest after 4"}</small>
+                  </div>
                 </section>
                 <section className="booking-parking-section">
                   <div className="booking-section-label">
@@ -336,12 +342,12 @@ export default function BookingModal({
                 <div className="booking-preview-photos">
                   <figure>
                     <Image
-                      src="/images/uppadar-hollie/master-bedroom.jpg"
-                      alt="Master bedroom"
+                      src={bedroomChoice === "bedroom_1" ? "/images/uppadar-hollie/master-bedroom.jpg" : "/images/uppadar-hollie/second-bedroom-bunk-wide.png"}
+                      alt={bedroomChoice === "bedroom_1" ? "Master bedroom with queen bed" : "Second bedroom with double-size bunk bed"}
                       fill
                       sizes="220px"
                     />
-                    <figcaption>Master bedroom</figcaption>
+                    <figcaption>{bedroomChoice === "bedroom_1" ? "Master bedroom · Queen bed" : "Second bedroom · Double-size bunk bed"}</figcaption>
                   </figure>
                   <figure>
                     <Image

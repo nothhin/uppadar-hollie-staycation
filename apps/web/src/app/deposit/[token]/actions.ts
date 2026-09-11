@@ -22,12 +22,13 @@ export async function updatePendingGuestCount(
     .object({
       token: z.string().refine(isValidDepositToken),
       guests: z.coerce.number().int().min(1).max(6),
-      bedroom: z.enum(["bedroom_1", "bedroom_2", "both_bedrooms"]),
+      bedroom: z.enum(["bedroom_1", "bedroom_2"]),
       parkingType: z.enum(["none", "car", "motorcycle"]),
+      earlyCheckInHours: z.coerce.number().int().min(0).max(5),
+      lateCheckoutHours: z.coerce.number().int().min(0).max(5),
     })
     .refine(
       (value) =>
-        value.bedroom === "both_bedrooms" ||
         (value.bedroom === "bedroom_1" && value.guests <= 2) ||
         (value.bedroom === "bedroom_2" && value.guests <= 6),
     )
@@ -36,6 +37,8 @@ export async function updatePendingGuestCount(
       guests: formData.get("guests"),
       bedroom: formData.get("bedroom"),
       parkingType: formData.get("parkingType"),
+      earlyCheckInHours: formData.get("earlyCheckInHours"),
+      lateCheckoutHours: formData.get("lateCheckoutHours"),
     });
   if (!parsed.success)
     return {
@@ -52,6 +55,8 @@ export async function updatePendingGuestCount(
       guests: parsed.data.guests,
       bedroom_selection: parsed.data.bedroom,
       parking_selection: parsed.data.parkingType,
+      early_hours: parsed.data.earlyCheckInHours,
+      late_hours: parsed.data.lateCheckoutHours,
     },
   );
   if (error || !data)
@@ -66,7 +71,7 @@ export async function updatePendingGuestCount(
   revalidatePath("/admin/operations");
   return {
     status: "success",
-    message: "Guest count, bedroom, and booking total updated.",
+    message: "Guest count, bedroom, parking, optional time, and booking total updated.",
   };
 }
 

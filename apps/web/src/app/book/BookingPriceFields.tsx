@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import BookingPriceReceipt from "../BookingPriceReceipt";
+import { showError } from "@/lib/sweetalert";
 import styles from "./book.module.css";
 
 type BookingPriceFieldsProps = {
@@ -55,7 +57,7 @@ export default function BookingPriceFields({
         <select
           name="guests"
           value={guests}
-          onChange={(event) => setGuests(Number(event.target.value))}
+          onChange={(event) => { const next = Number(event.target.value); setGuests(next); if (next > 2 && bedroomChoice === "bedroom_1") { setBedroomChoice("bedroom_2"); void showError("The Master bedroom accommodates a maximum of 2 guests. We switched you to the Second bedroom (double-size bunk bed)."); } }}
           required
         >
           {Array.from({ length: 6 }, (_, index) => index + 1).map(
@@ -80,6 +82,7 @@ export default function BookingPriceFields({
         <label><span>Early check-in (optional)</span><select name="earlyCheckInHours" value={earlyCheckInHours} onChange={(event) => setEarlyCheckInHours(Number(event.target.value))}><option value={0}>No early check-in</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} early · ₱{hour * 150}</option>)}</select></label>
         <label><span>Late checkout (optional)</span><select name="lateCheckoutHours" value={lateCheckoutHours} onChange={(event) => setLateCheckoutHours(Number(event.target.value))}><option value={0}>No late checkout</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour === 1 ? "" : "s"} late · ₱{hour * 150}</option>)}</select></label>
       </div>
+      <BookingPriceReceipt checkIn={checkIn} checkOut={checkOut} guests={guests} bedroomChoice={bedroomChoice as "bedroom_1" | "bedroom_2"} parkingType={parkingType as "none" | "car" | "motorcycle"} earlyCheckInHours={earlyCheckInHours} lateCheckoutHours={lateCheckoutHours} />
     </>
   );
 }
