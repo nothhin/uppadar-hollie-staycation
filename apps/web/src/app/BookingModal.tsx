@@ -218,8 +218,8 @@ export default function BookingModal({
                         [
                           "bedroom_2",
                           "Second bedroom",
-                          "Double-size bunk bed · 2–6 guests · Occupancy pricing applies",
-                          "₱1,700–₱2,600 / night",
+                          "Double-size bunk bed · Occupancy pricing applies",
+                          "₱1,700 / night",
                         ],
                       ] as const
                     ).map(([value, title, detail, price]) => (
@@ -309,7 +309,7 @@ export default function BookingModal({
                   </div>
                   <div className="booking-selected-room-copy">
                     <strong>{bedroomChoice === "bedroom_1" ? "Master bedroom" : "Second bedroom"}</strong>
-                    <small>{bedroomChoice === "bedroom_1" ? "Queen bed · Maximum 2 guests · ₱1,700/night" : "Double-size bunk bed · Up to 6 guests · 2 pax ₱1,700 · 3 pax ₱1,950 · 4 pax ₱2,100 · +₱250 per guest after 4"}</small>
+                    <small>{bedroomChoice === "bedroom_1" ? "Queen bed · Maximum 2 guests · ₱1,700/night" : "Double-size bunk bed · 2 pax ₱1,700 · 3 pax ₱1,950 · 4 pax ₱2,100 · +₱250 per guest after 4"}</small>
                   </div>
                 </section>
                 <section className="booking-parking-section">

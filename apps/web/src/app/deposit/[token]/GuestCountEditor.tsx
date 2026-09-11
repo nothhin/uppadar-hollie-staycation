@@ -116,7 +116,7 @@ export function GuestCountEditor({
           <span>Bedroom selection</span>
           <select name="bedroom" value={bedroom} onChange={(event) => chooseBedroom(event.target.value)}>
             <option value="bedroom_1">Master bedroom — up to 2 guests</option>
-            <option value="bedroom_2">Second bedroom — up to 6 guests</option>
+            <option value="bedroom_2">Second bedroom — Double-size bunk bed</option>
           </select>
         </label>
         <fieldset className={styles.extraTimeFields}>

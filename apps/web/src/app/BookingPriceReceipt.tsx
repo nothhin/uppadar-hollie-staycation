@@ -110,7 +110,7 @@ export default function BookingPriceReceipt({
               : `${receipt.bedrooms} bedroom${receipt.bedrooms === 1 ? "" : "s"}`}
           </dd>
         </div>
-        <div><dt>Room description</dt><dd>{bedroomChoice === "bedroom_1" ? "Queen bed · Up to 2 guests" : bedroomChoice === "bedroom_2" ? "Double-size bunk bed · Up to 6 guests" : "Two-bedroom condo"}</dd></div>
+        <div><dt>Room description</dt><dd>{bedroomChoice === "bedroom_1" ? "Queen bed · Up to 2 guests" : bedroomChoice === "bedroom_2" ? "Double-size bunk bed" : "Entire unit · Maximum of 6 guests"}</dd></div>
         <div>
           <dt>Base nightly rate</dt>
           <dd>{php.format(receipt.baseNightlyRateMinor / 100)}</dd>
