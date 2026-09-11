@@ -90,8 +90,8 @@ export default async function AdminDashboard({
         <header className={styles.topbar}>
           <AdminMobileNav classes={mobileClasses(styles)} />
           <div>
-            <span>{weekday}</span>
-            <strong>{fullDate}</strong>
+            <span className={styles.systemOnline}><i aria-hidden="true" />Live system online</span>
+            <strong>{weekday}, {fullDate} · {propertyProfile.timezone}</strong>
           </div>
           <div className={styles.adminIdentity}>
             <span>{staff.email.slice(0, 2).toUpperCase()}</span>

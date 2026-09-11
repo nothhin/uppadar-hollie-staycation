@@ -1513,16 +1513,18 @@
 /* Stitch host workspace visual system. Keep existing actions and panels intact
    while giving every admin route the same warm operational shell. */
 .dashboardShell { grid-template-columns: 272px minmax(0, 1fr); background: #fbf9f6; color: #1b1c1a; }
-.sidebar { background: #3a3028; padding: 32px 20px 22px; }
+.sidebar { background: #f5f3f0; color: #4e4638; padding: 32px 20px 22px; box-shadow: 0 1px 8px rgba(0,0,0,.04); }
 .adminBrand { padding: 0 8px 30px; gap: 14px; border-bottom-color: rgba(255,255,255,.18); }
 .adminBrand strong { font-size: 22px; letter-spacing: -.02em; }
-.adminBrand small { color: #d9c7ad; font-size: 9px; letter-spacing: .12em; }
+.adminBrand small { color: #7a590e; font-size: 9px; letter-spacing: .12em; }
 .sidebar nav { margin-top: 26px; gap: 7px; }
-.sidebar nav a { min-height: 48px; border-radius: 14px; padding: 0 15px; color: rgba(255,255,255,.7); font-size: 12px; font-weight: 600; }
-.sidebar nav a span { width: 20px; color: #cbbba8; font-size: 9px; }
-.sidebar nav a:hover, .sidebar nav .activeNav { background: #51463c; color: #fff; box-shadow: inset 3px 0 #d99e9a; }
-.sidebarFooter { border-top-color: rgba(255,255,255,.18); }
+.sidebar nav a { min-height: 48px; border-radius: 10px; padding: 0 15px; color: #4e4638; font-size: 12px; font-weight: 600; }
+.sidebar nav a span { width: 20px; color: #807666; font-size: 9px; }
+.sidebar nav a:hover, .sidebar nav .activeNav { background: #b89043; color: #3f2b00; box-shadow: 0 2px 8px rgba(184,144,67,.12); }
+.sidebarFooter { border-top-color: #d2c5b3; }
 .workspace { background: #fbf9f6; }
+.systemOnline { display: inline-flex !important; align-items: center; gap: 7px; color: #2c694e !important; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+.systemOnline i { width: 7px; height: 7px; border-radius: 50%; background: #2c694e; box-shadow: 0 0 0 4px rgba(44,105,78,.12); }
 .topbar { min-height: 80px; padding: 0 48px; background: rgba(255,255,255,.82); border-bottom-color: #e4e2df; }
 .content { padding: 56px clamp(28px, 5vw, 72px) 92px; }
 .eyebrow { color: #7a590e; letter-spacing: .2em; }
