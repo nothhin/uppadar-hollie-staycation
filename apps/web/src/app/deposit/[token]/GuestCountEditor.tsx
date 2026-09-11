@@ -119,7 +119,7 @@ export function GuestCountEditor({
             <option value="bedroom_2">Second bedroom — up to 6 guests</option>
           </select>
         </label>
-        <fieldset>
+        <fieldset className={styles.extraTimeFields}>
           <legend>Optional Extra Time</legend>
           <p>Regular check-in is 2:00 PM and checkout is 11:00 AM. Optional time is ₱150/hour, subject to host availability.</p>
           <label><span>Early check-in</span><select name="earlyCheckInHours" value={earlyCheckInHours} onChange={(event) => setEarlyCheckInHours(Number(event.target.value))}><option value={0}>None</option>{[1,2,3,4,5].map((hour) => <option key={hour} value={hour}>{hour} hour{hour===1?"":"s"} early · {14-hour}:00 · ₱{hour*150}</option>)}</select></label>
