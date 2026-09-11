@@ -4,6 +4,7 @@ import AvailabilityCalendar from "./AvailabilityCalendar";
 import UiIcon, { type IconName } from "./UiIcon";
 import { SavedBookingLink } from "./BookingMemory";
 import BookingLauncher from "./BookingLauncher";
+import PwaInstallPrompt from "./PwaInstallPrompt";
 import { amenityGroups, galleryImages, galleryVideos, nearbyPlaces, propertyProfile, serviceContacts, stayDetails, unavailableAmenities } from "@/lib/property";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +18,7 @@ export default function Home() {
       <div className="pwa-head-actions"><BookingLauncher className="pwa-icon-book"><UiIcon name="calendar" size={16} /><span className="sr-only">Open booking form</span></BookingLauncher><a href={propertyProfile.messengerUrl} target="_blank" rel="noreferrer" aria-label="Chat with the host"><UiIcon name="message" size={16} /></a></div>
     </header>
 
-    <div className="pwa-install"><span className="pwa-install-icon"><UiIcon name="install" size={17} /></span><div><strong>Install Uppadar Hollie</strong><small>Fast offline access &amp; instant booking status.</small></div><button type="button">Install</button><button className="pwa-install-close" type="button" aria-label="Dismiss install prompt">×</button></div>
+    <PwaInstallPrompt />
     <div className="pwa-status"><span><i /> Online · Ready to book</span><span><UiIcon name="bolt" size={11} /> Instant sync active</span></div>
 
     <section className="pwa-hero">

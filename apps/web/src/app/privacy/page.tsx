@@ -25,13 +25,9 @@ export default function PrivacyPage() {
           <h2>Who is responsible for your information?</h2>
           <p>
             Uppadar Hollie Staycation Cebu is responsible for the guest information submitted
-            through this website. You may contact us at{" "}
-            <a href={`mailto:${propertyProfile.email}`}>
-              {propertyProfile.email}
-            </a>
-            ,{" "}
-            <a href={`tel:${propertyProfile.phoneHref}`}>
-              {propertyProfile.phoneDisplay}
+            through this website. You may contact us through{" "}
+            <a href={propertyProfile.facebookUrl} target="_blank" rel="noreferrer">
+              Facebook Messenger
             </a>
             , or at {propertyProfile.address}.
           </p>
