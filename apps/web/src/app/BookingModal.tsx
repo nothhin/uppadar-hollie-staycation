@@ -31,6 +31,8 @@ export default function BookingModal({
   );
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const idempotencyInputRef = useRef<HTMLInputElement>(null);
   const [selectedCheckIn, setSelectedCheckIn] = useState(checkIn);
   const [selectedCheckOut, setSelectedCheckOut] = useState(checkOut);
@@ -79,6 +81,11 @@ export default function BookingModal({
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [onClose]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    stepHeadingRef.current?.focus();
+  }, [step]);
 
   useEffect(() => {
     if (state.status === "success" && !availabilityNotified.current) {
@@ -160,7 +167,9 @@ export default function BookingModal({
             </div>
             <ol>
               {(["Select stay", "Guest details", "Review"] as const).map((label, index) => (
-                <li className={index + 1 === step ? "active" : index + 1 < step ? "complete" : undefined} key={label}>{index + 1}. {label}</li>
+                <li className={index + 1 === step ? "active" : index + 1 < step ? "complete" : undefined} key={label}>
+                  <button type="button" disabled={index + 1 >= step} onClick={() => setStep((index + 1) as 1 | 2 | 3)}>{index + 1}. {label}</button>
+                </li>
               ))}
             </ol>
             <div className="booking-modal-progress-track" aria-hidden="true"><span style={{ width: `${(step / 3) * 100}%` }} /></div>
@@ -200,17 +209,24 @@ export default function BookingModal({
           </section>
         ) : (
           <>
-            <div className="booking-modal-scroll">
+            <div className="booking-modal-scroll" ref={scrollRef}>
               <div className="booking-modal-heading">
                 <p className="eyebrow">
                   <UiIcon name="check" size={12} /> Live availability · Direct
                   with host
                 </p>
-                <h2 id={titleId}>Reserve Your Sanctuary</h2>
+                <h2 id={titleId} ref={stepHeadingRef} tabIndex={-1}>Reserve Your Sanctuary</h2>
                 <p>
                   Choose your preferred dates and send your stay details. The
                   host will confirm the final rate directly with you.
                 </p>
+              </div>
+              <div className="booking-selected-dates" role="status">
+                <UiIcon name="calendar" size={17} />
+                <div>
+                  <strong>{selectedCheckIn && selectedCheckOut ? "Dates selected" : "Choose your dates"}</strong>
+                  <small>{selectedCheckIn && selectedCheckOut ? `${new Date(`${selectedCheckIn}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })} – ${new Date(`${selectedCheckOut}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })}` : "Select a check-in and check-out date in the first step."}</small>
+                </div>
               </div>
               <form
                 action={action}
