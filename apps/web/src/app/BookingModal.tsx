@@ -212,24 +212,26 @@ export default function BookingModal({
         ) : (
           <>
             <div className="booking-modal-scroll" ref={scrollRef}>
-              <div className="booking-modal-heading">
-                <p className="eyebrow">
-                  <UiIcon name="check" size={12} /> Live availability · Direct
-                  with host
-                </p>
-                <h2 id={titleId} ref={stepHeadingRef} tabIndex={-1}>Reserve Your Sanctuary</h2>
-                <p>
-                  Choose your preferred dates and send your stay details. The
-                  host will confirm the final rate directly with you.
-                </p>
-              </div>
-              <div className="booking-selected-dates" role="status">
-                <UiIcon name="calendar" size={17} />
-                <div>
-                  <strong>{selectedCheckIn && selectedCheckOut ? "Dates selected" : "Choose your dates"}</strong>
-                  <small>{selectedCheckIn && selectedCheckOut ? `${new Date(`${selectedCheckIn}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })} – ${new Date(`${selectedCheckOut}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })}` : "Select a check-in and check-out date in the first step."}</small>
+              {step === 1 ? <>
+                <div className="booking-modal-heading">
+                  <p className="eyebrow">
+                    <UiIcon name="check" size={12} /> Live availability · Direct
+                    with host
+                  </p>
+                  <h2 id={titleId} ref={stepHeadingRef} tabIndex={-1}>Reserve Your Sanctuary</h2>
+                  <p>
+                    Choose your preferred dates and send your stay details. The
+                    host will confirm the final rate directly with you.
+                  </p>
                 </div>
-              </div>
+                <div className="booking-selected-dates" role="status">
+                  <UiIcon name="calendar" size={17} />
+                  <div>
+                    <strong>{selectedCheckIn && selectedCheckOut ? "Dates selected" : "Choose your dates"}</strong>
+                    <small>{selectedCheckIn && selectedCheckOut ? `${new Date(`${selectedCheckIn}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })} – ${new Date(`${selectedCheckOut}T00:00:00`).toLocaleDateString("en-PH", { month: "short", day: "numeric", year: "numeric" })}` : "Select a check-in and check-out date in the first step."}</small>
+                  </div>
+                </div>
+              </> : <h2 className="booking-step-content-heading" id={titleId} ref={stepHeadingRef} tabIndex={-1}>{step === 2 ? "Guest details" : "Review request"}</h2>}
               <form
                 action={action}
                 ref={formRef}
@@ -512,7 +514,7 @@ export default function BookingModal({
                   </div>
                 </>
                 </div>
-                <div className="booking-step-actions">
+                <div className={`booking-step-actions${step > 1 ? " has-back" : ""}`}>
                   {step > 1 ? <button className="booking-step-back" type="button" onClick={() => setStep((value) => (value - 1) as 1 | 2)}>Back</button> : null}
                   {step < 3 ? <button className="booking-step-next" type="button" onClick={continueToNextStep}>Continue <UiIcon name="arrow-right" size={16} /></button> : <button className="booking-modal-submit" type="submit" disabled={pending}><UiIcon name="message" size={17} />{pending ? "Sending request…" : "Submit direct request"}</button>}
                 </div>
