@@ -41,7 +41,30 @@ export default function BookingModal({
   );
   const [earlyCheckInHours, setEarlyCheckInHours] = useState(0);
   const [lateCheckoutHours, setLateCheckoutHours] = useState(0);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const formRef = useRef<HTMLFormElement>(null);
   const availabilityNotified = useRef(false);
+
+  const validateStep = (currentStep: 1 | 2) => {
+    const form = formRef.current;
+    if (!form) return false;
+    const fields = Array.from(form.querySelectorAll<HTMLElement>(`[data-booking-step="${currentStep}"] input, [data-booking-step="${currentStep}"] select, [data-booking-step="${currentStep}"] textarea`));
+    const invalid = fields.find((field) => field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement ? !field.checkValidity() : false) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | undefined;
+    if (invalid) {
+      invalid.reportValidity();
+      return false;
+    }
+    if (currentStep === 1 && (!selectedCheckIn || !selectedCheckOut || selectedCheckOut <= selectedCheckIn)) {
+      void showError("Choose a valid check-in and check-out date before continuing.");
+      return false;
+    }
+    return true;
+  };
+
+  const continueToNextStep = () => {
+    if (step === 3) return;
+    if (validateStep(step)) setStep((value) => (value + 1) as 2 | 3);
+  };
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -128,6 +151,21 @@ export default function BookingModal({
             ×
           </button>
         </header>
+        {state.status !== "success" ? (
+          <div className="booking-modal-progress" aria-label={`Booking progress, step ${step} of 3`}>
+            <div>
+              <b>{step}</b>
+              <strong>{step === 1 ? "Choose your stay" : step === 2 ? "Guest details" : "Review request"}</strong>
+              <small>Step {step} of 3</small>
+            </div>
+            <ol>
+              {(["Select stay", "Guest details", "Review"] as const).map((label, index) => (
+                <li className={index + 1 === step ? "active" : index + 1 < step ? "complete" : undefined} key={label}>{index + 1}. {label}</li>
+              ))}
+            </ol>
+            <div className="booking-modal-progress-track" aria-hidden="true"><span style={{ width: `${(step / 3) * 100}%` }} /></div>
+          </div>
+        ) : null}
         {state.status === "success" ? (
           <section className="booking-modal-success" role="status">
             <RememberBooking
@@ -176,6 +214,7 @@ export default function BookingModal({
               </div>
               <form
                 action={action}
+                ref={formRef}
                 onSubmit={() => { if (idempotencyInputRef.current && !idempotencyInputRef.current.value) idempotencyInputRef.current.value = crypto.randomUUID(); }}
                 className="booking-modal-form booking-stitch-form"
               >
@@ -204,6 +243,7 @@ export default function BookingModal({
                   Website
                   <input name="website" tabIndex={-1} autoComplete="off" />
                 </label>
+                <div data-booking-step="1" className={step === 1 ? "booking-step" : "booking-step booking-step-hidden"}>
                 <section className="booking-suite-section">
                   <span>CHOOSE YOUR STAY</span>
                   <div className="booking-room-options">
@@ -279,6 +319,8 @@ export default function BookingModal({
                     </label>
                   </div>
                 </section>
+                </div>
+                <div data-booking-step="2" className={step === 2 ? "booking-step" : "booking-step booking-step-hidden"}>
                 <section className="booking-stay-details">
                   <h3>
                     <UiIcon name="sparkles" size={17} /> Stay Details
@@ -398,6 +440,8 @@ export default function BookingModal({
                     />
                   </label>
                 </section>
+                </div>
+                <div data-booking-step="3" className={step === 3 ? "booking-step" : "booking-step booking-step-hidden"}>
                 <>
                   <BookingPriceReceipt
                     checkIn={selectedCheckIn}
@@ -449,15 +493,10 @@ export default function BookingModal({
                     </a>
                   </div>
                 </>
+                </div>
                 <div className="booking-step-actions">
-                  <button
-                    className="booking-modal-submit"
-                    type="submit"
-                    disabled={pending}
-                  >
-                    <UiIcon name="message" size={17} />
-                    {pending ? "Sending request…" : "Submit direct request"}
-                  </button>
+                  {step > 1 ? <button className="booking-step-back" type="button" onClick={() => setStep((value) => (value - 1) as 1 | 2)}>Back</button> : null}
+                  {step < 3 ? <button className="booking-step-next" type="button" onClick={continueToNextStep}>Continue <UiIcon name="arrow-right" size={16} /></button> : <button className="booking-modal-submit" type="submit" disabled={pending}><UiIcon name="message" size={17} />{pending ? "Sending request…" : "Submit direct request"}</button>}
                 </div>
               </form>
             </div>
