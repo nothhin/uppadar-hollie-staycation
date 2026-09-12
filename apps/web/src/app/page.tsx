@@ -57,8 +57,8 @@ export default function Home() {
       <Image src="/images/uppadar-hollie/lounge.jpg" alt="Uppadar Hollie lounge and kitchen" width={520} height={640} />
     </section>
 
-    <section className="pwa-booking" id="availability">
-      <div className="pwa-book-heading"><span>LIVE AVAILABILITY · DIRECT WITH HOST</span><h2>Reserve your Cebu stay.</h2><p>Choose your preferred dates and contact Uppadar Hollie directly. Rates and guest limits will be confirmed by the host.</p></div>
+    <section className="pwa-booking" id="availability" tabIndex={-1} aria-labelledby="availability-heading">
+      <div className="pwa-book-heading"><span>LIVE AVAILABILITY · DIRECT WITH HOST</span><h2 id="availability-heading">Reserve your Cebu stay.</h2><p>Choose your preferred dates and contact Uppadar Hollie directly. Rates and guest limits will be confirmed by the host.</p></div>
       <div className="pwa-config-card"><span>STAY CONFIGURATION</span><article><div><strong>Entire two-bedroom condo</strong><small>Fully furnished · Kitchen · Smart lock</small></div><b>Ask host</b></article><article><div><strong>Perfect for your Cebu visit</strong><small>Family · Friends · Business travel</small></div><b>Flexible</b></article></div>
       <AvailabilityCalendar />
       <div className="pwa-returning"><strong>Already sent a request?</strong><SavedBookingLink /></div>
