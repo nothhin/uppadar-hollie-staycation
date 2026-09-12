@@ -70,6 +70,7 @@ export default function BookingModal({
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    document.body.classList.add("booking-modal-open");
     document.body.style.overflow = "hidden";
     dialogRef.current?.focus();
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -78,6 +79,7 @@ export default function BookingModal({
     window.addEventListener("keydown", closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.classList.remove("booking-modal-open");
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [onClose]);
