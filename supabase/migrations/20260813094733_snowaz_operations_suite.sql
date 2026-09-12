@@ -189,5 +189,4 @@ language sql stable security definer set search_path='' as $$
     greatest(b.total_minor-coalesce((select sum(case when p.direction='payment' then p.amount_minor else -p.amount_minor end) from public.booking_payments p where p.booking_request_id=b.id and p.status='recorded'),0),0)::bigint
   from public.booking_requests b where 'SNOWAZ-'||upper(substr(replace(b.id::text,'-',''),1,8))=upper(trim(booking_reference)) and regexp_replace(b.phone,'\D','','g')=regexp_replace(guest_phone,'\D','','g') limit 1
 $$;
-revoke all on function public.lookup_snowaz_booking_status(text,text) from public;
-grant execute on function public.lookup_snowaz_booking_status(text,text) to anon,authenticated;
+revoke all on function public.lookup_snowaz_booking_status(text,text) from public, anon, authenticated;

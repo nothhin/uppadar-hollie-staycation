@@ -8,5 +8,4 @@ language sql stable security definer set search_path = '' as $$
     and regexp_replace(b.phone, '[^0-9]', '', 'g') = regexp_replace(guest_phone, '[^0-9]', '', 'g')
   limit 1
 $$;
-revoke all on function public.lookup_snowaz_booking_status(text,text) from public;
-grant execute on function public.lookup_snowaz_booking_status(text,text) to anon, authenticated;
+revoke all on function public.lookup_snowaz_booking_status(text,text) from public, anon, authenticated;
