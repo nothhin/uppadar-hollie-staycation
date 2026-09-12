@@ -28,7 +28,7 @@ export default async function BookingPage({ searchParams }: { searchParams: Prom
         <BookingPriceFields initialCheckIn={params.checkIn} initialCheckOut={params.checkOut} initialGuests={params.guests} />
         <label><span>Full name</span><input name="fullName" autoComplete="name" required /></label>
         <label><span>Email address (optional)</span><input name="email" type="email" autoComplete="email" /></label>
-        <label><span>Contact number (required)</span><input name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="09xx xxx xxxx" required /><small>Uppadar Hollie will call this number about your request.</small></label>
+        <label><span>Contact number (required)</span><input name="phone" type="tel" autoComplete="tel" inputMode="numeric" placeholder="09xxxxxxxxx" pattern="09[0-9]{9}" minLength={11} maxLength={11} required /><small>Use an 11-digit Philippine mobile number starting with 09.</small></label>
         <label><span>Special requests (optional)</span><textarea name="specialRequests" rows={4} maxLength={1000} placeholder="Arrival time, celebration, or anything Uppadar Hollie should know" /></label>
         <label className={styles.consent}><input name="consent" type="checkbox" required /><span>I agree that Uppadar Hollie may use my contact and stay details to respond to this request. I have read the <Link href="/privacy">Privacy Notice</Link> and <Link href="/cookies">Cookie Notice</Link>. This does not confirm a reservation, and payment instructions are handled offline.</span></label>
         <div className={styles.saved}><strong><UiIcon name="bookmark" size={15} /> Saved to this device</strong><span>Your booking draft stays available on this device.</span></div>

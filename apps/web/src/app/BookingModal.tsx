@@ -379,9 +379,12 @@ export default function BookingModal({
                         name="phone"
                         type="tel"
                         autoComplete="tel"
-                        inputMode="tel"
-                        placeholder="09xx xxx xxxx"
-                        required
+                      inputMode="numeric"
+                      placeholder="09xxxxxxxxx"
+                      pattern="09[0-9]{9}"
+                      minLength={11}
+                      maxLength={11}
+                      required
                       />
                     </label>
                   </div>

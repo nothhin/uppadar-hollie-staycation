@@ -43,7 +43,7 @@ export const availabilitySearchSchema = staySchema.extend({
 export const guestDetailsSchema = z.object({
   fullName: z.string().trim().min(2).max(120),
   email: z.string().trim().toLowerCase().email().max(254),
-  phone: z.string().trim().min(7).max(30).optional().or(z.literal("")),
+  phone: z.string().trim().regex(/^09\d{9}$/, "Enter a valid Philippine mobile number starting with 09 (11 digits).").optional().or(z.literal("")),
 });
 
 export const reservationRequestSchema = staySchema.extend({
@@ -70,7 +70,7 @@ export const bookingEnquirySchema = staySchema.extend({
       z.literal(""),
       z.string().trim().toLowerCase().email().max(254),
     ]),
-    phone: z.string().trim().min(7).max(30),
+    phone: z.string().trim().regex(/^09\d{9}$/, "Enter a valid Philippine mobile number starting with 09 (11 digits)."),
     preferredContact: z.literal("phone"),
     specialRequests: z.string().trim().max(1_000).optional().or(z.literal("")),
     consent: z.literal("on", {
