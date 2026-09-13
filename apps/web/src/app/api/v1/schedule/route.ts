@@ -1,4 +1,6 @@
 import { stayDateSchema, stayNights } from "@uppadar-hollie/shared/booking";
+import { after } from "next/server";
+import { syncAirbnbCalendarIfStale } from "@/lib/server/airbnb-calendar";
 import { createPublicSupabaseClient } from "@/lib/supabase/public-server";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +28,13 @@ export async function GET(request: Request) {
       range_end: to.data,
     });
     if (error) throw error;
+
+    // Keep availability fresh without delaying the public calendar response.
+    // A Vercel cron can call the dedicated sync route as well; this fallback
+    // keeps the calendar self-healing when the scheduler is unavailable.
+    after(() => syncAirbnbCalendarIfStale().catch((syncError: unknown) => {
+      console.warn("[airbnb-calendar] background sync failed", syncError instanceof Error ? syncError.message : "unknown error");
+    }));
 
     return Response.json({ requestId, data: { from: from.data, to: to.data, ranges: [
       ...(data ?? []).map((range: { check_in: string; check_out: string; display_status: string; public_label: string | null }) => ({ checkIn: range.check_in, checkOut: range.check_out, status: range.display_status, label: range.public_label })),

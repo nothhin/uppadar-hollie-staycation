@@ -15,6 +15,10 @@ import {
   type OpsBooking,
   type OpsNotification,
 } from "./OperationsClient";
+import AirbnbCalendarSyncPanel, {
+  type AirbnbSyncPanelStatus,
+} from "./AirbnbCalendarSyncPanel";
+import { isAirbnbCalendarConfigured } from "@/lib/server/airbnb-calendar";
 import styles from "../admin.module.css";
 export const metadata: Metadata = {
   title: "Housekeeping & finance | Uppadar Hollie Staycation Cebu",
@@ -25,6 +29,15 @@ type Operations = {
   bookings: OpsBooking[];
   blocks: DateBlock[];
   notifications: OpsNotification[];
+};
+const emptyAirbnbStatus: AirbnbSyncPanelStatus = {
+  status: "never",
+  lastSucceededAt: null,
+  lastFailedAt: null,
+  lastError: null,
+  eventsSeen: 0,
+  conflictsSeen: 0,
+  activeEvents: 0,
 };
 const mobileClasses = {
   button: styles.mobileMenu,
@@ -41,6 +54,14 @@ export default async function OperationsPage() {
   const { data, error } = await supabase.rpc("staff_get_snowaz_operations");
   if (error || !data) throw new Error("Operations data is unavailable.");
   const ops = data as Operations;
+  const { data: airbnbStatusData } = await supabase.rpc("staff_get_snowaz_airbnb_sync_status");
+  const rawAirbnbStatus = (airbnbStatusData ?? {}) as Partial<AirbnbSyncPanelStatus>;
+  const airbnbStatus: AirbnbSyncPanelStatus = {
+    ...emptyAirbnbStatus,
+    ...rawAirbnbStatus,
+    status: rawAirbnbStatus.status ?? "never",
+  };
+  const airbnbConfiguration = isAirbnbCalendarConfigured();
   const active = ops.bookings.filter(
     (item) => !["cancelled", "declined"].includes(item.bookingStatus),
   );
@@ -148,6 +169,11 @@ export default async function OperationsPage() {
             ))}
           </section>
           <BookingOperations bookings={ops.bookings} />
+          <AirbnbCalendarSyncPanel
+            status={airbnbStatus}
+            importConfigured={airbnbConfiguration.importConfigured}
+            exportConfigured={airbnbConfiguration.exportConfigured}
+          />
           <div className={styles.operationsLowerGrid}>
             <DateBlocks blocks={ops.blocks} />
             <NotificationQueue notifications={ops.notifications} />

@@ -13,6 +13,13 @@ npm.cmd run dev --workspace web
 
 Open `http://localhost:3000`.
 
+## Airbnb calendar sync
+
+The production booking flow includes a protected two-way iCalendar integration
+for Airbnb. Follow [docs/airbnb-calendar-sync.md](docs/airbnb-calendar-sync.md)
+to configure the server-only feed URL, export token, Supabase service key, and
+scheduled sync before enabling it for guests.
+
 ## Before enabling direct booking
 
 1. Confirm the maximum guest count and bedroom sleeping arrangements.
