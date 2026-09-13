@@ -100,7 +100,7 @@ export default async function OperationsPage() {
               <p className={styles.eyebrow}>Uppadar Hollie control center</p>
               <h1>Operations & finance.</h1>
               <p>
-                Edit stays, verify guests, record payments, block dates, and
+                Review stays, verify guests, record payments, block dates, and
                 track follow-ups from one workspace.
               </p>
             </div>
