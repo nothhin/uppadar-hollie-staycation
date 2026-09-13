@@ -118,10 +118,10 @@ export default function BookingPriceReceipt({
         {receipt.additionalGuests > 0 ? (
           <div className="booking-receipt-additional">
             <dt>
-              Additional pax
+              Second-bedroom occupancy adjustment
               <br />
               <small>
-                {receipt.additionalGuests} pax × ₱250 × {receipt.nights} night
+                {php.format(receipt.additionalGuestChargeMinor / receipt.nights / 100)} per night × {receipt.nights} night
                 {receipt.nights === 1 ? "" : "s"}
               </small>
             </dt>
