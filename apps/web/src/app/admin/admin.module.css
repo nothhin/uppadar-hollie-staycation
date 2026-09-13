@@ -2367,3 +2367,13 @@
 }
 .operationsHistory[open] summary::after { content: "−"; }
 .operationsHistoryBody { margin-top: 10px; }
+.airbnbLinkForm { margin-top: 18px; padding: 16px; border: 1px solid #e6dacd; border-radius: 12px; background: #faf8f5; }
+.airbnbLinkForm label { display: block; color: #3c342d; font-size: 13px; font-weight: 800; }
+.airbnbLinkForm p { margin: 6px 0 12px; color: #75685e; font-size: 12px; line-height: 1.5; }
+.airbnbLinkForm > div { display: flex; gap: 10px; }
+.airbnbLinkForm input { min-width: 0; flex: 1; padding: 12px; border: 1px solid #d9c9b8; border-radius: 9px; background: #fff; color: #3c342d; font: inherit; font-size: 13px; }
+.airbnbLinkForm button { min-height: 42px; padding: 10px 16px; border: 0; border-radius: 9px; background: #3c342d; color: #fff; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.airbnbLinkForm button:disabled { opacity: .5; cursor: not-allowed; }
+.airbnbLinkForm small { display: block; margin-top: 10px; color: #75685e; font-size: 11px; }
+.airbnbLinkForm .airbnbRestoreButton { margin-top: 10px; border: 1px solid #d9c9b8; background: #fff; color: #3c342d; }
+@media (max-width: 720px) { .airbnbLinkForm > div { flex-direction: column; } .airbnbLinkForm button { width: 100%; } }

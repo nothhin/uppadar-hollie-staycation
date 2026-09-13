@@ -61,7 +61,7 @@ export default async function OperationsPage() {
     ...rawAirbnbStatus,
     status: rawAirbnbStatus.status ?? "never",
   };
-  const airbnbConfiguration = isAirbnbCalendarConfigured();
+  const airbnbConfiguration = await isAirbnbCalendarConfigured();
   const active = ops.bookings.filter(
     (item) => !["cancelled", "declined"].includes(item.bookingStatus),
   );
@@ -173,6 +173,7 @@ export default async function OperationsPage() {
             status={airbnbStatus}
             importConfigured={airbnbConfiguration.importConfigured}
             exportConfigured={airbnbConfiguration.exportConfigured}
+            importSource={airbnbConfiguration.importSource}
           />
           <div className={styles.operationsLowerGrid}>
             <DateBlocks blocks={ops.blocks} />

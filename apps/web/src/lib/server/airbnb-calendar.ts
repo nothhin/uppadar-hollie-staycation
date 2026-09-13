@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import {
   parseAirbnbCalendar,
 } from "./airbnb-calendar-parser";
+import { normalizeAirbnbIcalUrl } from "./airbnb-calendar-url";
 export { isAirbnbExportTokenValid, parseAirbnbCalendar } from "./airbnb-calendar-parser";
 
 const MAX_ICAL_BYTES = 1_000_000;
@@ -66,6 +67,41 @@ function createSupabaseAdminClient() {
   return createClient(url, configuration.serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+}
+
+export async function getAirbnbImportSource() {
+  const fallback = getAirbnbCalendarConfiguration().importUrl;
+  const admin = createSupabaseAdminClient();
+  if (!admin) return { importUrl: fallback, source: fallback ? "vercel" as const : "none" as const };
+  const { data, error } = await admin.from("external_calendar_settings")
+    .select("import_url")
+    .eq("provider", "airbnb")
+    .maybeSingle();
+  // Never silently import a different Vercel feed during a settings outage.
+  // Doing so could cancel dates from the admin-configured Airbnb calendar.
+  if (error) throw new Error("Airbnb calendar settings could not be read.");
+  const override = data?.import_url ? normalizeAirbnbIcalUrl(data.import_url) : null;
+  if (data?.import_url && !override) throw new Error("Saved Airbnb calendar link is invalid.");
+  return override
+    ? { importUrl: override, source: "admin" as const }
+    : { importUrl: fallback, source: fallback ? "vercel" as const : "none" as const };
+}
+
+export async function saveAirbnbImportUrl(value: string) {
+  const importUrl = normalizeAirbnbIcalUrl(value);
+  if (!importUrl) throw new Error("Paste the full Airbnb export link ending in .ics, including its private t parameter.");
+  const admin = createSupabaseAdminClient();
+  if (!admin) throw new Error("Calendar settings are unavailable.");
+  const { error } = await admin.from("external_calendar_settings")
+    .upsert({ provider: "airbnb", import_url: importUrl, updated_at: new Date().toISOString() }, { onConflict: "provider" });
+  if (error) throw new Error("Could not save the Airbnb calendar link.");
+}
+
+export async function clearAirbnbImportUrl() {
+  const admin = createSupabaseAdminClient();
+  if (!admin) throw new Error("Calendar settings are unavailable.");
+  const { error } = await admin.from("external_calendar_settings").delete().eq("provider", "airbnb");
+  if (error) throw new Error("Could not restore the Vercel calendar link.");
 }
 
 function formatIcalDate(value: string) {
@@ -177,15 +213,15 @@ function hasOverlap(left: DateRange, right: DateRange) {
 }
 
 export async function syncAirbnbCalendar(): Promise<AirbnbSyncResult> {
-  const configuration = getAirbnbCalendarConfiguration();
-  if (!configuration.importUrl) throw new Error("Airbnb calendar import is not configured.");
+  const { importUrl } = await getAirbnbImportSource();
+  if (!importUrl) throw new Error("Airbnb calendar import is not configured.");
   const admin = createSupabaseAdminClient();
   if (!admin) throw new Error("Supabase server credentials are not configured.");
   const startedAt = new Date().toISOString();
   await updateSyncState({ status: "running", last_started_at: startedAt, last_error: null, updated_at: startedAt });
 
   try {
-    const events = await fetchAirbnbCalendar(configuration.importUrl);
+    const events = await fetchAirbnbCalendar(importUrl);
     // An empty response can be transient. Never clear known Airbnb holds from
     // a feed that contains no events; that could expose reserved dates.
     if (events.length === 0) {
@@ -264,18 +300,20 @@ export async function getAirbnbSyncStatus(): Promise<AirbnbSyncStatus> {
 }
 
 export async function syncAirbnbCalendarIfStale() {
-  const configuration = getAirbnbCalendarConfiguration();
-  if (!configuration.importUrl || !configuration.serviceRoleKey) return;
+  const { importUrl } = await getAirbnbImportSource();
+  if (!importUrl || !getAirbnbCalendarConfiguration().serviceRoleKey) return;
   const status = await getAirbnbSyncStatus();
   const lastSync = status.lastSucceededAt ? Date.parse(status.lastSucceededAt) : 0;
   if (status.status === "running" || (lastSync > 0 && Date.now() - lastSync < SYNC_STALE_AFTER_MS)) return;
   await syncAirbnbCalendar();
 }
 
-export function isAirbnbCalendarConfigured() {
+export async function isAirbnbCalendarConfigured() {
   const configuration = getAirbnbCalendarConfiguration();
+  const { importUrl, source } = await getAirbnbImportSource();
   return {
-    importConfigured: Boolean(configuration.importUrl && configuration.serviceRoleKey),
+    importConfigured: Boolean(importUrl && configuration.serviceRoleKey),
     exportConfigured: Boolean(configuration.exportToken && configuration.serviceRoleKey),
+    importSource: source,
   };
 }
