@@ -27,6 +27,8 @@ export async function GET(
       },
     });
   } catch {
+    // Never log the request URL or token: the calendar URL is a bearer secret.
+    console.error("Airbnb export feed unavailable after calendar read");
     return new Response("Calendar temporarily unavailable", {
       status: 503,
       headers: { "Cache-Control": "no-store, max-age=0" },

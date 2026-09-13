@@ -80,18 +80,27 @@ async function loadWebsiteCalendarRanges() {
   const admin = createSupabaseAdminClient();
   if (!admin) throw new Error("Supabase server credentials are not configured.");
 
-  const [bookings, blocks, reservations] = await Promise.all([
-    admin.from("booking_requests")
-      .select("id,check_in,check_out,status")
-      .in("status", ["pending", "contacted", "confirmed"]),
-    admin.from("property_date_blocks")
-      .select("id,check_in,check_out,status")
-      .eq("status", "active"),
-    admin.from("snowaz_calendar_ranges")
-      .select("source_kind,source_id,check_in,check_out,display_status")
-      .eq("source_kind", "reservation")
-      .eq("display_status", "booked"),
-  ]);
+  async function readRanges() {
+    return Promise.all([
+      admin.from("booking_requests")
+        .select("id,check_in,check_out,status")
+        .in("status", ["pending", "contacted", "confirmed"]),
+      admin.from("property_date_blocks")
+        .select("id,check_in,check_out,status")
+        .eq("status", "active"),
+      admin.from("snowaz_calendar_ranges")
+        .select("source_kind,source_id,check_in,check_out,display_status")
+        .eq("source_kind", "reservation")
+        .eq("display_status", "booked"),
+    ]);
+  }
+  let [bookings, blocks, reservations] = await readRanges();
+  if (bookings.error || blocks.error || reservations.error) {
+    // The calendar is polled by Airbnb; a brief Data API interruption should
+    // not make a valid subscription look like an invalid feed.
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    [bookings, blocks, reservations] = await readRanges();
+  }
   const firstError = bookings.error || blocks.error || reservations.error;
   if (firstError) throw new Error("Website calendar data could not be read.");
 
