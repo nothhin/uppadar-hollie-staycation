@@ -7,7 +7,6 @@ import {
   manageDateBlock,
   recordPartialPayment,
   reversePayment,
-  updateBookingOperations,
   type OperationActionState,
 } from "../actions";
 import { showError, showSuccess } from "@/lib/sweetalert";
@@ -83,10 +82,6 @@ function BookingModal({
   booking: OpsBooking;
   onClose: () => void;
 }) {
-  const [editState, editAction, editing] = useActionState(
-    updateBookingOperations,
-    initial,
-  );
   const [payState, payAction, paying] = useActionState(
     recordPartialPayment,
     initial,
@@ -96,7 +91,6 @@ function BookingModal({
     initial,
   );
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  useActionNotice(editState);
   useActionNotice(payState);
   useActionNotice(reverseState);
   useEffect(() => {
@@ -154,86 +148,6 @@ function BookingModal({
             </div>
           </section>
           <div className={styles.operationsFormsGrid}>
-            <form action={editAction} className={styles.operationsForm}>
-              <div>
-                <p className={styles.eyebrow}>Stay details</p>
-                <h3>Edit, reprice, or update status</h3>
-              </div>
-              <input type="hidden" name="bookingId" value={booking.id} />
-              <div className={styles.operationsFieldGrid}>
-                <label>
-                  <span>Check-in</span>
-                  <input
-                    name="checkIn"
-                    type="date"
-                    defaultValue={booking.checkIn}
-                    required
-                  />
-                </label>
-                <label>
-                  <span>Check-out</span>
-                  <input
-                    name="checkOut"
-                    type="date"
-                    defaultValue={booking.checkOut}
-                    required
-                  />
-                </label>
-                <label>
-                  <span>Guests</span>
-                  <input
-                    name="guests"
-                    type="number"
-                    min="1"
-                    max="8"
-                    defaultValue={booking.guestCount}
-                    required
-                  />
-                </label>
-                <label>
-                  <span>Bedroom</span>
-                  <select name="bedroom" defaultValue={booking.bedroomChoice}>
-                    <option value="bedroom_1">Bedroom 1</option>
-                    <option value="bedroom_2">Bedroom 2</option>
-                    <option value="both_bedrooms">Both bedrooms</option>
-                  </select>
-                </label>
-                <label>
-                  <span>Stay status</span>
-                  <select name="stayStatus" defaultValue={booking.stayStatus}>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="checked_in">Checked in</option>
-                    <option value="checked_out">Checked out / completed</option>
-                    <option value="no_show">No-show</option>
-                  </select>
-                </label>
-                <label>
-                  <span>ID type</span>
-                  <input
-                    name="idType"
-                    maxLength={40}
-                    defaultValue={booking.idType ?? ""}
-                    placeholder="Passport, license…"
-                  />
-                </label>
-                <label>
-                  <span>Last 4 ID characters</span>
-                  <input
-                    name="idLast4"
-                    minLength={4}
-                    maxLength={4}
-                    defaultValue={booking.idLast4 ?? ""}
-                    placeholder="1234"
-                  />
-                </label>
-              </div>
-              <button disabled={editing}>
-                {editing ? "Saving…" : "Save booking changes"}
-              </button>
-              <small>
-                Availability and pricing are checked again before saving.
-              </small>
-            </form>
             <section className={styles.operationsForm}>
               <div>
                 <p className={styles.eyebrow}>Payment ledger</p>
@@ -368,8 +282,8 @@ export function BookingOperations({ bookings }: { bookings: OpsBooking[] }) {
           <p className={styles.eyebrow}>Booking workspace</p>
           <h2>Stay and payment operations</h2>
           <p>
-            Choose a booking card to edit dates, guests, status, identification,
-            and payments.
+            Choose a booking card to review its payment ledger and record a
+            remaining balance.
           </p>
         </div>
         <span className={styles.countBadge}>{filtered.length} shown</span>

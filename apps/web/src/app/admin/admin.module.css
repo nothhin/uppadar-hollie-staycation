@@ -2305,3 +2305,6 @@
   .balanceForm { padding: 15px; }
   .balanceForm > button { width: 100%; }
 }
+
+/* Operations now focuses on the payment ledger; the unreliable booking editor is removed. */
+.operationsFormsGrid { grid-template-columns: minmax(0, 1fr); }
