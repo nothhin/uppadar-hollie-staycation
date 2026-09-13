@@ -5,6 +5,9 @@ const php = new Intl.NumberFormat("en-PH", { style:"currency", currency:"PHP", m
 const bedroomLabels = { bedroom_1:"Master bedroom · Queen bed", bedroom_2:"Second bedroom · Double-size bunk bed", both_bedrooms:"Legacy two-bedroom booking" } as const;
 
 export function AdminPriceReceipt({ booking }: { booking:AdminEnquiry }) {
+  // The dashboard balance includes recorded deposit payments, while balancePaidMinor
+  // excludes the verified deposit. Show the difference so the ledger adds up.
+  const appliedDepositMinor = Math.max(0, booking.totalMinor - booking.balancePaidMinor - booking.remainingBalanceMinor);
   return <section className={styles.adminReceipt} aria-label="Booking payment receipt"><header><strong>Payment summary</strong><span>{booking.remainingBalanceMinor === 0 ? "Fully paid" : "Balance due"}</span></header><dl>
     {booking.bookingReference?<div><dt>Booking reference</dt><dd>{booking.bookingReference}</dd></div>:null}
     <div><dt>Guest contact</dt><dd>{booking.phone}{booking.email?` · ${booking.email}`:""}</dd></div>
@@ -21,7 +24,8 @@ export function AdminPriceReceipt({ booking }: { booking:AdminEnquiry }) {
     {(booking.extrasTotalMinor??0)>0?<div><dt>Extras total</dt><dd>+{php.format((booking.extrasTotalMinor??0)/100)}</dd></div>:null}
     <div><dt>Final total</dt><dd>{php.format(booking.totalMinor/100)}</dd></div>
     <div><dt>Refundable security deposit</dt><dd>{php.format(booking.depositAmountMinor/100)}</dd></div>
-    <div><dt>Balance paid</dt><dd>−{php.format(booking.balancePaidMinor/100)}</dd></div>
+    {appliedDepositMinor>0?<div><dt>Verified deposit applied</dt><dd>−{php.format(appliedDepositMinor/100)}</dd></div>:null}
+    <div><dt>Other payments recorded</dt><dd>{booking.balancePaidMinor>0?"−":""}{php.format(booking.balancePaidMinor/100)}</dd></div>
     <div className={styles.adminReceiptBalance}><dt>Remaining balance</dt><dd>{php.format(booking.remainingBalanceMinor/100)}</dd></div>
     <div><dt>Status</dt><dd>{booking.status.replaceAll("_"," ")} · {booking.depositStatus.replaceAll("_"," ")}</dd></div>
   </dl></section>;
