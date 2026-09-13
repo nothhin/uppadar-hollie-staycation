@@ -79,16 +79,17 @@ function escapeIcalText(value: string) {
 async function loadWebsiteCalendarRanges() {
   const admin = createSupabaseAdminClient();
   if (!admin) throw new Error("Supabase server credentials are not configured.");
+  const calendarClient = admin;
 
   async function readRanges() {
     return Promise.all([
-      admin.from("booking_requests")
+      calendarClient.from("booking_requests")
         .select("id,check_in,check_out,status")
         .in("status", ["pending", "contacted", "confirmed"]),
-      admin.from("property_date_blocks")
+      calendarClient.from("property_date_blocks")
         .select("id,check_in,check_out,status")
         .eq("status", "active"),
-      admin.from("snowaz_calendar_ranges")
+      calendarClient.from("snowaz_calendar_ranges")
         .select("source_kind,source_id,check_in,check_out,display_status")
         .eq("source_kind", "reservation")
         .eq("display_status", "booked"),
