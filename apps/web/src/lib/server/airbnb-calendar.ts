@@ -176,6 +176,11 @@ export async function syncAirbnbCalendar(): Promise<AirbnbSyncResult> {
 
   try {
     const events = await fetchAirbnbCalendar(configuration.importUrl);
+    // An empty response can be transient. Never clear known Airbnb holds from
+    // a feed that contains no events; that could expose reserved dates.
+    if (events.length === 0) {
+      throw new Error("Airbnb calendar returned no events; existing blocked dates were preserved.");
+    }
     const rows = events.map((event) => ({
       provider: "airbnb",
       external_uid: event.externalUid,

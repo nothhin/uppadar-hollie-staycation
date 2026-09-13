@@ -13,7 +13,8 @@ export async function GET(
 ) {
   const { token } = await params;
   const configuration = getAirbnbCalendarConfiguration();
-  if (!isAirbnbExportTokenValid(token, configuration.exportToken)) {
+  const exportToken = token.endsWith(".ics") ? token.slice(0, -4) : token;
+  if (!isAirbnbExportTokenValid(exportToken, configuration.exportToken)) {
     return new Response("Not found", { status: 404 });
   }
   try {
