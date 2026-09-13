@@ -413,6 +413,11 @@ export function DateBlocks({ blocks }: { blocks: DateBlock[] }) {
             Prevent booking during maintenance or owner-use dates. The reopening
             date remains available.
           </p>
+          <p>
+            There is no date-count limit. “Block from” includes the arrival
+            date; “Reopen on” is exclusive, so the unit becomes available that
+            morning. Existing bookings still cannot be blocked.
+          </p>
         </div>
       </div>
       <form action={action} className={styles.operationsBlockForm}>
