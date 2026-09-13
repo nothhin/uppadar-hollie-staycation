@@ -2292,6 +2292,12 @@
   .bookingInfoModal h2 { font-size: clamp(22px, 6vw, 28px); line-height: 1.12; overflow-wrap: anywhere; }
   .bookingInfoModal > header > button { width: 40px; height: 40px; }
   .bookingModalBody { padding-block: 16px 24px; }
+  .bookingInfoGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .bookingInfoGrid > div { padding: 10px 12px; }
+  .bookingInfoGrid dt { font-size: 9px; }
+  .bookingInfoGrid dd { font-size: 12px; }
+  .bookingInfoGrid > div:first-child,
+  .bookingInfoGrid > div:nth-child(4) { grid-column: 1 / -1; }
   .adminReceipt dl div { gap: 12px; }
   .adminReceipt dt, .adminReceipt dd { font-size: 12px; line-height: 1.45; }
   .adminReceipt dt { flex: 0 0 42%; }
