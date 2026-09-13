@@ -96,8 +96,10 @@ export default function AvailabilityCalendar() {
       {cells.map((date, index) => {
         if (!date) return <span className="calendar-empty" aria-hidden="true" key={`empty-${index}`} />;
         const dateIso = iso(date); const past = dateIso < todayIso; const availability = availabilityFor(dateIso); const status = past ? "past" : availability.status;
-        return <button type="button" key={dateIso} disabled={past || status !== "open" || loading} data-status={status} aria-label={`${date.toLocaleDateString("en-PH", { dateStyle: "long" })}: ${status}`} onClick={() => chooseDate(date)}>
-          <strong>{date.getDate()}</strong><small>{loading ? "Checking" : status === "open" ? "Open" : status === "pending" ? "Pending" : status === "booked" ? "Booked" : status === "unavailable" ? availability.label : "Past"}</small>
+        const statusLabel = loading ? "Checking" : status === "open" ? "Open" : status === "pending" ? "Pending" : status === "booked" ? "Booked" : status === "unavailable" ? availability.label : "Past";
+        const accessibleLabel = status === "unavailable" ? `Unavailable: ${availability.label}` : statusLabel;
+        return <button type="button" key={dateIso} disabled={past || status !== "open" || loading} data-status={status} aria-label={`${date.toLocaleDateString("en-PH", { dateStyle: "long" })}: ${accessibleLabel}`} title={status === "unavailable" ? availability.label : undefined} onClick={() => chooseDate(date)}>
+          <strong>{date.getDate()}</strong><small>{statusLabel}</small>
         </button>;
       })}
     </div>

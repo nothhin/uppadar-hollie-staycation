@@ -2308,3 +2308,60 @@
 
 /* Operations now focuses on the payment ledger; the unreliable booking editor is removed. */
 .operationsFormsGrid { grid-template-columns: minmax(0, 1fr); }
+
+.operationsBlockSection {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #e8ddd1;
+}
+.operationsListHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.operationsListHeading h3 {
+  margin: 0;
+  color: #4c3b30;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.operationsListHeading > span,
+.operationsHistory summary b {
+  min-width: 24px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: #efe5d7;
+  color: #866333;
+  font-size: 8px;
+  text-align: center;
+}
+.operationsBlockSection > .operationsList { margin-top: 12px; }
+.operationsHistory {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e8ddd1;
+}
+.operationsHistory summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  color: #4c3b30;
+  font-size: 11px;
+  font-weight: 800;
+  list-style: none;
+}
+.operationsHistory summary::-webkit-details-marker { display: none; }
+.operationsHistory summary::after {
+  content: "＋";
+  margin-left: auto;
+  color: #a05d37;
+  font-size: 17px;
+  font-weight: 500;
+}
+.operationsHistory[open] summary::after { content: "−"; }
+.operationsHistoryBody { margin-top: 10px; }

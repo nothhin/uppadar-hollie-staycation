@@ -1,5 +1,12 @@
 "use client";
-import { useActionState, useEffect, useMemo, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { formatStayRange } from "@/lib/date-format";
@@ -18,6 +25,7 @@ const money = new Intl.NumberFormat("en-PH", {
   maximumFractionDigits: 0,
 });
 const PAGE_SIZE = 6;
+const DATE_BLOCK_PAGE_SIZE = 4;
 type OpsPayment = {
   id: string;
   direction: string;
@@ -402,7 +410,79 @@ export function BookingOperations({ bookings }: { bookings: OpsBooking[] }) {
 }
 export function DateBlocks({ blocks }: { blocks: DateBlock[] }) {
   const [state, action, pending] = useActionState(manageDateBlock, initial);
+  const [activePage, setActivePage] = useState(1);
+  const [releasedPage, setReleasedPage] = useState(1);
   useActionNotice(state);
+  const activeBlocks = useMemo(
+    () => blocks.filter((block) => block.status === "active"),
+    [blocks],
+  );
+  const releasedBlocks = useMemo(
+    () => blocks.filter((block) => block.status !== "active"),
+    [blocks],
+  );
+  const activePages = Math.max(
+    1,
+    Math.ceil(activeBlocks.length / DATE_BLOCK_PAGE_SIZE),
+  );
+  const releasedPages = Math.max(
+    1,
+    Math.ceil(releasedBlocks.length / DATE_BLOCK_PAGE_SIZE),
+  );
+  const currentActivePage = Math.min(activePage, activePages);
+  const currentReleasedPage = Math.min(releasedPage, releasedPages);
+  const visibleActiveBlocks = activeBlocks.slice(
+    (currentActivePage - 1) * DATE_BLOCK_PAGE_SIZE,
+    currentActivePage * DATE_BLOCK_PAGE_SIZE,
+  );
+  const visibleReleasedBlocks = releasedBlocks.slice(
+    (currentReleasedPage - 1) * DATE_BLOCK_PAGE_SIZE,
+    currentReleasedPage * DATE_BLOCK_PAGE_SIZE,
+  );
+  const renderPagination = (
+    currentPage: number,
+    pages: number,
+    setPage: Dispatch<SetStateAction<number>>,
+    label: string,
+  ) =>
+    pages > 1 ? (
+      <nav className={styles.pagination} aria-label={`${label} pages`}>
+        <button
+          type="button"
+          disabled={currentPage === 1}
+          onClick={() => setPage((page) => Math.max(1, page - 1))}
+        >
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {pages}
+        </span>
+        <button
+          type="button"
+          disabled={currentPage === pages}
+          onClick={() => setPage((page) => Math.min(pages, page + 1))}
+        >
+          Next
+        </button>
+      </nav>
+    ) : null;
+  const renderBlock = (block: DateBlock, canRelease: boolean) => (
+    <article key={block.id}>
+      <div>
+        <strong>{formatStayRange(block.checkIn, block.checkOut)}</strong>
+        <span>
+          {block.reason} · {block.status}
+        </span>
+      </div>
+      {canRelease ? (
+        <form action={action}>
+          <input type="hidden" name="blockId" value={block.id} />
+          <input type="hidden" name="release" value="true" />
+          <button disabled={pending}>Release</button>
+        </form>
+      ) : null}
+    </article>
+  );
   return (
     <section className={`${styles.panel} ${styles.operationsSidePanel}`}>
       <div className={styles.panelHeading}>
@@ -445,31 +525,44 @@ export function DateBlocks({ blocks }: { blocks: DateBlock[] }) {
           {pending ? "Saving…" : "Block dates"}
         </button>
       </form>
-      <div className={styles.operationsList}>
-        {blocks.length ? (
-          blocks.map((block) => (
-            <article key={block.id}>
-              <div>
-                <strong>
-                  {formatStayRange(block.checkIn, block.checkOut)}
-                </strong>
-                <span>
-                  {block.reason} · {block.status}
-                </span>
-              </div>
-              {block.status === "active" ? (
-                <form action={action}>
-                  <input type="hidden" name="blockId" value={block.id} />
-                  <input type="hidden" name="release" value="true" />
-                  <button>Release</button>
-                </form>
-              ) : null}
-            </article>
-          ))
-        ) : (
-          <p>No date blocks.</p>
+      <section className={styles.operationsBlockSection} aria-labelledby="active-date-blocks">
+        <div className={styles.operationsListHeading}>
+          <h3 id="active-date-blocks">Active blocks</h3>
+          <span>{activeBlocks.length}</span>
+        </div>
+        <div className={styles.operationsList}>
+          {visibleActiveBlocks.length ? (
+            visibleActiveBlocks.map((block) => renderBlock(block, true))
+          ) : (
+            <p>No active date blocks.</p>
+          )}
+        </div>
+        {renderPagination(
+          currentActivePage,
+          activePages,
+          setActivePage,
+          "Active date block",
         )}
-      </div>
+      </section>
+      {releasedBlocks.length ? (
+        <details className={styles.operationsHistory}>
+          <summary>
+            <span>Released history</span>
+            <b>{releasedBlocks.length}</b>
+          </summary>
+          <div className={styles.operationsHistoryBody}>
+            <div className={styles.operationsList}>
+              {visibleReleasedBlocks.map((block) => renderBlock(block, false))}
+            </div>
+            {renderPagination(
+              currentReleasedPage,
+              releasedPages,
+              setReleasedPage,
+              "Released date block",
+            )}
+          </div>
+        </details>
+      ) : null}
     </section>
   );
 }
