@@ -1144,6 +1144,62 @@
 .calendarLegend span[data-status="confirmed"]::before {
   background: #78a589;
 }
+.calendarSubcopy { margin: 8px 0 0; max-width: 640px; color: #766d65; font-size: 11px; line-height: 1.55; }
+.adminCalendarGrid button[data-status="open"] { border-color: #b6d7c2; background: #f1faf4; }
+.adminCalendarGrid button[data-status="pending"] { border-color: #e7c47f; background: #fff6df; }
+.adminCalendarGrid button[data-status="booked"] { border-color: #c69e93; background: #faece8; color: #86463c; }
+.adminCalendarGrid button[data-status="blocked"] { border-color: #b67868; background: #f7e7e2; color: #8f443a; }
+.adminCalendarGrid button[data-status="unavailable"] { border-color: #c7bcb3; background: #f1eeeb; color: #70665f; }
+.adminCalendarGrid button[data-status="past"] { border-color: #e8e2dc; background: #f8f6f3; color: #a39b94; }
+.adminCalendarGrid button[data-status="open"]:hover,
+.adminCalendarGrid button[data-status="blocked"]:hover,
+.adminCalendarGrid button[data-status="booked"]:hover,
+.adminCalendarGrid button[data-status="pending"]:hover,
+.adminCalendarGrid button[data-status="unavailable"]:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(65,48,35,.1); }
+.adminCalendarGrid button em { display: block; max-width: 100%; overflow: hidden; color: currentColor; font-size: 7px; font-style: normal; font-weight: 700; line-height: 1.2; text-overflow: ellipsis; text-transform: none; white-space: nowrap; }
+.calendarLegend span[data-status="open"]::before { background: #78a589; }
+.calendarLegend span[data-status="booked"]::before { background: #b87568; }
+.calendarLegend span[data-status="blocked"]::before { background: #a45143; }
+.calendarLegend span[data-status="unavailable"]::before { background: #9d9289; }
+.calendarLegend span[data-status="past"]::before { background: #d3cbc3; }
+.calendarModal form { margin-top: 18px; }
+.calendarBlockForm { display: grid; gap: 12px; }
+.calendarBlockForm label { display: grid; gap: 6px; }
+.calendarBlockForm label span { color: #75685e; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.calendarBlockForm input { width: 100%; min-height: 43px; padding: 0 12px; border: 1px solid #ddd1c4; border-radius: 10px; background: #fff; color: #302a25; font: inherit; font-size: 11px; }
+.calendarBlockForm > button, .calendarReleaseButton { min-height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: #3c342d; color: #fffaf3; font: inherit; font-size: 10px; font-weight: 800; cursor: pointer; }
+.calendarBlockForm > button:disabled, .calendarReleaseButton:disabled { cursor: wait; opacity: .6; }
+.calendarFormHint { margin: 0; color: #766d65; font-size: 10px; line-height: 1.55; }
+.calendarConflict { display: grid; gap: 4px; padding: 12px; border: 1px solid #e3b2a8; border-radius: 10px; background: #fff0ed; color: #90483d; font-size: 10px; line-height: 1.45; }
+.calendarSuccess { padding: 12px; border: 1px solid #b8d8c2; border-radius: 10px; background: #edf8f1; color: #2e6b48; font-size: 10px; line-height: 1.45; }
+.calendarDetails { display: grid; gap: 12px; }
+.calendarStatusBanner { display: grid; gap: 4px; padding: 14px; border-radius: 12px; background: #edf8f1; color: #2e6b48; }
+.calendarStatusBanner[data-status="pending"] { background: #fff6df; color: #87632c; }
+.calendarStatusBanner[data-status="booked"], .calendarStatusBanner[data-status="blocked"] { background: #faece8; color: #8b463b; }
+.calendarStatusBanner[data-status="unavailable"] { background: #f1eeeb; color: #70665f; }
+.calendarStatusBanner[data-status="past"] { background: #f5f2ee; color: #877e76; }
+.calendarStatusBanner strong { font-size: 13px; }
+.calendarStatusBanner span { font-size: 10px; line-height: 1.45; }
+.calendarDetailCard { padding: 16px; border: 1px solid #e8ddd1; border-radius: 13px; background: #fff; }
+.calendarDetailCard > div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.calendarDetailCard > div:first-child strong { font-family: var(--font-display), serif; font-size: 21px; }
+.calendarDetailCard > div:first-child span { color: #8b642c; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+.calendarDetailCard dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 14px 0 0; }
+.calendarDetailCard dt { color: #8b8178; font-size: 8px; font-weight: 800; text-transform: uppercase; }
+.calendarDetailCard dd { margin: 3px 0 0; font-size: 11px; overflow-wrap: anywhere; }
+.calendarReleaseButton { margin-top: 14px; background: #984a40; }
+.calendarSecondaryButton { min-height: 40px; border: 1px solid #e0d3c4; border-radius: 999px; background: #fff; color: #5c5147; font: inherit; font-size: 10px; font-weight: 800; cursor: pointer; }
+@media (max-width: 720px) {
+  .calendarSubcopy { font-size: 10px; }
+  .adminCalendarGrid { gap: 4px; margin-top: 16px; }
+  .adminCalendarGrid button, .adminCalendarGrid > span:not(.calendarWeekday) { min-height: 72px; padding: 7px 6px; border-radius: 9px; }
+  .adminCalendarGrid button strong { font-size: 14px; }
+  .adminCalendarGrid button small { font-size: 6px; letter-spacing: -.01em; }
+  .adminCalendarGrid button em { font-size: 6px; }
+  .calendarModal { max-height: 92svh; padding: 20px 16px; border-radius: 18px; }
+  .calendarModal h2 { font-size: 28px; }
+  .calendarDetailCard dl { grid-template-columns: 1fr; gap: 9px; }
+}
 .calendarModalBackdrop {
   position: fixed;
   z-index: 120;

@@ -623,11 +623,12 @@ export async function manageDateBlock(
   if (error || !data)
     return {
       status: "error",
-      message: error?.message.includes("conflict")
+      message: error?.message?.toLowerCase().includes("conflict")
         ? "This block overlaps an active booking."
-        : "The date block could not be changed.",
+      : "The date block could not be changed.",
     };
   revalidatePath("/admin/operations");
+  revalidatePath("/admin");
   revalidatePath("/");
   return {
     status: "success",

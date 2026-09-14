@@ -8,7 +8,12 @@ import { signOut } from "./actions";
 import { AdminBottomNav, AdminMobileNav, AdminNav } from "./AdminNav";
 import { AdminLiveRefresh } from "./AdminLiveRefresh";
 import { AdminFlashAlert } from "./AdminFlashAlert";
-import { AdminCalendar } from "./AdminCalendar";
+import {
+  AdminCalendar,
+  type AdminCalendarBlock,
+  type AdminCalendarBooking,
+  type AdminCalendarExternalBlock,
+} from "./AdminCalendar";
 import {
   BookingRequestsPanel,
   type AdminEnquiry,
@@ -21,6 +26,11 @@ export const metadata: Metadata = {
 };
 export const dynamic = "force-dynamic";
 type DashboardData = { enquiries: AdminEnquiry[] };
+type CalendarData = {
+  bookings: AdminCalendarBooking[];
+  blocks: AdminCalendarBlock[];
+  externalBlocks: AdminCalendarExternalBlock[];
+};
 const mobileClasses = (styles: { [key: string]: string }) => ({
   button: styles.mobileMenu,
   backdrop: styles.mobileBackdrop,
@@ -42,6 +52,15 @@ export default async function AdminDashboard({
   const { data, error } = await supabase.rpc("get_snowaz_admin_dashboard");
   if (error || !data) throw new Error("Admin data is unavailable.");
   const { enquiries } = data as DashboardData;
+  const { data: calendarData, error: calendarError } = await supabase.rpc(
+    "staff_get_snowaz_calendar",
+  );
+  if (calendarError || !calendarData) {
+    console.error("[admin-calendar] load failed", {
+      code: calendarError?.code ?? "missing-data",
+    });
+    throw new Error("Admin calendar data is unavailable.");
+  }
   const now = new Date();
   const today = new Intl.DateTimeFormat("en-CA", {
     timeZone: propertyProfile.timezone,
@@ -164,7 +183,12 @@ export default async function AdminDashboard({
         Open confirmed stays <span>{confirmed.length}</span>
       </Link>
       <BookingRequestsPanel enquiries={enquiries} canManage={canManage} />
-          <AdminCalendar bookings={enquiries} />
+          <AdminCalendar
+            bookings={(calendarData as CalendarData).bookings ?? []}
+            blocks={(calendarData as CalendarData).blocks ?? []}
+            externalBlocks={(calendarData as CalendarData).externalBlocks ?? []}
+            canManage={canManage}
+          />
         </div>
       </section>
       <AdminBottomNav className={styles.adminBottomNav} activeClassName={styles.adminBottomNavActive} />
